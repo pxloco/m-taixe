@@ -28,15 +28,16 @@ class CategoryController: UIViewController, UITableViewDataSource, UITableViewDe
     var timer = Timer()
     var currentRoute = Route()
     var routes = [Route]()
+    var isChooseRoute = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        //Hide navigationbar and show toolbar
         print("role type: \(currentUser.RoleType)")
         if currentUser.RoleType == 1{
             contrainsButton.constant = contrainsButton.constant-btnChooseRoute.frame.size.height
             btnChooseRoute.isHidden = true
-            
         }
+        
         initUI()
                 tableView.separatorStyle = UITableViewCellSeparatorStyle.singleLine
         alert.showWait("Đang tải dữ liệu!", subTitle: "Vui lòng đợi!")
@@ -44,10 +45,11 @@ class CategoryController: UIViewController, UITableViewDataSource, UITableViewDe
             loadRoute()
         }
         else{
-            
             //Load dữ liệu
             loadData(date, choose: true)
         }
+        
+        
         //Load dữ liệu ngày hôm qua lưu xuống local
 //        var currentDate = Date()
 //        currentDate = currentDate.addingTimeInterval(TimeInterval(-1*60*60*24))
@@ -65,6 +67,9 @@ class CategoryController: UIViewController, UITableViewDataSource, UITableViewDe
 //        timer = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(CategoryController.timerTask), userInfo: nil, repeats: true)
         
     }
+    
+    // - MARK: Init
+    
     func initUI(){
         let fullName = self.userDefaults.value(forKey: "FullName") as! String
         self.nameLabel.text = "\(fullName)   "
@@ -96,11 +101,11 @@ class CategoryController: UIViewController, UITableViewDataSource, UITableViewDe
         date = formatter.string(from: d)
         formatter.dateFormat = "dd/MM/yyyy"
         dateLabel.text = formatter.string(from: d)
-        
-
     }
     
-    func loadRoute(){
+    // - MARK: Connect SOAP
+    
+    func loadRoute() {
         let soapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
             "<soapenv:Header/>" +
             "<soapenv:Body>" +
@@ -145,7 +150,8 @@ class CategoryController: UIViewController, UITableViewDataSource, UITableViewDe
             }
         }
         }
-    var isChooseRoute = false
+    
+    
     @IBAction func btnChooseRouteClick(_ sender: UIButton) {
         isChooseRoute = true
         let transition:CATransition = CATransition()
@@ -220,7 +226,7 @@ class CategoryController: UIViewController, UITableViewDataSource, UITableViewDe
         
         //Gửi yêu cầu lấy danh sách chuyến trong ngày "bydate"
         sendPostRequest.sendRequest(soapMessage, soapAction: soapAction) { (string, error) in
-            if error == nil{
+            if error == nil {
                 
                 //Parse dữ liệu trả về sang NSData
                 var data = string.data(using: String.Encoding.utf8, allowLossyConversion: false)
@@ -265,7 +271,7 @@ class CategoryController: UIViewController, UITableViewDataSource, UITableViewDe
                 self.backgroundThread(0.0, background: {
                     
                     //Lưu danh sách khách hàng của từng chuyến
-                    for i in 0 ..< trips.count{
+                    for i in 0 ..< trips.count {
                         var trip = trips[i]
                         self.insertCustomer(trip.TripId, atDate: byDate)
                     }
@@ -300,7 +306,6 @@ class CategoryController: UIViewController, UITableViewDataSource, UITableViewDe
                 }
             }
         }
-        
     }
     
     //Hàm xoá dữ liệu
@@ -310,7 +315,7 @@ class CategoryController: UIViewController, UITableViewDataSource, UITableViewDe
         dateFormat.dateFormat = "yyyyMMdd"
         
         //Xoá trong vòng 30 ngày
-        for i in 1...31{
+        for i in 1...31 {
             dateDelete = dateDelete.addingTimeInterval(TimeInterval(-24*60*60))
             let strDate = dateFormat.string(from: dateDelete)
             let dataJsonTrips = userDefaults.value(forKey: strDate) as? Data

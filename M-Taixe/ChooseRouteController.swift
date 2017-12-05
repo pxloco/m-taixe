@@ -14,7 +14,6 @@ class ChooseRouteController: UIViewController, UITableViewDataSource, UITableVie
     var routes = [Route]()
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
     }
 
@@ -34,19 +33,23 @@ class ChooseRouteController: UIViewController, UITableViewDataSource, UITableVie
         transition.subtype = kCATransitionFromBottom
         self.navigationController!.view.layer.add(transition, forKey: kCATransition)
     }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return routes.count
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(withIdentifier: "RouteCell", for: indexPath) as! RouteCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "RouteCell", for: indexPath) as! RouteCell
         cell.lblRouteName.text = routes[indexPath.row].Name
         return cell
     }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var controller = self.navigationController?.viewControllers[(self.navigationController?.viewControllers.count)!-2] as! CategoryController
+        let controller = self.navigationController?.viewControllers[(self.navigationController?.viewControllers.count)!-2] as! CategoryController
         controller.currentRoute = routes[indexPath.row]
         self.navigationController?.popToViewController(controller, animated: true)
     }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
