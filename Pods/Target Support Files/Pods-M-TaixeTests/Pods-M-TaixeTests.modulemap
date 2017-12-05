@@ -1,0 +1,6 @@
+framework module Pods_M_TaixeTests {
+  umbrella header "Pods-M-TaixeTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

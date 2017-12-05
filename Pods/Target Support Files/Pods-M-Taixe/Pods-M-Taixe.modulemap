@@ -1,0 +1,6 @@
+framework module Pods_M_Taixe {
+  umbrella header "Pods-M-Taixe-umbrella.h"
+
+  export *
+  module * { export * }
+}
