@@ -22,9 +22,10 @@ class ChooseRouteController: UIViewController, UITableViewDataSource, UITableVie
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func btnHomeClick(_ sender: UIBarButtonItem) {
+    @IBAction func homeClick(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
+    
     override func viewWillDisappear(_ animated: Bool) {
         let transition:CATransition = CATransition()
         transition.duration = 0.5

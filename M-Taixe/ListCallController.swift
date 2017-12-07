@@ -10,15 +10,8 @@ import UIKit
 
 class ListCallController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
-    @IBOutlet weak var btnRecent: UIBarButtonItem!
-    @IBOutlet weak var navigateBar: UINavigationBar!
-    @IBOutlet weak var lblDate: UILabel!
-    @IBOutlet weak var btnChooseDate: UIButton!
-    @IBOutlet weak var dateButton: UIView!
-    @IBOutlet weak var dateView: UIView!
+    @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var btnRight: UIButton!
-    @IBOutlet weak var btnLeft: UIButton!
     
     var currentPageNum = 1
     var currentPageSize = 20
@@ -67,21 +60,12 @@ class ListCallController: UIViewController, UITableViewDataSource, UITableViewDe
             self.toolbarItems = items
         }
         
-        dateButton.backgroundColor = UIColor.clear
-        
-        //set màu viền và bo các góc của nút chọn ngày
-        btnChooseDate.layer.borderColor = UIColor.init(hexString: "#888888").cgColor
-        btnChooseDate.layer.cornerRadius = 3
-        btnChooseDate.layer.borderWidth = 1.0
-        
         //lấy ngày hiện tại
         formatter.dateFormat = "yyyyMMdd"
         let d = Date()
         date = formatter.string(from: d)
         formatter.dateFormat = "dd/MM/yyyy"
-        lblDate.text = formatter.string(from: d)
-        
-        
+        dateLabel.text = formatter.string(from: d)
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return calls.count
@@ -205,49 +189,9 @@ class ListCallController: UIViewController, UITableViewDataSource, UITableViewDe
                 self.alert.showError("Lỗi!", subTitle: "Không kết nối được server!")
             }
         }
-        
-    }
-    @IBAction func btnChonClick(_ sender: UIButton) {
-        isRecentCall = false
-        formatter.dateFormat = "yyyyMMdd"
-        let datePicker = DatePickerDialog()
-        datePicker.defaultDate = formatter.date(from: date)
-        datePicker.show("Chọn ngày cần xem", doneButtonTitle: "Done", cancelButtonTitle: "Cancel", datePickerMode: .date) {
-            (date) -> Void in
-            self.formatter.dateFormat = "dd/MM/yyyy"
-            self.lblDate.text = self.formatter.string(from: date)
-            self.formatter.dateFormat = "yyyyMMdd"
-            self.date = self.formatter.string(from: date)
-            self.loadData()
-        }
-        
     }
     
-    @IBAction func btnRightClick(_ sender: UIButton) {
-        isRecentCall = false
-        let dateFormat = DateFormatter()
-        dateFormat.dateFormat = "yyyyMMdd"
-        var current = dateFormat.date(from: self.date)
-        current = current?.addingTimeInterval(TimeInterval(24*60*60))
-        self.date = dateFormat.string(from: current!)
-        dateFormat.dateFormat = "dd/MM/yyyy"
-        lblDate.text = dateFormat.string(from: current!)
-        loadData()
-    }
-    
-    @IBAction func btnLeftClick(_ sender: UIButton) {
-        isRecentCall = false
-        let dateFormat = DateFormatter()
-        dateFormat.dateFormat = "yyyyMMdd"
-        var current = dateFormat.date(from: self.date)
-        current = current?.addingTimeInterval(TimeInterval(-24*60*60))
-        self.date = dateFormat.string(from: current!)
-        dateFormat.dateFormat = "dd/MM/yyyy"
-        lblDate.text = dateFormat.string(from: current!)
-        loadData()
-        
-    }
-    @IBAction func btnRecentClick(_ sender: UIBarButtonItem) {
+    @IBAction func recentCallClick(_ sender: Any) {
         if isRecentCall{
             isRecentCall = false
         }
@@ -255,6 +199,45 @@ class ListCallController: UIViewController, UITableViewDataSource, UITableViewDe
             isRecentCall = true
         }
         loadData()
+    }
+    
+    @IBAction func rightClick(_ sender: Any) {
+        isRecentCall = false
+        let dateFormat = DateFormatter()
+        dateFormat.dateFormat = "yyyyMMdd"
+        var current = dateFormat.date(from: self.date)
+        current = current?.addingTimeInterval(TimeInterval(24*60*60))
+        self.date = dateFormat.string(from: current!)
+        dateFormat.dateFormat = "dd/MM/yyyy"
+        dateLabel.text = dateFormat.string(from: current!)
+        loadData()
+    }
+    
+    @IBAction func leftClick(_ sender: Any) {
+        isRecentCall = false
+        let dateFormat = DateFormatter()
+        dateFormat.dateFormat = "yyyyMMdd"
+        var current = dateFormat.date(from: self.date)
+        current = current?.addingTimeInterval(TimeInterval(-24*60*60))
+        self.date = dateFormat.string(from: current!)
+        dateFormat.dateFormat = "dd/MM/yyyy"
+        dateLabel.text = dateFormat.string(from: current!)
+        loadData()
+    }
+    
+    @IBAction func chooseDateClick(_ sender: Any) {
+        isRecentCall = false
+        formatter.dateFormat = "yyyyMMdd"
+        let datePicker = DatePickerDialog()
+        datePicker.defaultDate = formatter.date(from: date)
+        datePicker.show("Chọn ngày cần xem", doneButtonTitle: "Done", cancelButtonTitle: "Cancel", datePickerMode: .date) {
+            (date) -> Void in
+            self.formatter.dateFormat = "dd/MM/yyyy"
+            self.dateLabel.text = self.formatter.string(from: date)
+            self.formatter.dateFormat = "yyyyMMdd"
+            self.date = self.formatter.string(from: date)
+            self.loadData()
+        }
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 30

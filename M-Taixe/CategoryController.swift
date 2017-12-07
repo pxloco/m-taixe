@@ -9,8 +9,7 @@
 import UIKit
 
 class CategoryController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    
-    
+
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
@@ -502,7 +501,7 @@ class CategoryController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         if overTop{
-            navigateToSearch()
+            //navigateToSearch()
         }
     }
     func navigateToSearch(){

@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import HPXibDesignable
+import HPUIViewExtensions
 
 class SearchController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
@@ -18,7 +20,7 @@ class SearchController: UIViewController, UITableViewDataSource, UITableViewDele
     var jsonHelper = JsonHelper()
     var alert = SCLAlertView()
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var tfSearchText: UITextField!
+    @IBOutlet weak var searchTextField: HPTextField!
     override func viewDidLoad() {
         super.viewDidLoad()
         initUI()
@@ -87,12 +89,12 @@ class SearchController: UIViewController, UITableViewDataSource, UITableViewDele
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func btnHomeClick(_ sender: UIButton) {
+    @IBAction func homeClick(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func btnSearchClick(_ sender: AnyObject) {
-        var searchText = tfSearchText.text ?? ""
+    @IBAction func searchClick(_ sender: Any) {
+        var searchText = searchTextField.text ?? ""
         if searchText != "" {
             
             alert = SCLAlertView()
@@ -103,6 +105,7 @@ class SearchController: UIViewController, UITableViewDataSource, UITableViewDele
             search(text: searchText)
         }
     }
+    
     override func viewWillDisappear(_ animated: Bool) {
         let transition:CATransition = CATransition()
         transition.duration = 0.5
@@ -122,7 +125,7 @@ class SearchController: UIViewController, UITableViewDataSource, UITableViewDele
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row == arrCustomers.count-1 {
             if currentPageSize >= 20{
-                var text = tfSearchText.text ?? ""
+                var text = searchTextField.text ?? ""
                 if text != ""{
                     search(text: text)
                 }

@@ -170,6 +170,7 @@
 		0C0A598F1FD58EA300198D55 /* ViewComponents */ = {
 			isa = PBXGroup;
 			children = (
+				31C9156D1DB0B16B00385C79 /* AddCustomerViewCell.swift */,
 				3127E7E61D379704002293D4 /* CategoryCell.swift */,
 				310EE6491D3916610003FD8A /* CustomerCell.swift */,
 				312B88431D3D023400728743 /* InformationCell.swift */,
@@ -234,7 +235,6 @@
 				3121F91F1D3CC10F00E3ED8E /* InformationController.swift */,
 				318E7E731DADC7FC005BB52D /* FretController.swift */,
 				318E7E771DADD091005BB52D /* AddFretController.swift */,
-				31C9156D1DB0B16B00385C79 /* AddCustomerViewCell.swift */,
 				31B3075B1DCC7CDA0039AFBC /* ChooseRouteController.swift */,
 				31B307651DCCC54C0039AFBC /* AddOrderController.swift */,
 				31ABC5A31DCDD3A7000C8DAC /* ListCallController.swift */,
@@ -390,7 +390,7 @@
 				TargetAttributes = {
 					3127E7791D372447002293D4 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 9GLLK6K7WL;
+						DevelopmentTeam = X8AYLQ66B6;
 						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -729,6 +729,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -799,8 +800,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = X8AYLQ66B6;
 				INFOPLIST_FILE = "M-Taixe/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "kha.M-Taixe";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -816,8 +818,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = X8AYLQ66B6;
 				INFOPLIST_FILE = "M-Taixe/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "kha.M-Taixe";
 				PRODUCT_NAME = "$(TARGET_NAME)";
