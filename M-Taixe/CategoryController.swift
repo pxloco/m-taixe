@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import HPXibDesignable
+import HPUIViewExtensions
 
 class CategoryController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
@@ -14,7 +16,7 @@ class CategoryController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var contrainsButton: NSLayoutConstraint!
-    @IBOutlet weak var btnChooseRoute: UIButton!
+    @IBOutlet weak var btnChooseRoute: HPButton!
     
     var tripJson = Data()
     var currentUser = User()
@@ -32,7 +34,7 @@ class CategoryController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewDidLoad() {
         super.viewDidLoad()
         print("role type: \(currentUser.RoleType)")
-        if currentUser.RoleType == 1{
+        if currentUser.RoleType == 1 {
             contrainsButton.constant = contrainsButton.constant-btnChooseRoute.frame.size.height
             btnChooseRoute.isHidden = true
         }
@@ -69,7 +71,7 @@ class CategoryController: UIViewController, UITableViewDataSource, UITableViewDe
     
     // - MARK: Init
     
-    func initUI(){
+    func initUI() {
         let fullName = self.userDefaults.value(forKey: "FullName") as! String
         self.nameLabel.text = "\(fullName)   "
         self.navigationController?.setNavigationBarHidden(true, animated: false)
@@ -81,7 +83,7 @@ class CategoryController: UIViewController, UITableViewDataSource, UITableViewDe
         listButton.tintColor = UIColor(netHex: 0x197DAE)
         inforButton.tintColor = UIColor(netHex: 0x555555)
         let flex = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-        if currentUser.RoleType != 1{
+        if currentUser.RoleType != 1 {
             let listCallButton = UIBarButtonItem.init(image: UIImage(named: "phone_active"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.btnListCallClick))
             
             listCallButton.tintColor = UIColor(netHex: 0x555555)
@@ -128,7 +130,7 @@ class CategoryController: UIViewController, UITableViewDataSource, UITableViewDe
         sendPostRequest.sendRequest(soapMessage, soapAction: soapAction){ (string, error) in
             if error == nil {
                 
-                var data = string.data(using: String.Encoding.utf8, allowLossyConversion: false)
+                let data = string.data(using: String.Encoding.utf8, allowLossyConversion: false)
                 self.routes = self.jsonHelper.parseRoutes(data!)
                 if self.routes.count>0{
                     self.currentRoute = self.routes[0]
@@ -148,10 +150,9 @@ class CategoryController: UIViewController, UITableViewDataSource, UITableViewDe
                 self.alert.showError("Lỗi!", subTitle: "Không kết nối được server!")
             }
         }
-        }
+    }
     
-    
-    @IBAction func btnChooseRouteClick(_ sender: UIButton) {
+    @IBAction func btnChooseRouteClick(_ sender: Any) {
         isChooseRoute = true
         let transition:CATransition = CATransition()
         transition.duration = 0.5
@@ -159,12 +160,13 @@ class CategoryController: UIViewController, UITableViewDataSource, UITableViewDe
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromTop
         self.navigationController!.view.layer.add(transition, forKey: kCATransition)
-
+        
         let storyBoard = UIStoryboard(name: "Main", bundle: Bundle.main)
         let controller = storyBoard.instantiateViewController(withIdentifier: "ChooseRoute") as! ChooseRouteController
         controller.routes = self.routes
         self.navigationController?.pushViewController(controller, animated: true)
     }
+    
     func timerTask(){
         if UIApplication.shared.applicationState == UIApplicationState.active{
             loadData(self.date, choose: false)
@@ -416,7 +418,7 @@ class CategoryController: UIViewController, UITableViewDataSource, UITableViewDe
         return "Danh sách chuyến"
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 20.0
+        return 30.0
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return arrTrip.count
@@ -433,6 +435,7 @@ class CategoryController: UIViewController, UITableViewDataSource, UITableViewDe
         controller.gioXuatBen = arrTrip[(indexPath as NSIndexPath).row].StartTime
         self.navigationController?.pushViewController(controller, animated: true)
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath) as! CategoryCell
         let trip = arrTrip[(indexPath as NSIndexPath).row]

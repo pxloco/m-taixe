@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C326B681FDBB93E003CBCD4 /* MapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C326B671FDBB93E003CBCD4 /* MapController.swift */; };
+		0C326B6A1FDBB95D003CBCD4 /* SchemaController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C326B691FDBB95D003CBCD4 /* SchemaController.swift */; };
+		0C326B6D1FDBD507003CBCD4 /* SegueFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C326B6C1FDBD507003CBCD4 /* SegueFactory.swift */; };
 		3109C16E1D37BFFA00C3BDE4 /* DatePickerDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3109C16D1D37BFFA00C3BDE4 /* DatePickerDialog.swift */; };
 		310EE6421D38D2740003FD8A /* CustomersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310EE6411D38D2740003FD8A /* CustomersController.swift */; };
 		310EE6481D38F8A00003FD8A /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310EE6471D38F8A00003FD8A /* Customer.swift */; };
@@ -75,6 +78,9 @@
 
 /* Begin PBXFileReference section */
 		0BE5FC5C9F4893F6D5DCFB3E /* Pods-M-Taixe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-M-Taixe.release.xcconfig"; path = "Pods/Target Support Files/Pods-M-Taixe/Pods-M-Taixe.release.xcconfig"; sourceTree = "<group>"; };
+		0C326B671FDBB93E003CBCD4 /* MapController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapController.swift; sourceTree = "<group>"; };
+		0C326B691FDBB95D003CBCD4 /* SchemaController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaController.swift; sourceTree = "<group>"; };
+		0C326B6C1FDBD507003CBCD4 /* SegueFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegueFactory.swift; sourceTree = "<group>"; };
 		19EA599949F8B6D7E34FBD43 /* Pods_M_Taixe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_M_Taixe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3109C16D1D37BFFA00C3BDE4 /* DatePickerDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerDialog.swift; sourceTree = "<group>"; };
 		310EE6411D38D2740003FD8A /* CustomersController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomersController.swift; sourceTree = "<group>"; };
@@ -183,6 +189,14 @@
 			name = ViewComponents;
 			sourceTree = "<group>";
 		};
+		0C326B6B1FDBD4EE003CBCD4 /* Ultils */ = {
+			isa = PBXGroup;
+			children = (
+				0C326B6C1FDBD507003CBCD4 /* SegueFactory.swift */,
+			);
+			name = Ultils;
+			sourceTree = "<group>";
+		};
 		1558DB36B344C479ADB89C2E /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -239,6 +253,8 @@
 				31B307651DCCC54C0039AFBC /* AddOrderController.swift */,
 				31ABC5A31DCDD3A7000C8DAC /* ListCallController.swift */,
 				311B2F2C1DD5E42800E27978 /* SearchController.swift */,
+				0C326B671FDBB93E003CBCD4 /* MapController.swift */,
+				0C326B691FDBB95D003CBCD4 /* SchemaController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -281,6 +297,7 @@
 		3127E77C1D372447002293D4 /* M-Taixe */ = {
 			isa = PBXGroup;
 			children = (
+				0C326B6B1FDBD4EE003CBCD4 /* Ultils */,
 				0C0A598F1FD58EA300198D55 /* ViewComponents */,
 				310EE6451D38E14C0003FD8A /* Controller */,
 				310EE6441D38E1340003FD8A /* OtherFile */,
@@ -624,6 +641,7 @@
 				3121F9221D3CD09700E3ED8E /* ColorHelper.swift in Sources */,
 				31ABC5A61DCDDDC8000C8DAC /* Call.swift in Sources */,
 				3182F7CA1DC32B57006517B4 /* CurrentUser.swift in Sources */,
+				0C326B6A1FDBB95D003CBCD4 /* SchemaController.swift in Sources */,
 				3127E7E31D378F6B002293D4 /* Trip.swift in Sources */,
 				31ABC5A81DCDE0EE000C8DAC /* CallCell.swift in Sources */,
 				31B307601DCCA0050039AFBC /* RouteCell.swift in Sources */,
@@ -635,6 +653,7 @@
 				31B307621DCCB0E60039AFBC /* OrderInforCell.swift in Sources */,
 				3127E7E91D3798B0002293D4 /* JsonHelper.swift in Sources */,
 				318E7E741DADC7FC005BB52D /* FretController.swift in Sources */,
+				0C326B681FDBB93E003CBCD4 /* MapController.swift in Sources */,
 				31C9156C1DB0A9CC00385C79 /* TextFiledExtension.swift in Sources */,
 				310EE6421D38D2740003FD8A /* CustomersController.swift in Sources */,
 				3127E7EB1D379B6B002293D4 /* User.swift in Sources */,
@@ -649,6 +668,7 @@
 				3127E7B41D372ACE002293D4 /* SCLAlertView.swift in Sources */,
 				31C1361C1DD0642000B970AA /* BillCell.swift in Sources */,
 				31B3076C1DCCE1110039AFBC /* AddOrderHelper.swift in Sources */,
+				0C326B6D1FDBD507003CBCD4 /* SegueFactory.swift in Sources */,
 				3127E7B01D37259D002293D4 /* LoginController.swift in Sources */,
 				311B2F2D1DD5E42800E27978 /* SearchController.swift in Sources */,
 				318E7E781DADD091005BB52D /* AddFretController.swift in Sources */,

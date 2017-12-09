@@ -23,6 +23,7 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
     var jsonHelper = JsonHelper()
     var userDefaults = UserDefaults.standard
     var gioXuatBen = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -30,6 +31,7 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
         self.navigationController?.setToolbarHidden(true, animated: false)
         
         initBar()
+        initNavigationBottomBar()
         
         
         //Load dữ liệu từ local
@@ -42,7 +44,22 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
         //timer = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(CustomersController.timerTask), userInfo: nil, repeats: true)
         //segmentControl.frame = CGRect(x: 50, y: 50, width: 1000, height: 50)
     }
-    func initBar(){
+    
+    func initNavigationBottomBar() {
+        self.navigationController?.setToolbarHidden(false, animated: true)
+        let flex = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        
+        let listCustomerButton = UIBarButtonItem.init(image: #imageLiteral(resourceName: "ListIcon"), style: UIBarButtonItemStyle.plain, target: nil, action: nil)
+        let schemaButton = UIBarButtonItem.init(image: #imageLiteral(resourceName: "map_icon_active"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(CustomersController.btnSchemaClick(_:)))
+        schemaButton.tintColor = UIColor(netHex: 0x555555)
+        listCustomerButton.tintColor = UIColor(netHex: 0x197DAE)
+        
+        let items = [flex, listCustomerButton, flex, schemaButton, flex]
+        self.toolbarItems = items
+    }
+    
+    
+    func initBar() {
         //Add segmentcontrol vào navigationbar
         let titleView = UIView.init(frame: CGRect(x: 0, y: 0, width: 300, height: 40))
         self.initSegmentControl()
@@ -71,11 +88,13 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
         self.navigationItem.leftBarButtonItem = right
 
     }
+    
     func btnHomeClick(){
     
         self.navigationController?.popViewController(animated: true)
         
     }
+    
     func btnAddClick(){
         let transition:CATransition = CATransition()
         transition.duration = 0.5
@@ -278,20 +297,20 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
         self.segmentControl.addTarget(self, action: #selector(CustomersController.segmentedControlValueChanged(_:)), for:.valueChanged)
         self.segmentControl.addTarget(self, action: #selector(CustomersController.segmentedControlValueChanged(_:)), for:.touchUpInside)
     }
+    
     func segmentedControlValueChanged(_ sender: UISegmentedControl){
         tableView.reloadData()
-        if segmentControl.selectedSegmentIndex == 0{
+        
+        switch segmentControl.selectedSegmentIndex {
+        case 0:
             currentSegmentIndex = 0
             do{
                 let text = try NSAttributedString(data: "<b>\(gioXuatBen)</b> Tổng số hành khách: \(arrCustomersChuaDon.count)".data(using: String.Encoding.unicode, allowLossyConversion: false)!, options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType], documentAttributes: nil)
                 lblTongSo.attributedText = text
             }
             catch{
-                
             }
-            
-        }
-        else if segmentControl.selectedSegmentIndex == 1{
+        case 1:
             currentSegmentIndex = 1
             do{
                 let text = try NSAttributedString(data: "<b>\(gioXuatBen)</b> Tổng số hành khách: \(arrCustomers.count)".data(using: String.Encoding.unicode, allowLossyConversion: false)!, options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType], documentAttributes: nil)
@@ -300,34 +319,35 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
             catch{
                 
             }
-            
-        }
-        else{
+        default:
             let storyBoard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
             let controller = storyBoard.instantiateViewController(withIdentifier: "Fret") as! FretController
             controller.currentUser = currentUser
             controller.tripId = tripId
             self.navigationController?.pushViewController(controller, animated: false)
-            
         }
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         self.segmentControl.selectedSegmentIndex = currentSegmentIndex
-        self.navigationController?.setNavigationBarHidden(false, animated: false)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
         self.overTop = false
         loadData()
     }
+    
     var overTop = false
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if tableView.contentOffset.y < -30{
             overTop = true
         }
     }
+    
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         if overTop{
             navigateToSearch()
         }
     }
+    
     func navigateToSearch(){
         let transition:CATransition = CATransition()
         transition.duration = 0.5
@@ -346,8 +366,10 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
     override func viewWillDisappear(_ animated: Bool) {
     }
+    
     /*
      // MARK: - Navigation
      
@@ -358,4 +380,22 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
      }
      */
     
+    //Button xem sơ đồ
+    func btnSchemaClick(_ sender: UIBarButtonItem) {
+        let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
+        let controller = storyboard.instantiateViewController(withIdentifier: "Schema") as! SchemaController
+        //        controller.currentUser = self.currentUser
+        //        controller.inforView = true
+        self.navigationController?.pushViewController(controller, animated: false)
+        
+    }
+    
+    func btnMapClick(_ sender: UIBarButtonItem) {
+        let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
+        let controller = storyboard.instantiateViewController(withIdentifier: "Search") as! SearchController
+        //        controller.currentUser = self.currentUser
+        //        controller.inforView = true
+        self.navigationController?.pushViewController(controller, animated: true)
+        
+    }
 }
