@@ -51,10 +51,11 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
         
         let listCustomerButton = UIBarButtonItem.init(image: #imageLiteral(resourceName: "ListIcon"), style: UIBarButtonItemStyle.plain, target: nil, action: nil)
         let schemaButton = UIBarButtonItem.init(image: #imageLiteral(resourceName: "map_icon_active"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(CustomersController.btnSchemaClick(_:)))
+        let mapButton = UIBarButtonItem.init(image: #imageLiteral(resourceName: "map_icon_active"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(CustomersController.btnMapClick(_:)))
         schemaButton.tintColor = UIColor(netHex: 0x555555)
         listCustomerButton.tintColor = UIColor(netHex: 0x197DAE)
         
-        let items = [flex, listCustomerButton, flex, schemaButton, flex]
+        let items = [flex, listCustomerButton, flex, schemaButton, flex, mapButton, flex]
         self.toolbarItems = items
     }
     
@@ -90,9 +91,7 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     func btnHomeClick(){
-    
         self.navigationController?.popViewController(animated: true)
-        
     }
     
     func btnAddClick(){
@@ -383,18 +382,15 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
     //Button xem sơ đồ
     func btnSchemaClick(_ sender: UIBarButtonItem) {
         let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
-        let controller = storyboard.instantiateViewController(withIdentifier: "Schema") as! SchemaController
+        let controller = storyboard.instantiateViewController(withIdentifier: "Schema") as! SchemaViewController
         //        controller.currentUser = self.currentUser
         //        controller.inforView = true
-        self.navigationController?.pushViewController(controller, animated: false)
-        
+        self.navigationController?.pushViewController(controller, animated: true)
     }
     
     func btnMapClick(_ sender: UIBarButtonItem) {
         let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
-        let controller = storyboard.instantiateViewController(withIdentifier: "Search") as! SearchController
-        //        controller.currentUser = self.currentUser
-        //        controller.inforView = true
+        let controller = storyboard.instantiateViewController(withIdentifier: "MapViewController") as! MapViewController
         self.navigationController?.pushViewController(controller, animated: true)
         
     }

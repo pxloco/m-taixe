@@ -16,6 +16,7 @@ class InformationController: UIViewController, UITableViewDataSource, UITableVie
         super.viewDidLoad()
         let inforButton = UIBarButtonItem.init(image: UIImage(named: "person-icon"), style: UIBarButtonItemStyle.plain, target: nil, action: nil)
         let listButton = UIBarButtonItem.init(image: UIImage(named: "ListIcon"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(InformationController.btnListClick(_:)))
+        let analysButton = UIBarButtonItem.init(image: UIImage(named: "ListIcon"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(InformationController.btnAnalysButtonClick(_:)))
         listButton.tintColor = UIColor(netHex: 0x555555)
         inforButton.tintColor = UIColor(netHex: 0x197DAE)
         let flex = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
@@ -23,7 +24,7 @@ class InformationController: UIViewController, UITableViewDataSource, UITableVie
             let listCallButton = UIBarButtonItem.init(image: UIImage(named: "phone_active"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.btnListCallClick))
             
             listCallButton.tintColor = UIColor(netHex: 0x555555)
-            let items = [flex,listButton,flex,listCallButton, flex, inforButton, flex]
+            let items = [flex,listButton,flex,listCallButton, flex, analysButton, flex, inforButton, flex]
             self.toolbarItems = items
         }
         else{
@@ -34,11 +35,18 @@ class InformationController: UIViewController, UITableViewDataSource, UITableVie
         self.tableView.allowsSelection = false
         // Do any additional setup after loading the view.
     }
-    func btnListCallClick(){
+    func btnListCallClick(_ sender: UIBarButtonItem){
         self.navigationController?.popViewController(animated: true)
     }
+    
+    func btnAnalysButtonClick(_ sender: UIBarButtonItem) {
+        let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
+        let controller = storyboard.instantiateViewController(withIdentifier: "Analys") as! AnalysViewController
+        self.navigationController?.pushViewController(controller, animated: false)
+    }
+    
     func btnListClick(_ sender: UIBarButtonItem){
-        var controller = self.navigationController?.viewControllers[(self.navigationController?.viewControllers.count)!-3]
+        let controller = self.navigationController?.viewControllers[(self.navigationController?.viewControllers.count)!-3]
         self.navigationController?.popToViewController(controller!, animated: true)
 
     }

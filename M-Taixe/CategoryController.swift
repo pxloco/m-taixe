@@ -12,7 +12,6 @@ import HPUIViewExtensions
 
 class CategoryController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
-    @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var contrainsButton: NSLayoutConstraint!
@@ -73,25 +72,25 @@ class CategoryController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func initUI() {
         let fullName = self.userDefaults.value(forKey: "FullName") as! String
-        self.nameLabel.text = "\(fullName)   "
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         self.navigationController?.toolbar.barTintColor = UIColor.white
         self.navigationController?.setToolbarHidden(false, animated: false)
         //Thêm các nút tác vụ vào toolbar
         let inforButton = UIBarButtonItem.init(image: UIImage(named: "person-icon"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(CategoryController.btnInforClick(_:)))
-        let listButton = UIBarButtonItem.init(image: UIImage(named: "ListIcon"), style: UIBarButtonItemStyle.plain, target: nil, action: nil)
+        let listButton = UIBarButtonItem.init(image: UIImage(named: "ListIcon"), style: UIBarButtonItemStyle.plain, target: self, action: nil)
+        let analysButton = UIBarButtonItem.init(image: UIImage(named: "ListIcon"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(CategoryController.btnAnalysButtonClick(_:)))
         listButton.tintColor = UIColor(netHex: 0x197DAE)
         inforButton.tintColor = UIColor(netHex: 0x555555)
+        analysButton.tintColor = UIColor(netHex: 0x555555)
         let flex = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
         if currentUser.RoleType != 1 {
             let listCallButton = UIBarButtonItem.init(image: UIImage(named: "phone_active"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.btnListCallClick))
             
             listCallButton.tintColor = UIColor(netHex: 0x555555)
-            let items = [flex,listButton,flex,listCallButton, flex, inforButton, flex]
+            let items = [flex,listButton, flex, listCallButton, flex, analysButton, flex, inforButton, flex]
             self.toolbarItems = items
         }
         else{
-            
             let items = [flex,listButton,flex, inforButton, flex]
             self.toolbarItems = items
         }
@@ -188,7 +187,12 @@ class CategoryController: UIViewController, UITableViewDataSource, UITableViewDe
         controller.currentUser = self.currentUser
         controller.inforView = true
         self.navigationController?.pushViewController(controller, animated: false)
-
+    }
+    
+    func btnAnalysButtonClick(_ sender: UIBarButtonItem) {
+        let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
+        let controller = storyboard.instantiateViewController(withIdentifier: "Analys") as! AnalysViewController
+        self.navigationController?.pushViewController(controller, animated: false)
     }
     
     //Hàm load dữ liệu
@@ -446,6 +450,8 @@ class CategoryController: UIViewController, UITableViewDataSource, UITableViewDe
         
     }
     
+    // MARK: - User Action
+    
     @IBAction func rightButtonClick(_ sender: Any) {
         let dateFormat = DateFormatter()
         dateFormat.dateFormat = "yyyyMMdd"
@@ -484,6 +490,15 @@ class CategoryController: UIViewController, UITableViewDataSource, UITableViewDe
             self.alert.showWait("Đang tải dữ liệu!", subTitle: "Vui lòng đợi!")
             self.loadData(self.date, choose: true)
         }
+    }
+    
+    
+    @IBAction func editRoute(_ sender: Any) {
+        performSegue(withIdentifier: SegueFactory.fromCategoryToEditCategory.rawValue, sender: nil)
+    }
+    
+    @IBAction func goToListGoods(_ sender: Any) {
+       
     }
     
     override func viewWillAppear(_ animated: Bool) {

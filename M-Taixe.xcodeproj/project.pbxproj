@@ -7,9 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0C326B681FDBB93E003CBCD4 /* MapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C326B671FDBB93E003CBCD4 /* MapController.swift */; };
-		0C326B6A1FDBB95D003CBCD4 /* SchemaController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C326B691FDBB95D003CBCD4 /* SchemaController.swift */; };
+		0C13387D1FDEC75E001E6A4B /* SeatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C13387C1FDEC75E001E6A4B /* SeatCell.swift */; };
+		0C13387F1FDEC791001E6A4B /* SchemaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C13387E1FDEC791001E6A4B /* SchemaViewController.swift */; };
+		0C268EC91FE5147A00DFD811 /* EditRouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C268EC81FE5147A00DFD811 /* EditRouteViewController.swift */; };
+		0C268ECB1FE5148800DFD811 /* ListGoodsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C268ECA1FE5148800DFD811 /* ListGoodsViewController.swift */; };
 		0C326B6D1FDBD507003CBCD4 /* SegueFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C326B6C1FDBD507003CBCD4 /* SegueFactory.swift */; };
+		0C357E721FDCBE8C008490B2 /* SeatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C357E711FDCBE8C008490B2 /* SeatView.swift */; };
+		0C357E741FDCBE99008490B2 /* SeatView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C357E731FDCBE99008490B2 /* SeatView.xib */; };
+		0C357E761FDCC6BE008490B2 /* Seat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C357E751FDCC6BE008490B2 /* Seat.swift */; };
+		0C807DD41FE6D17F0031BB43 /* HomeTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C807DD31FE6D17F0031BB43 /* HomeTabBarViewController.swift */; };
+		0CE4B9331FE5F2BC00992EED /* AnalysViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE4B9321FE5F2BC00992EED /* AnalysViewController.swift */; };
+		0CE4B9351FE6076A00992EED /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE4B9341FE6076A00992EED /* MapViewController.swift */; };
 		3109C16E1D37BFFA00C3BDE4 /* DatePickerDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3109C16D1D37BFFA00C3BDE4 /* DatePickerDialog.swift */; };
 		310EE6421D38D2740003FD8A /* CustomersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310EE6411D38D2740003FD8A /* CustomersController.swift */; };
 		310EE6481D38F8A00003FD8A /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310EE6471D38F8A00003FD8A /* Customer.swift */; };
@@ -78,9 +86,17 @@
 
 /* Begin PBXFileReference section */
 		0BE5FC5C9F4893F6D5DCFB3E /* Pods-M-Taixe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-M-Taixe.release.xcconfig"; path = "Pods/Target Support Files/Pods-M-Taixe/Pods-M-Taixe.release.xcconfig"; sourceTree = "<group>"; };
-		0C326B671FDBB93E003CBCD4 /* MapController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapController.swift; sourceTree = "<group>"; };
-		0C326B691FDBB95D003CBCD4 /* SchemaController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaController.swift; sourceTree = "<group>"; };
+		0C13387C1FDEC75E001E6A4B /* SeatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeatCell.swift; sourceTree = "<group>"; };
+		0C13387E1FDEC791001E6A4B /* SchemaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaViewController.swift; sourceTree = "<group>"; };
+		0C268EC81FE5147A00DFD811 /* EditRouteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRouteViewController.swift; sourceTree = "<group>"; };
+		0C268ECA1FE5148800DFD811 /* ListGoodsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListGoodsViewController.swift; sourceTree = "<group>"; };
 		0C326B6C1FDBD507003CBCD4 /* SegueFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegueFactory.swift; sourceTree = "<group>"; };
+		0C357E711FDCBE8C008490B2 /* SeatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeatView.swift; sourceTree = "<group>"; };
+		0C357E731FDCBE99008490B2 /* SeatView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SeatView.xib; sourceTree = "<group>"; };
+		0C357E751FDCC6BE008490B2 /* Seat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seat.swift; sourceTree = "<group>"; };
+		0C807DD31FE6D17F0031BB43 /* HomeTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabBarViewController.swift; sourceTree = "<group>"; };
+		0CE4B9321FE5F2BC00992EED /* AnalysViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysViewController.swift; sourceTree = "<group>"; };
+		0CE4B9341FE6076A00992EED /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		19EA599949F8B6D7E34FBD43 /* Pods_M_Taixe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_M_Taixe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3109C16D1D37BFFA00C3BDE4 /* DatePickerDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerDialog.swift; sourceTree = "<group>"; };
 		310EE6411D38D2740003FD8A /* CustomersController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomersController.swift; sourceTree = "<group>"; };
@@ -185,6 +201,7 @@
 				31B307631DCCB79E0039AFBC /* AddSeatCell.swift */,
 				31ABC5A71DCDE0EE000C8DAC /* CallCell.swift */,
 				31C1361B1DD0642000B970AA /* BillCell.swift */,
+				0C13387C1FDEC75E001E6A4B /* SeatCell.swift */,
 			);
 			name = ViewComponents;
 			sourceTree = "<group>";
@@ -195,6 +212,15 @@
 				0C326B6C1FDBD507003CBCD4 /* SegueFactory.swift */,
 			);
 			name = Ultils;
+			sourceTree = "<group>";
+		};
+		0CB77B341FDC424800BF720E /* Custom View */ = {
+			isa = PBXGroup;
+			children = (
+				0C357E711FDCBE8C008490B2 /* SeatView.swift */,
+				0C357E731FDCBE99008490B2 /* SeatView.xib */,
+			);
+			name = "Custom View";
 			sourceTree = "<group>";
 		};
 		1558DB36B344C479ADB89C2E /* Pods */ = {
@@ -220,6 +246,7 @@
 				31B307691DCCD41D0039AFBC /* RouteDetail.swift */,
 				31ABC5A51DCDDDC8000C8DAC /* Call.swift */,
 				31C136191DD05E9A00B970AA /* Bill.swift */,
+				0C357E751FDCC6BE008490B2 /* Seat.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -253,8 +280,12 @@
 				31B307651DCCC54C0039AFBC /* AddOrderController.swift */,
 				31ABC5A31DCDD3A7000C8DAC /* ListCallController.swift */,
 				311B2F2C1DD5E42800E27978 /* SearchController.swift */,
-				0C326B671FDBB93E003CBCD4 /* MapController.swift */,
-				0C326B691FDBB95D003CBCD4 /* SchemaController.swift */,
+				0C13387E1FDEC791001E6A4B /* SchemaViewController.swift */,
+				0C268EC81FE5147A00DFD811 /* EditRouteViewController.swift */,
+				0C268ECA1FE5148800DFD811 /* ListGoodsViewController.swift */,
+				0CE4B9321FE5F2BC00992EED /* AnalysViewController.swift */,
+				0CE4B9341FE6076A00992EED /* MapViewController.swift */,
+				0C807DD31FE6D17F0031BB43 /* HomeTabBarViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -297,6 +328,7 @@
 		3127E77C1D372447002293D4 /* M-Taixe */ = {
 			isa = PBXGroup;
 			children = (
+				0CB77B341FDC424800BF720E /* Custom View */,
 				0C326B6B1FDBD4EE003CBCD4 /* Ultils */,
 				0C0A598F1FD58EA300198D55 /* ViewComponents */,
 				310EE6451D38E14C0003FD8A /* Controller */,
@@ -455,6 +487,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3127E7881D372448002293D4 /* LaunchScreen.storyboard in Resources */,
+				0C357E741FDCBE99008490B2 /* SeatView.xib in Resources */,
 				3127E7851D372448002293D4 /* Assets.xcassets in Resources */,
 				31B307681DCCCDA50039AFBC /* select.html in Resources */,
 				3127E7831D372447002293D4 /* Main.storyboard in Resources */,
@@ -638,22 +671,28 @@
 			files = (
 				311F3B7D1D3A00AD004507A5 /* SendPostRequest.swift in Sources */,
 				31C1361A1DD05E9A00B970AA /* Bill.swift in Sources */,
+				0C268ECB1FE5148800DFD811 /* ListGoodsViewController.swift in Sources */,
 				3121F9221D3CD09700E3ED8E /* ColorHelper.swift in Sources */,
+				0CE4B9331FE5F2BC00992EED /* AnalysViewController.swift in Sources */,
 				31ABC5A61DCDDDC8000C8DAC /* Call.swift in Sources */,
 				3182F7CA1DC32B57006517B4 /* CurrentUser.swift in Sources */,
-				0C326B6A1FDBB95D003CBCD4 /* SchemaController.swift in Sources */,
 				3127E7E31D378F6B002293D4 /* Trip.swift in Sources */,
+				0C268EC91FE5147A00DFD811 /* EditRouteViewController.swift in Sources */,
+				0C807DD41FE6D17F0031BB43 /* HomeTabBarViewController.swift in Sources */,
 				31ABC5A81DCDE0EE000C8DAC /* CallCell.swift in Sources */,
 				31B307601DCCA0050039AFBC /* RouteCell.swift in Sources */,
 				31B307641DCCB79E0039AFBC /* AddSeatCell.swift in Sources */,
 				3127E77E1D372447002293D4 /* AppDelegate.swift in Sources */,
+				0CE4B9351FE6076A00992EED /* MapViewController.swift in Sources */,
 				3109C16E1D37BFFA00C3BDE4 /* DatePickerDialog.swift in Sources */,
 				3127E7E11D378638002293D4 /* CategoryController.swift in Sources */,
 				312B88441D3D023400728743 /* InformationCell.swift in Sources */,
 				31B307621DCCB0E60039AFBC /* OrderInforCell.swift in Sources */,
+				0C13387D1FDEC75E001E6A4B /* SeatCell.swift in Sources */,
 				3127E7E91D3798B0002293D4 /* JsonHelper.swift in Sources */,
+				0C13387F1FDEC791001E6A4B /* SchemaViewController.swift in Sources */,
 				318E7E741DADC7FC005BB52D /* FretController.swift in Sources */,
-				0C326B681FDBB93E003CBCD4 /* MapController.swift in Sources */,
+				0C357E761FDCC6BE008490B2 /* Seat.swift in Sources */,
 				31C9156C1DB0A9CC00385C79 /* TextFiledExtension.swift in Sources */,
 				310EE6421D38D2740003FD8A /* CustomersController.swift in Sources */,
 				3127E7EB1D379B6B002293D4 /* User.swift in Sources */,
@@ -662,6 +701,7 @@
 				31B3075C1DCC7CDA0039AFBC /* ChooseRouteController.swift in Sources */,
 				310EE64A1D3916610003FD8A /* CustomerCell.swift in Sources */,
 				310EE6481D38F8A00003FD8A /* Customer.swift in Sources */,
+				0C357E721FDCBE8C008490B2 /* SeatView.swift in Sources */,
 				31B307661DCCC54C0039AFBC /* AddOrderController.swift in Sources */,
 				31C9156E1DB0B16B00385C79 /* AddCustomerViewCell.swift in Sources */,
 				31B3076A1DCCD41D0039AFBC /* RouteDetail.swift in Sources */,

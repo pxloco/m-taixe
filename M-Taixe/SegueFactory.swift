@@ -10,5 +10,8 @@ import Foundation
 
 enum SegueFactory: String {
     case fromCustomerToSchema                     = "fromCustomerToSchema"
+    case fromCategoryToEditCategory               = "fromCategoryToEditCategory"
+    case fromCategoryToAnalys                     = "fromCategoryToAnalys"
+    case fromLoginToTabBarViewController          = "fromLoginToTabBarViewController"
 }
 

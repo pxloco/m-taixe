@@ -7,3 +7,13 @@
 //
 
 import Foundation
+
+class Seat {
+    var isSelected = Bool()
+    var seatName = String()
+    
+    init(isSelected: Bool, seatName: String) {
+        self.isSelected = isSelected
+        self.seatName = seatName
+    }
+}

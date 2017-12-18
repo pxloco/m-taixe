@@ -6,4 +6,15 @@
 //  Copyright © 2017 kha. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+class SeatCell: UICollectionViewCell {
+    
+    @IBOutlet weak var seatName: UILabel!
+    @IBOutlet weak var imageSelected: UIImageView!
+    
+    func setData(seat: Seat) {
+        seatName.text = seat.seatName
+        imageSelected.isHidden = !seat.isSelected
+    }
+}

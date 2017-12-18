@@ -46,7 +46,7 @@ class LoginController: UIViewController, UITextFieldDelegate {
         if userName != nil {
             let storyBoard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
             let controller = storyBoard.instantiateViewController(withIdentifier: "Category") as! CategoryController
-            
+
             controller.currentUser.UserName = userName  as! String
             controller.currentUser.Password = password as! String
             controller.currentUser.DisplayName = displayName  as! String

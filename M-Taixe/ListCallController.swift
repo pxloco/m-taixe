@@ -44,6 +44,7 @@ class ListCallController: UIViewController, UITableViewDataSource, UITableViewDe
         //Thêm các nút tác vụ vào toolbar
         let inforButton = UIBarButtonItem.init(image: UIImage(named: "person-icon"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.navigateToInforView))
         let listButton = UIBarButtonItem.init(image: UIImage(named: "ListIcon"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.btnListClick))
+        let analysButton = UIBarButtonItem.init(image: UIImage(named: "ListIcon"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(ListCallController.btnAnalysButtonClick(_:)))
         listButton.tintColor = UIColor(netHex: 0x555555)
         inforButton.tintColor = UIColor(netHex: 0x555555)
         let flex = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
@@ -51,7 +52,7 @@ class ListCallController: UIViewController, UITableViewDataSource, UITableViewDe
             let listCallButton = UIBarButtonItem.init(image: UIImage(named: "phone_active"), style: UIBarButtonItemStyle.plain, target: self, action: nil)
             
             listCallButton.tintColor = UIColor(netHex: 0x197DAE)
-            let items = [flex,listButton,flex,listCallButton, flex, inforButton, flex]
+            let items = [flex,listButton,flex,listCallButton, flex, analysButton, flex, inforButton, flex]
             self.toolbarItems = items
         }
         else{
@@ -266,15 +267,26 @@ class ListCallController: UIViewController, UITableViewDataSource, UITableViewDe
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    func btnListClick(){
+    
+    func btnListClick(_ sender: UIBarButtonItem){
         self.navigationController?.popViewController(animated: true)
     }
+    
+    func btnAnalysButtonClick(_ sender: UIBarButtonItem) {
+        let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
+        let controller = storyboard.instantiateViewController(withIdentifier: "Analys") as! AnalysViewController
+        self.navigationController?.pushViewController(controller, animated: false)
+    }
+    
     func navigateToInforView(){
             let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
             let controller = storyboard.instantiateViewController(withIdentifier: "Information") as! InformationController
             controller.currentUser = self.currentUser
             self.navigationController?.pushViewController(controller, animated: true)
     }
+    
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
