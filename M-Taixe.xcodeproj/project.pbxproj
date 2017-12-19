@@ -16,6 +16,7 @@
 		0C357E741FDCBE99008490B2 /* SeatView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C357E731FDCBE99008490B2 /* SeatView.xib */; };
 		0C357E761FDCC6BE008490B2 /* Seat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C357E751FDCC6BE008490B2 /* Seat.swift */; };
 		0C807DD41FE6D17F0031BB43 /* HomeTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C807DD31FE6D17F0031BB43 /* HomeTabBarViewController.swift */; };
+		0CB9BAAE1FE87F2700A9BABB /* CategoryViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB9BAAD1FE87F2700A9BABB /* CategoryViewCell.swift */; };
 		0CE4B9331FE5F2BC00992EED /* AnalysViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE4B9321FE5F2BC00992EED /* AnalysViewController.swift */; };
 		0CE4B9351FE6076A00992EED /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE4B9341FE6076A00992EED /* MapViewController.swift */; };
 		3109C16E1D37BFFA00C3BDE4 /* DatePickerDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3109C16D1D37BFFA00C3BDE4 /* DatePickerDialog.swift */; };
@@ -95,6 +96,7 @@
 		0C357E731FDCBE99008490B2 /* SeatView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SeatView.xib; sourceTree = "<group>"; };
 		0C357E751FDCC6BE008490B2 /* Seat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seat.swift; sourceTree = "<group>"; };
 		0C807DD31FE6D17F0031BB43 /* HomeTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabBarViewController.swift; sourceTree = "<group>"; };
+		0CB9BAAD1FE87F2700A9BABB /* CategoryViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewCell.swift; sourceTree = "<group>"; };
 		0CE4B9321FE5F2BC00992EED /* AnalysViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysViewController.swift; sourceTree = "<group>"; };
 		0CE4B9341FE6076A00992EED /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		19EA599949F8B6D7E34FBD43 /* Pods_M_Taixe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_M_Taixe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -202,6 +204,7 @@
 				31ABC5A71DCDE0EE000C8DAC /* CallCell.swift */,
 				31C1361B1DD0642000B970AA /* BillCell.swift */,
 				0C13387C1FDEC75E001E6A4B /* SeatCell.swift */,
+				0CB9BAAD1FE87F2700A9BABB /* CategoryViewCell.swift */,
 			);
 			name = ViewComponents;
 			sourceTree = "<group>";
@@ -566,12 +569,14 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-M-Taixe/Pods-M-Taixe-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/DropDown/DropDown.framework",
 				"${BUILT_PRODUCTS_DIR}/HPUIViewExtensions/HPUIViewExtensions.framework",
 				"${BUILT_PRODUCTS_DIR}/HPXibDesignable/HPXibDesignable.framework",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DropDown.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HPUIViewExtensions.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HPXibDesignable.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
@@ -689,6 +694,7 @@
 				312B88441D3D023400728743 /* InformationCell.swift in Sources */,
 				31B307621DCCB0E60039AFBC /* OrderInforCell.swift in Sources */,
 				0C13387D1FDEC75E001E6A4B /* SeatCell.swift in Sources */,
+				0CB9BAAE1FE87F2700A9BABB /* CategoryViewCell.swift in Sources */,
 				3127E7E91D3798B0002293D4 /* JsonHelper.swift in Sources */,
 				0C13387F1FDEC791001E6A4B /* SchemaViewController.swift in Sources */,
 				318E7E741DADC7FC005BB52D /* FretController.swift in Sources */,

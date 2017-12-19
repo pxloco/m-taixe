@@ -14,6 +14,7 @@ target 'M-Taixe' do
   pod 'HPXibDesignable'
   pod 'HPUIViewExtensions'
   pod 'NVActivityIndicatorView'
+  pod 'DropDown'
 
   # Pods for M-Taixe
 
