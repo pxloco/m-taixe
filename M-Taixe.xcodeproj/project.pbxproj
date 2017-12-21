@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C03022E1FE94DD000DB4D45 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C03022D1FE94DD000DB4D45 /* Location.swift */; };
+		0C0DA20E1FEAB223008FF915 /* AppUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0DA20D1FEAB223008FF915 /* AppUtils.swift */; };
 		0C13387D1FDEC75E001E6A4B /* SeatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C13387C1FDEC75E001E6A4B /* SeatCell.swift */; };
 		0C13387F1FDEC791001E6A4B /* SchemaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C13387E1FDEC791001E6A4B /* SchemaViewController.swift */; };
 		0C268EC91FE5147A00DFD811 /* EditRouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C268EC81FE5147A00DFD811 /* EditRouteViewController.swift */; };
@@ -87,6 +89,8 @@
 
 /* Begin PBXFileReference section */
 		0BE5FC5C9F4893F6D5DCFB3E /* Pods-M-Taixe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-M-Taixe.release.xcconfig"; path = "Pods/Target Support Files/Pods-M-Taixe/Pods-M-Taixe.release.xcconfig"; sourceTree = "<group>"; };
+		0C03022D1FE94DD000DB4D45 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		0C0DA20D1FEAB223008FF915 /* AppUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUtils.swift; sourceTree = "<group>"; };
 		0C13387C1FDEC75E001E6A4B /* SeatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeatCell.swift; sourceTree = "<group>"; };
 		0C13387E1FDEC791001E6A4B /* SchemaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaViewController.swift; sourceTree = "<group>"; };
 		0C268EC81FE5147A00DFD811 /* EditRouteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRouteViewController.swift; sourceTree = "<group>"; };
@@ -213,6 +217,7 @@
 			isa = PBXGroup;
 			children = (
 				0C326B6C1FDBD507003CBCD4 /* SegueFactory.swift */,
+				0C0DA20D1FEAB223008FF915 /* AppUtils.swift */,
 			);
 			name = Ultils;
 			sourceTree = "<group>";
@@ -250,6 +255,7 @@
 				31ABC5A51DCDDDC8000C8DAC /* Call.swift */,
 				31C136191DD05E9A00B970AA /* Bill.swift */,
 				0C357E751FDCC6BE008490B2 /* Seat.swift */,
+				0C03022D1FE94DD000DB4D45 /* Location.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -332,11 +338,11 @@
 			isa = PBXGroup;
 			children = (
 				0CB77B341FDC424800BF720E /* Custom View */,
+				310EE6431D38E1260003FD8A /* Model */,
 				0C326B6B1FDBD4EE003CBCD4 /* Ultils */,
 				0C0A598F1FD58EA300198D55 /* ViewComponents */,
 				310EE6451D38E14C0003FD8A /* Controller */,
 				310EE6441D38E1340003FD8A /* OtherFile */,
-				310EE6431D38E1260003FD8A /* Model */,
 				3127E7811D372447002293D4 /* Main.storyboard */,
 				3127E7841D372448002293D4 /* Assets.xcassets */,
 				3127E7861D372448002293D4 /* LaunchScreen.storyboard */,
@@ -680,6 +686,7 @@
 				3121F9221D3CD09700E3ED8E /* ColorHelper.swift in Sources */,
 				0CE4B9331FE5F2BC00992EED /* AnalysViewController.swift in Sources */,
 				31ABC5A61DCDDDC8000C8DAC /* Call.swift in Sources */,
+				0C03022E1FE94DD000DB4D45 /* Location.swift in Sources */,
 				3182F7CA1DC32B57006517B4 /* CurrentUser.swift in Sources */,
 				3127E7E31D378F6B002293D4 /* Trip.swift in Sources */,
 				0C268EC91FE5147A00DFD811 /* EditRouteViewController.swift in Sources */,
@@ -700,6 +707,7 @@
 				318E7E741DADC7FC005BB52D /* FretController.swift in Sources */,
 				0C357E761FDCC6BE008490B2 /* Seat.swift in Sources */,
 				31C9156C1DB0A9CC00385C79 /* TextFiledExtension.swift in Sources */,
+				0C0DA20E1FEAB223008FF915 /* AppUtils.swift in Sources */,
 				310EE6421D38D2740003FD8A /* CustomersController.swift in Sources */,
 				3127E7EB1D379B6B002293D4 /* User.swift in Sources */,
 				3121F9201D3CC10F00E3ED8E /* InformationController.swift in Sources */,

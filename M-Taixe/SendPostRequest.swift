@@ -15,7 +15,7 @@ class SendPostRequest: NSObject{
         let urlString = "http://api.mobihome.vn/Mobihome.svc"
         let url = URL(string: urlString)
         let theRequest = NSMutableURLRequest.init(url: url!, cachePolicy: NSURLRequest.CachePolicy.useProtocolCachePolicy, timeoutInterval: 3)
-        let msgLength = soapMessage.characters.count
+        let msgLength = soapMessage.count
         theRequest.addValue("text/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
         theRequest.addValue(String(msgLength), forHTTPHeaderField: "Content-Length")
         theRequest.addValue("api.mobihome.vn", forHTTPHeaderField: "Host")
@@ -74,11 +74,25 @@ class SendPostRequest: NSObject{
                     case "http://tempuri.org/IMobihomeWcf/Order_FastSearch":
                         self.parseSearch(s: s!, callBack: callBack)
                         break;
+                    case "http://tempuri.org/IMobihomeWcf/Place_SearchAllDepart":
+                        self.parseSearchAllDepartResult(s: s!, callBack: callBack)
+                        break;
+                    case "http://tempuri.org/IMobihomeWcf/Place_SearchAllArrival":
+                        self.parseSearchAllArrivalResult(s: s!, callBack: callBack)
+                        break;
+                    case "http://tempuri.org/IMobihomeWcf/Trip_FilterForBooking":
+                        self.parseTrip(s: s!, callBack: callBack)
+                        break;
+                    case "http://tempuri.org/IMobihomeWcf/Map_GetMapXML":
+                        self.parseMapXML(s: s!, callBack: callBack)
+                        break;
+                    case "http://tempuri.org/IMobihomeWcf/Ticket_GetStatusBookedByTrip":
+                        self.parseStatusBookedByTrip(s: s!, callBack: callBack)
+                        break;
                     default:
                         callBack("", error as NSError?)
                         break;
                     }
-                    
                 }
                 else{
                     callBack("", error as NSError?)
@@ -87,9 +101,53 @@ class SendPostRequest: NSObject{
             else{
                 callBack("", error as NSError?)
             }
-            
         }
     }
+    
+    func parseStatusBookedByTrip(s: NSString,callBack: @escaping SendPostRequestCallBack){
+        var arr = s.components(separatedBy: "Ticket_GetStatusBookedByTripResult")
+        if arr.count > 0 {
+            let result = arr[1].replacingOccurrences(of: ">", with: "").replacingOccurrences(of: "</", with: "")
+            callBack(result, nil)
+        }
+        else {
+            callBack("", NSError())
+        }
+    }
+    
+    func parseMapXML(s: NSString,callBack: @escaping SendPostRequestCallBack){
+        var arr = s.components(separatedBy: "Map_GetMapXMLResult")
+        if arr.count > 0 {
+            let result = arr[1].replacingOccurrences(of: ">", with: "").replacingOccurrences(of: "</", with: "")
+            callBack(result, nil)
+        }
+        else {
+            callBack("", NSError())
+        }
+    }
+    
+    func parseSearchAllArrivalResult(s: NSString,callBack: @escaping SendPostRequestCallBack){
+        var arr = s.components(separatedBy: "Place_SearchAllArrivalResult")
+        if arr.count > 0 {
+            let result = arr[1].replacingOccurrences(of: ">", with: "").replacingOccurrences(of: "</", with: "")
+            callBack(result, nil)
+        }
+        else {
+            callBack("", NSError())
+        }
+    }
+    
+    func parseSearchAllDepartResult(s: NSString,callBack: @escaping SendPostRequestCallBack){
+        var arr = s.components(separatedBy: "Place_SearchAllDepartResult")
+        if arr.count > 0 {
+            let result = arr[1].replacingOccurrences(of: ">", with: "").replacingOccurrences(of: "</", with: "")
+            callBack(result, nil)
+        }
+        else {
+            callBack("", NSError())
+        }
+    }
+    
     func parseSearch(s: NSString,callBack: @escaping SendPostRequestCallBack){
         var arr = s.components(separatedBy: "Order_FastSearchResult")
         if arr.count > 0{
@@ -216,6 +274,18 @@ class SendPostRequest: NSObject{
             
         }
     }
+    
+    func parseTrip(s: NSString,callBack: @escaping SendPostRequestCallBack) {
+        var arr = s.components(separatedBy: "Trip_FilterForBookingResult")
+        if arr.count > 2 {
+            var result = arr[1].replacingOccurrences(of: ">", with: "").replacingOccurrences(of: "</", with: "") ?? ""
+            callBack(result, nil)
+        }
+        else{
+            callBack("", nil)
+        }
+    }
+    
     func parseOneTrip(s: NSString,callBack: @escaping SendPostRequestCallBack){
         var arr = s.components(separatedBy: "Trip_GetOneResult")
         if arr.count > 2 {

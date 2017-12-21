@@ -12,6 +12,7 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var lblTongSo: UILabel!
+    
     var currentUser = User()
     var segmentControl = UISegmentedControl()
     var tripId = String()

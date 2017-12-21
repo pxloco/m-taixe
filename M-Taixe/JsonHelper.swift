@@ -49,6 +49,7 @@ class JsonHelper{
         }
         return items
     }
+    
     func parseRoutes(_ inputData: Data)-> [Route]{
         var routes = [Route]()
         do{
@@ -69,6 +70,7 @@ class JsonHelper{
         }
         return routes
     }
+    
     func parseCalls(_ inputData: Data) -> [Call]{
         var calls = [Call]()
         do{
@@ -98,7 +100,8 @@ class JsonHelper{
         }
         return calls
     }
-    func parseRouteDetail(_ inputData: Data)-> [RouteDetail]{
+    
+    func parseRouteDetail(_ inputData: Data)-> [RouteDetail] {
         var routeDetails = [RouteDetail]()
         do{
             let json = try JSONSerialization.jsonObject(with: inputData, options: JSONSerialization.ReadingOptions.allowFragments)
@@ -121,23 +124,50 @@ class JsonHelper{
         }
         return routeDetails
     }
+    
+    func parseRouteLocation(_ inputData: Data)-> [Location]{
+        var locations = [Location]()
+        do {
+            let json = try JSONSerialization.jsonObject(with: inputData, options: JSONSerialization.ReadingOptions.allowFragments)
+            print(json)
+            for item in json as! [[String: AnyObject]]{
+                let location = Location()
+                if let locationId =  item["LocationID"] as? String {
+                    location.LocationID = locationId
+                }
+                
+                if let Name =  item["Name"] as? String {
+                    location.Name = Name
+                }
+               
+                locations.append(location)
+            }
+        }
+        catch{
+            print("json error: \(error)")
+        }
+        return locations
+    }
+    
     func parseTrips(_ inputData: Data) -> [Trip]{
         var trips = [Trip]()
         do{
             
             let dateFormatter = DateFormatter()
-            var err: NSError?
             let json = try JSONSerialization.jsonObject(with: inputData, options: JSONSerialization.ReadingOptions.allowFragments)
             for item in json as! [[String: AnyObject]]{
                 let trip = Trip()
+                
                 if let CountTicket = item["CountTicket"] as? Int
                 {
                     trip.CountTicket = CountTicket
                 }
+                
                 if let CountBooked = item["CountBooked"] as? Int
                 {
                     trip.CountBooked = CountBooked
                 }
+                
                 if let RouteId = item["RouteId"] as? Int
                 {
                     trip.RouteId = RouteId
@@ -147,10 +177,16 @@ class JsonHelper{
                 {
                     trip.LicensePlate = LicensePlate
                 }
+                
                 if let TripId = item["TripId"] as? String
                 {
                     trip.TripId = TripId
                 }
+                
+                if let color = item["color"] as? String {
+                    trip.color = color
+                }
+                
                 if let StartTime = item["StartTime"] as? Double
                 {
                     let time = Int64(StartTime)
@@ -160,6 +196,7 @@ class JsonHelper{
                     newFormatter.dateFormat = "HH:mm"
                     trip.StartTime = newFormatter.string(from: date)
                 }
+                
                 if let StartDate = item["StartDate"] as? Int
                 {
                     dateFormatter.dateFormat = "yyyyMMdd"
@@ -168,10 +205,12 @@ class JsonHelper{
                     newFormatter.dateFormat = "dd:MM:yyyy"
                     trip.StartDate = newFormatter.string(from: date)
                 }
+                
                 if let Title = item["Title"] as? String
                 {
                     trip.Title = Title
                 }
+                
                 if let UpdateTime = item["UpdateTime"] as? Double{
                     if UpdateTime > 10000000000000{
                         dateFormatter.dateFormat = "yyyyMMddHHmmss"

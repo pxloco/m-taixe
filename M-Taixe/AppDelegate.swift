@@ -204,7 +204,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     let dateFomatter = DateFormatter()
                     dateFomatter.dateFormat = "yyyyMMdd"
                     let currentDateString = dateFomatter.string(from: currentDate)
-                    category.loadData(currentDateString, choose: true)
+//                    category.loadData(currentDateString, choose: true)
                 }
                 if (navigationController.viewControllers.count == 3){
                     let customerController = navigationController.topViewController as! CustomersController

@@ -21,5 +21,6 @@ class CategoryViewCell: UICollectionViewCell {
         labelBienSo.text = "\(trip.LicensePlate) \(choTrong)/\(trip.CountTicket)"
         labelGioXuatBen.text = trip.StartTime
         labelTrangThaiBanVe.text = String(trip.CountTicket - trip.CountBooked)
+        backgroundCategory.backgroundColor = AppUtils.hexStringToUIColor(hex: trip.color)
     }
 }
