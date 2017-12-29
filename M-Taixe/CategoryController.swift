@@ -43,7 +43,7 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpUI()
-        loadData()
+//        loadData()
         
         //Load dữ liệu ngày hôm qua lưu xuống local
 //        var currentDate = Date()
@@ -68,13 +68,15 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
         self.navigationController?.setToolbarHidden(false, animated: false)
         self.overTop = false
         self.collectionViewCatagory.reloadData()
-        if isChooseRoute{
-            btnChooseRoute.setTitle(currentRoute.Name, for: UIControlState.normal)
-//            self.loadData(date, choose: true)
-        }
+        self.loadDiaDiemDi()
+        self.loadRoute()
+//        if isChooseRoute {
+//            btnChooseRoute.setTitle(currentRoute.Name, for: UIControlState.normal)
+////            self.loadData(date, choose: true)
+//
+//        }
     }
     
-
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if collectionViewCatagory.contentOffset.y < -30{
             overTop = true
@@ -120,23 +122,23 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
         dateLabel.text = formatter.string(from: d)
     }
     
-    // Load data from role
-    func loadData() {
-        print("role type: \(currentUser.RoleType)")
-        if currentUser.RoleType == 1 {
-            contrainsButton.constant = contrainsButton.constant-btnChooseRoute.frame.size.height
-            btnChooseRoute.isHidden = true
-        }
-        
-        alert.showWait("Đang tải dữ liệu!", subTitle: "Vui lòng đợi!")
-        if currentUser.RoleType != 1 {
-            loadRoute()
-        }
-        else{
-            //Load dữ liệu
-//            loadData(date, choose: true)
-        }
-    }
+//    // Load data from role
+//    func loadData() {
+//        print("role type: \(currentUser.RoleType)")
+//        if currentUser.RoleType == 1 {
+//            contrainsButton.constant = contrainsButton.constant-btnChooseRoute.frame.size.height
+//            btnChooseRoute.isHidden = true
+//        }
+//
+//        alert.showWait("Đang tải dữ liệu!", subTitle: "Vui lòng đợi!")
+//        if currentUser.RoleType != 1 {
+//            loadRoute()
+//        }
+//        else{
+//            //Load dữ liệu
+////            loadData(date, choose: true)
+//        }
+//    }
     
     // - MARK: Connect SOAP
     
@@ -168,10 +170,7 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
                 if self.routes.count > 0 {
                     self.currentRoute = self.routes[0]
                     self.btnChooseRoute.setTitle(self.currentRoute.Name, for: UIControlState.normal)
-                    print("routeid: \(self.currentRoute.RouteId)")
-                    
-                    //Load dữ liệu
-//                    self.loadData(self.date, choose: true)
+                    //print("routeid: \(self.currentRoute.RouteId)")
                 }
                 else{
                     self.currentRoute = Route()
@@ -185,6 +184,31 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
         }
     }
     
+    func loadRouteDenDropDown() {
+        let dropDown = DropDown()
+        DropDown.appearance().textColor = UIColor.black
+        DropDown.appearance().textFont = UIFont.systemFont(ofSize: 15)
+        DropDown.appearance().backgroundColor = UIColor.white
+        DropDown.appearance().selectionBackgroundColor = UIColor.lightGray
+        DropDown.appearance().cellHeight = 60
+        
+        dropDown.anchorView = self.btnChooseRoute
+        
+        var arrDropDown = [String]()
+        for route in self.routes {
+            arrDropDown.append(route.Name)
+        }
+        
+        dropDown.dataSource = arrDropDown
+        
+        dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
+            self.labelDiemDi.text = item
+            self.currentRoute = self.routes[index]
+        }
+    
+        dropDown.show()
+    }
+    
     func loadDiaDiemDi() {
         let soapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\"><soapenv:Header/><soapenv:Body><tem:Place_SearchAllDepart><!--Optional:--><tem:CompanyId>\(currentUser.CompanyId)</tem:CompanyId><!--Optional:--><tem:AgentId>\(currentUser.AgentId)</tem:AgentId><!--Optional:--><tem:UserName>\(currentUser.UserName)</tem:UserName><!--Optional:--><tem:Password>\(currentUser.Password)</tem:Password><!--Optional:--><tem:SecurityCode>MobihomeAppDv123</tem:SecurityCode><!--Optional:--><tem:SearchText></tem:SearchText></tem:Place_SearchAllDepart></soapenv:Body></soapenv:Envelope>"
         
@@ -194,43 +218,50 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
             if error == nil {
                 let data = string.data(using: String.Encoding.utf8, allowLossyConversion: false)
                 self.locationStartPoint = self.jsonHelper.parseRouteLocation(data!)
-                if self.locationStartPoint.count > 0 {
-                    let dropDown = DropDown()
-                    DropDown.appearance().textColor = UIColor.black
-                    DropDown.appearance().textFont = UIFont.systemFont(ofSize: 15)
-                    DropDown.appearance().backgroundColor = UIColor.white
-                    DropDown.appearance().selectionBackgroundColor = UIColor.lightGray
-                    DropDown.appearance().cellHeight = 60
-                    
-                    // The view to which the drop down will appear on
-                    dropDown.anchorView = self.labelDiemDi // UIView or UIBarButtonItem
-                    
-                    var arrDropDown = [String]()
-                    for location in self.locationStartPoint {
-                        arrDropDown.append(location.Name)
-                    }
-                    
-                    // The list of items to display. Can be changed dynamically
-                    dropDown.dataSource = arrDropDown
-
-                    // Action triggered on selection
-                    dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
-                        self.labelDiemDi.text = item
-                        self.currentlocationStartPoint = self.locationStartPoint[index]
-                    }
-                    
-                    // Will set a custom width instead of the anchor view width
-                    dropDown.show()
-                }
-                else {
-                    self.currentlocationStartPoint = Location()
-                }
+                self.labelDiemDi.text = self.locationStartPoint[0].Name
+                self.currentlocationStartPoint = self.locationStartPoint[0]
+                self.loadDiaDiemDen()
             }
             else{
                 self.alert.hideView()
                 self.alert = SCLAlertView()
                 self.alert.showError("Lỗi!", subTitle: "Không kết nối được server!")
             }
+        }
+    }
+    
+    func loadDiaDiemDiLenDropDown() {
+        if self.locationStartPoint.count > 0 {
+            let dropDown = DropDown()
+            DropDown.appearance().textColor = UIColor.black
+            DropDown.appearance().textFont = UIFont.systemFont(ofSize: 15)
+            DropDown.appearance().backgroundColor = UIColor.white
+            DropDown.appearance().selectionBackgroundColor = UIColor.lightGray
+            DropDown.appearance().cellHeight = 60
+            
+            // The view to which the drop down will appear on
+            dropDown.anchorView = self.labelDiemDi // UIView or UIBarButtonItem
+            
+            var arrDropDown = [String]()
+            for location in self.locationStartPoint {
+                arrDropDown.append(location.Name)
+            }
+            
+            // The list of items to display. Can be changed dynamically
+            dropDown.dataSource = arrDropDown
+            
+            // Action triggered on selection
+            dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
+                self.labelDiemDi.text = item
+                self.currentlocationStartPoint = self.locationStartPoint[index]
+                self.loadDanhSachXe(self.date, choose: true)
+            }
+            
+            // Will set a custom width instead of the anchor view width
+            dropDown.show()
+        }
+        else {
+            self.currentlocationStartPoint = Location()
         }
     }
     
@@ -267,38 +298,9 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
             if error == nil {
                 let data = string.data(using: String.Encoding.utf8, allowLossyConversion: false)
                 self.locationEndPoint = self.jsonHelper.parseRouteLocation(data!)
-                if self.locationEndPoint.count > 0 {
-                    let dropDown = DropDown()
-                    DropDown.appearance().textColor = UIColor.black
-                    DropDown.appearance().textFont = UIFont.systemFont(ofSize: 15)
-                    DropDown.appearance().backgroundColor = UIColor.white
-                    DropDown.appearance().selectionBackgroundColor = UIColor.lightGray
-                    DropDown.appearance().cellHeight = 60
-                    
-                    // The view to which the drop down will appear on
-                    dropDown.anchorView = self.labelDiemDi // UIView or UIBarButtonItem
-                    
-                    var arrDropDown = [String]()
-                    for location in self.locationEndPoint {
-                        arrDropDown.append(location.Name)
-                    }
-                    
-                    // The list of items to display. Can be changed dynamically
-                    dropDown.dataSource = arrDropDown
-                    
-                    // Action triggered on selection
-                    dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
-                        self.labelDiemDen.text = item
-                        self.currentlocationEndPoint = self.locationEndPoint[index]
-                        self.loadDanhSachXe(self.date, choose: true)
-                    }
-                    
-                    // Will set a custom width instead of the anchor view width
-                    dropDown.show()
-                }
-                else {
-                    self.currentlocationEndPoint = Location()
-                }
+                self.labelDiemDen.text = self.locationEndPoint[0].Name
+                self.currentlocationEndPoint = self.locationEndPoint[0]
+                self.loadDanhSachXe(self.date, choose: true)
             }
             else {
                 self.alert.hideView()
@@ -308,7 +310,46 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
         }
     }
     
+    func loadDiaDiemDenLenDropDown() {
+        if self.locationEndPoint.count > 0 {
+            let dropDown = DropDown()
+            DropDown.appearance().textColor = UIColor.black
+            DropDown.appearance().textFont = UIFont.systemFont(ofSize: 15)
+            DropDown.appearance().backgroundColor = UIColor.white
+            DropDown.appearance().selectionBackgroundColor = UIColor.lightGray
+            DropDown.appearance().cellHeight = 60
+            
+            // The view to which the drop down will appear on
+            dropDown.anchorView = self.labelDiemDi // UIView or UIBarButtonItem
+            
+            var arrDropDown = [String]()
+            for location in self.locationEndPoint {
+                arrDropDown.append(location.Name)
+            }
+            
+            // The list of items to display. Can be changed dynamically
+            dropDown.dataSource = arrDropDown
+            
+            // Action triggered on selection
+            dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
+                self.labelDiemDen.text = item
+                self.currentlocationEndPoint = self.locationEndPoint[index]
+                self.loadDanhSachXe(self.date, choose: true)
+            }
+            
+            // Will set a custom width instead of the anchor view width
+            dropDown.show()
+        }
+        else {
+            self.currentlocationEndPoint = Location()
+        }
+    }
+    
     func loadDanhSachXe(_ byDate: String, choose: Bool) {
+        if self.currentlocationStartPoint.LocationID == "" && self.currentlocationEndPoint.LocationID == "" {
+            return
+        }
+        
         let soapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
         "<soapenv:Header/>" +
         "<soapenv:Body>" +
@@ -663,10 +704,8 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let storyBoard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
         let controller = storyBoard.instantiateViewController(withIdentifier: "Schema") as! SchemaViewController
-//        let controller = storyBoard.instantiateViewController(withIdentifier: "Customers") as! CustomersController
-        controller.currentUser = self.currentUser
-        controller.tripId = arrTrip[(indexPath as NSIndexPath).row].TripId
-        controller.gioXuatBen = arrTrip[(indexPath as NSIndexPath).row].StartTime
+        controller.initDataFromCategory(currentUser: self.currentUser, tripId: arrTrip[(indexPath as NSIndexPath).row].TripId, gioXuatBen: arrTrip[(indexPath as NSIndexPath).row].StartTime, DepartGuid: currentlocationStartPoint.LocationID, ArrivalGuid: currentlocationEndPoint.LocationID)
+        
         self.navigationController?.pushViewController(controller, animated: true)
     }
     
@@ -714,6 +753,7 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
         dateFormat.dateFormat = "dd/MM/yyyy"
         dateLabel.text = dateFormat.string(from: current!)
 //        loadData(self.date, choose: true)
+        self.loadDanhSachXe(self.date, choose: true)
     }
     
     @IBAction func leftButtonClick(_ sender: Any) {
@@ -725,6 +765,7 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
         dateFormat.dateFormat = "dd/MM/yyyy"
         dateLabel.text = dateFormat.string(from: current!)
 //        loadData(self.date, choose: true)
+        self.loadDanhSachXe(self.date, choose: true)
     }
     
     @IBAction func selectDateButtonClick(_ sender: Any) {
@@ -742,9 +783,9 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
             self.alert = SCLAlertView()
             self.alert.showWait("Đang tải dữ liệu!", subTitle: "Vui lòng đợi!")
 //            self.loadData(self.date, choose: true)
+            self.loadDanhSachXe(self.date, choose: true)
         }
     }
-    
     
     @IBAction func editRoute(_ sender: Any) {
         performSegue(withIdentifier: SegueFactory.fromCategoryToEditCategory.rawValue, sender: nil)
@@ -755,12 +796,11 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     @IBAction func btnChonDiemDiClick(_ sender: Any) {
-        loadDiaDiemDi()
-        
+        loadDiaDiemDiLenDropDown()
     }
     
     @IBAction func btnChonDiemDenClick(_ sender: Any) {
-        loadDiaDiemDen()
+        loadDiaDiemDenLenDropDown()
     }
 
 //
@@ -786,26 +826,49 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
         self.navigationController?.pushViewController(controller, animated: true)
     }
     
-    func btnListCallClick(){
+    func btnListCallClick() {
+        var viewControllers = self.navigationController?.viewControllers
+        let countViewControllers: Int = (viewControllers?.count)!
         let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
         let controller = storyboard.instantiateViewController(withIdentifier: "ListCall") as! ListCallController
         controller.currentUser = self.currentUser
+        for i in 0 ... countViewControllers {
+            if i > 3 {
+                viewControllers?.remove(at: i)
+            }
+        }
+        self.navigationController?.viewControllers = viewControllers!
         self.navigationController?.pushViewController(controller, animated: true)
-        
     }
     
     //Button xem thông tin tk
-    func btnInforClick(_ sender: UIBarButtonItem){
+    func btnInforClick(_ sender: UIBarButtonItem) {
+        var viewControllers = self.navigationController?.viewControllers
+        let countViewControllers: Int = (viewControllers?.count)!
         let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
         let controller = storyboard.instantiateViewController(withIdentifier: "ListCall") as! ListCallController
         controller.currentUser = self.currentUser
         controller.inforView = true
+        for i in 0 ... countViewControllers {
+            if i > 3 {
+                viewControllers?.remove(at: i)
+            }
+        }
+        self.navigationController?.viewControllers = viewControllers!
         self.navigationController?.pushViewController(controller, animated: false)
     }
     
     func btnAnalysButtonClick(_ sender: UIBarButtonItem) {
+        var viewControllers = self.navigationController?.viewControllers
+        let countViewControllers: Int = (viewControllers?.count)!
         let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
         let controller = storyboard.instantiateViewController(withIdentifier: "Analys") as! AnalysViewController
+        for i in 0 ... countViewControllers {
+            if i > 3 {
+                viewControllers?.remove(at: i)
+            }
+        }
+        self.navigationController?.viewControllers = viewControllers!
         self.navigationController?.pushViewController(controller, animated: false)
     }
     

@@ -273,19 +273,35 @@ class ListCallController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func btnAnalysButtonClick(_ sender: UIBarButtonItem) {
+        var viewControllers = self.navigationController?.viewControllers
+        let countViewControllers: Int = (viewControllers?.count)!
         let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
         let controller = storyboard.instantiateViewController(withIdentifier: "Analys") as! AnalysViewController
+        
+        for i in 0 ... countViewControllers {
+            if i > 3 {
+                viewControllers?.remove(at: i)
+            }
+        }
         self.navigationController?.pushViewController(controller, animated: false)
+        self.navigationController?.viewControllers = viewControllers!
     }
     
     func navigateToInforView(){
-            let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
-            let controller = storyboard.instantiateViewController(withIdentifier: "Information") as! InformationController
-            controller.currentUser = self.currentUser
-            self.navigationController?.pushViewController(controller, animated: true)
+        var viewControllers = self.navigationController?.viewControllers
+        let countViewControllers: Int = (viewControllers?.count)!
+        let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
+        let controller = storyboard.instantiateViewController(withIdentifier: "Information") as! InformationController
+        controller.currentUser = self.currentUser
+        
+        for i in 0 ... countViewControllers {
+            if i > 3 {
+                viewControllers?.remove(at: i)
+            }
+        }
+        self.navigationController?.viewControllers = viewControllers!
+        self.navigationController?.pushViewController(controller, animated: true)
     }
-    
-    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

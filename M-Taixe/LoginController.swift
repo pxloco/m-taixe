@@ -109,7 +109,7 @@ class LoginController: UIViewController, UITextFieldDelegate {
                 if string != ""{
                     var arr = string.components(separatedBy: "\t")
                     //Kết quả server trả về là true thì lưu thông tin tài khoản xuống bộ nhớ local, chuyển sang view sau
-                    if arr[0] == "true"{
+                    if arr[0] == "true" {
                         self.alert.hideView()
                         let defaults = UserDefaults.standard
                         defaults.setValue("\(userName)", forKey: "UserName")
@@ -121,7 +121,18 @@ class LoginController: UIViewController, UITextFieldDelegate {
                         defaults.setValue("\(arr[5])", forKey: "UserId")
                         defaults.setValue("\(arr[6])", forKey: "UserGuid")
                         defaults.synchronize()
-                        let u = String(describing: defaults.value(forKey: "UserName"))
+                        
+                        let devideId = UIDevice.current.identifierForVendor!.uuidString
+                        if devideId != "" {
+                            defaults.setValue("\(devideId)", forKey: "DevideId")
+                            
+                            let formatter = DateFormatter()
+                            formatter.dateFormat = "yyyymmddHHmmss"
+                            let d = Date()
+                            let date = formatter.string(from: d)
+                            let session = devideId + "-" + date
+                            defaults.setValue("\(session)", forKey: "Session")
+                        }
                         self.navigateToTrip()
                     }
                         

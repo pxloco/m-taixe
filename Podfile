@@ -15,6 +15,9 @@ target 'M-Taixe' do
   pod 'HPUIViewExtensions'
   pod 'NVActivityIndicatorView'
   pod 'DropDown'
+  pod 'Firebase/Core'
+  pod 'Firebase/Database'
+  
 
   # Pods for M-Taixe
 

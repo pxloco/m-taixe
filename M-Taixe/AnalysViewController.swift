@@ -47,10 +47,17 @@ class AnalysViewController: UIViewController {
     }
     
     func btnListCallClick(_ sender: UIBarButtonItem) {
+        var viewControllers = self.navigationController?.viewControllers
+        let countViewControllers: Int = (viewControllers?.count)!
         let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
         let controller = storyboard.instantiateViewController(withIdentifier: "ListCall") as! ListCallController
         controller.currentUser = self.currentUser
         self.navigationController?.pushViewController(controller, animated: true)
+        for i in 0 ... countViewControllers {
+            if i > 3 {
+                viewControllers?.remove(at: i)
+            }
+        }
     }
     
     func btnListCategoryClick(_ sender: UIBarButtonItem) {
@@ -58,10 +65,20 @@ class AnalysViewController: UIViewController {
     }
     
     func btnInforClick(_ sender: UIBarButtonItem) {
+        var viewControllers = self.navigationController?.viewControllers
+        let countViewControllers: Int = (viewControllers?.count)!
         let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
         let controller = storyboard.instantiateViewController(withIdentifier: "ListCall") as! ListCallController
         controller.currentUser = self.currentUser
         controller.inforView = true
+        
+        for i in 0 ... countViewControllers {
+            if i > 3 {
+                viewControllers?.remove(at: i)
+            }
+        }
+        
+        self.navigationController?.viewControllers = viewControllers!
         self.navigationController?.pushViewController(controller, animated: false)
     }
     

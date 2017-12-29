@@ -8,6 +8,8 @@
 
 import UIKit
 import CoreLocation
+import Firebase
+
 @available(iOS 8.0, *)
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIApplication.shared.applicationIconBadgeNumber = 0
         application.registerForRemoteNotifications()
         registerForPushNotifications(application)
+        FirebaseApp.configure()
         //application.beginBackgroundTaskWithName("showNotification", expirationHandler: nil)
         
 

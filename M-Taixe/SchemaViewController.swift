@@ -8,26 +8,46 @@
 
 import UIKit
 import WebKit
+import FirebaseDatabase
 
-class SchemaViewController: UIViewController {
+class SchemaViewController: UIViewController, UIWebViewDelegate {
 
     var currentUser = User()
     var tripId = String()
     var gioXuatBen = ""
     var mapXML = String()
     var alert = SCLAlertView()
+    var seats = [Seat]()
+    var jsonHelper = JsonHelper()
+    var seatsID = [String]()
+    var arrMyChooseSeatId = [String]()
+    var arrChooseSeatId = [String]()
+    var DepartGuid = String()
+    var ArrivalGuid = String()
+    var ref: DatabaseReference!
     
- 
+    @IBOutlet weak var bienSoLabel: UILabel!
+    @IBOutlet weak var tuyenDuongLabel: UILabel!
+    @IBOutlet weak var taixephuxeLabel: UILabel!
     @IBOutlet weak var schemaWebView: UIWebView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        ref = Database.database().reference(withPath: "m-taixe")
         initNavigationBottomBar()
         getXMLMapView()
         getStatusBookedByTrip()
     }
     
     // MARK: - Init
+
+    func initDataFromCategory(currentUser: User, tripId: String, gioXuatBen: String, DepartGuid: String, ArrivalGuid: String) {
+        self.currentUser = currentUser
+        self.tripId = tripId
+        self.gioXuatBen = gioXuatBen
+        self.DepartGuid = DepartGuid
+        self.ArrivalGuid = ArrivalGuid
+    }
     
     func initNavigationBottomBar() {
         self.navigationController?.setNavigationBarHidden(true, animated: false)
@@ -56,82 +76,154 @@ class SchemaViewController: UIViewController {
         self.navigationController?.pushViewController(controller, animated: true)
     }
     
+    // MARK: - Get data
+    
     func getXMLMapView () {
-        let soapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
-            "<soapenv:Header/>" +
-            "<soapenv:Body>" +
-            "<tem:Map_GetMapXML>" +
-            "<!--Optional:-->" +
-            "<tem:CompanyId>\(currentUser.CompanyId)</tem:CompanyId>" +
-            "<!--Optional:-->" +
-            "<tem:AgentId>\(currentUser.AgentId)</tem:AgentId>" +
-            "<!--Optional:-->" +
-            "<tem:UserName>\(currentUser.UserName)</tem:UserName>" +
-            "<!--Optional:-->" +
-            "<tem:Password>\(currentUser.Password)</tem:Password>" +
-            "<!--Optional:-->" +
-            "<tem:SecurityCode>MobihomeAppDv123</tem:SecurityCode>" +
-            "<!--Optional:-->" +
-            "<tem:TripId>\(self.tripId)</tem:TripId>" +
-            "</tem:Map_GetMapXML>" +
-            "</soapenv:Body>" +
-        "</soapenv:Envelope>"
-        print(soapMessage)
-        
-        let soapAction = "http://tempuri.org/IMobihomeWcf/Map_GetMapXML"
-        let sendPostRequest = SendPostRequest()
-        sendPostRequest.sendRequest(soapMessage, soapAction: soapAction){ (string, error) in
-            if error == nil {
-                let data = string.data(using: String.Encoding.utf8, allowLossyConversion: false)
-                
-                let datastring = String(data: data!, encoding: String.Encoding(rawValue: String.Encoding.utf8.rawValue))
-                let htmlDecoded = AppUtils.HTMLEntityDecode(htmlEncodedString: datastring!)
-                print(htmlDecoded)
-                self.schemaWebView.loadHTMLString(htmlDecoded, baseURL: nil)
+            var dataString = String()
+            var alert = SCLAlertView()
+            let soapAction = "http://tempuri.org/IMobihomeWcf/Map_GetMapXML"
+            let sendPostRequest = SendPostRequest()
+            let soapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
+                "<soapenv:Header/>" +
+                "<soapenv:Body>" +
+                "<tem:Map_GetMapXML>" +
+                "<!--Optional:-->" +
+                "<tem:CompanyId>\(UserDefaults.standard.value(forKey: "CompanyId")!)</tem:CompanyId>" +
+                "<!--Optional:-->" +
+                "<tem:AgentId>\(UserDefaults.standard.value(forKey: "AgentId")!)</tem:AgentId>" +
+                "<!--Optional:-->" +
+                "<tem:UserName>\(UserDefaults.standard.value(forKey: "UserName")!)</tem:UserName>" +
+                "<!--Optional:-->" +
+                "<tem:Password>\(UserDefaults.standard.value(forKey: "Password")!)</tem:Password>" +
+                "<!--Optional:-->" +
+                "<tem:SecurityCode>MobihomeAppDv123</tem:SecurityCode>" +
+                "<!--Optional:-->" +
+                "<tem:TripId>\(self.tripId)</tem:TripId>" +
+                "</tem:Map_GetMapXML>" +
+                "</soapenv:Body>" +
+            "</soapenv:Envelope>"
+            
+            sendPostRequest.sendRequest(soapMessage, soapAction: soapAction){ (string, error) in
+                    if error == nil {
+                        let data = string.data(using: String.Encoding.utf8, allowLossyConversion: false)
+                        
+                        dataString = String(data: data!, encoding: String.Encoding(rawValue: String.Encoding.utf8.rawValue))!
+                        dataString = AppUtils.HTMLEntityDecode(htmlEncodedString: dataString)
+                        self.loadMapWithScrip(htmlDecoded: dataString)
+                    }
+                    else {
+                        alert.hideView()
+                        alert = SCLAlertView()
+                        alert.showError("Lỗi!", subTitle: "Không kết nối được server!")
+                    }
             }
-            else {
-                self.alert.hideView()
-                self.alert = SCLAlertView()
-                self.alert.showError("Lỗi!", subTitle: "Không kết nối được server!")
-            }
-        }
+    }
+    
+    func webViewDidFinishLoad(_ webView: UIWebView) {
+        getStatusBookedByTrip()
     }
     
     func getStatusBookedByTrip() {
+        let sendPostRequest = SendPostRequest()
+        var dataString = Data()
+        var alert = SCLAlertView()
+        let soapAction = "http://tempuri.org/IMobihomeWcf/Ticket_GetStatusBookedByTrip"
         let soapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
             "<soapenv:Header/>" +
             "<soapenv:Body>" +
             "<tem:Ticket_GetStatusBookedByTrip>" +
             "<!--Optional:-->" +
-            "<tem:CompanyId>\(currentUser.CompanyId)</tem:CompanyId>" +
+            "<tem:CompanyId>\(UserDefaults.standard.value(forKey: "CompanyId")!)</tem:CompanyId>" +
             "<!--Optional:-->" +
-            "<tem:AgentId>\(currentUser.AgentId)</tem:AgentId>" +
+            "<tem:AgentId>\(UserDefaults.standard.value(forKey: "AgentId")!)</tem:AgentId>" +
             "<!--Optional:-->" +
-            "<tem:UserName>\(currentUser.UserName)</tem:UserName>" +
+            "<tem:UserName>\(UserDefaults.standard.value(forKey: "UserName")!)</tem:UserName>" +
             "<!--Optional:-->" +
-            "<tem:Password>\(currentUser.Password)</tem:Password>" +
+            "<tem:Password>\(UserDefaults.standard.value(forKey: "Password")!)</tem:Password>" +
             "<!--Optional:-->" +
             "<tem:SecurityCode>MobihomeAppDv123</tem:SecurityCode>" +
             "<!--Optional:-->" +
-            "<tem:TripId>\(self.tripId)</tem:TripId>" +
+            "<tem:TripId>\(tripId)</tem:TripId>" +
             "</tem:Ticket_GetStatusBookedByTrip>" +
             "</soapenv:Body>" +
         "</soapenv:Envelope>"
-        print(soapMessage)
         
-        let soapAction = "http://tempuri.org/IMobihomeWcf/Ticket_GetStatusBookedByTrip"
-        let sendPostRequest = SendPostRequest()
         sendPostRequest.sendRequest(soapMessage, soapAction: soapAction){ (string, error) in
             if error == nil {
-                let data = string.data(using: String.Encoding.utf8, allowLossyConversion: false)
+                dataString = string.data(using: String.Encoding.utf8, allowLossyConversion: false)!
                 
-                let datastring = String(data: data!, encoding: String.Encoding(rawValue: String.Encoding.utf8.rawValue))
+                self.seats = self.jsonHelper.parseSeats(dataString)
+                self.saveSeatsToFireBase()
+                self.schemaWebView.stringByEvaluatingJavaScript(from: "clearAllTicket()")
+                for seat in self.seats {
+                    self.arrChooseSeatId.append(String(seat.SeatID))
+                    
+                    if seat.Status == 32 {
+                        self.schemaWebView.stringByEvaluatingJavaScript(from: "setSeat('\(seat.SeatID)', true)")
+                    }
+                    
+                    if seat.Status == 11 {
+                        if self.seatsID.contains(String(seat.SeatID)) {
+                            self.schemaWebView.stringByEvaluatingJavaScript(from: "myChoose('\(seat.SeatID)', true)")
+                        } else {
+                            self.schemaWebView.stringByEvaluatingJavaScript(from: "chooseSeat('\(seat.SeatID)', true)")
+                        }
+                    }
+                    
+                    if seat.Status == 12 {
+                        self.schemaWebView.stringByEvaluatingJavaScript(from: "setSeat('\(seat.SeatID)', true)")
+                    }
+                }
             }
             else {
-                self.alert.hideView()
-                self.alert = SCLAlertView()
-                self.alert.showError("Lỗi!", subTitle: "Không kết nối được server!")
+                alert.hideView()
+                alert = SCLAlertView()
+                alert.showError("Lỗi!", subTitle: "Không kết nối được server!")
             }
         }
+    }
+    
+    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+        if request.url?.scheme == "m-taixe" {
+            if let seatId = request.url?.query {
+                if arrChooseSeatId.contains(seatId) {
+                    let dataString = SchemaApi.Ticket_CheckExistsV2(TripId: tripId, SeatId: seatId, DepartGuid: self.DepartGuid, ArrivalGuid: self.ArrivalGuid)
+                } else {
+                    if arrMyChooseSeatId.contains(seatId) {
+                        arrMyChooseSeatId = arrMyChooseSeatId.filter{ $0 != seatId }
+                        self.schemaWebView.stringByEvaluatingJavaScript(from: "unchoose('\(seatId)')")
+//                        self.schemaWebView.stringByEvaluatingJavaScript(from: "resetSeat('\(seatId)')")
+                        
+                    } else {
+                        arrMyChooseSeatId.append(seatId)
+                        self.schemaWebView.stringByEvaluatingJavaScript(from: "chooseSeat('\(seatId)')")
+                        self.schemaWebView.stringByEvaluatingJavaScript(from: "setSeat('\(seatId)', true)")
+                    }
+                }
+            }
+        }
+        return true
+    }
+    
+    // MARK: - Firebases
+    
+    func saveSeatsToFireBase() {
+        let itemsRef = ref.child("seat-items")
+        for seat in seats {
+//            let item = Seat(SeatID: seat.SeatID, seatName: seat.seatName, Status: seat.Status)
+//            itemsRef.setValue(item)
+        }
+    }
+    
+    
+//    if (seatStatus.getTicket().Status == 11 && seatStatus.getTicket().BookingClerkId == CurrentUser.getUserId()&& seatStatus.getTicket().SessionId.equals(CurrentSession.getSessionId()))
+    
+    func loadMapWithScrip(htmlDecoded: String) {
+        let map = SchemaApi.replaceHtmlWithJavascrip(htmlDecoded: htmlDecoded)
+        self.schemaWebView.loadHTMLString(map, baseURL: nil)
+    }
+    
+    @IBAction func homeClick(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
     }
 }

@@ -40,13 +40,29 @@ class InformationController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func btnAnalysButtonClick(_ sender: UIBarButtonItem) {
+        var viewControllers = self.navigationController?.viewControllers
+        let countViewControllers: Int = (viewControllers?.count)!
         let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
         let controller = storyboard.instantiateViewController(withIdentifier: "Analys") as! AnalysViewController
+        for i in 0 ... countViewControllers {
+            if i > 3 {
+                viewControllers?.remove(at: i)
+            }
+        }
+        self.navigationController?.viewControllers = viewControllers!
         self.navigationController?.pushViewController(controller, animated: false)
     }
     
     func btnListClick(_ sender: UIBarButtonItem){
+        var viewControllers = self.navigationController?.viewControllers
+        let countViewControllers: Int = (viewControllers?.count)!
         let controller = self.navigationController?.viewControllers[(self.navigationController?.viewControllers.count)!-3]
+        for i in 0 ... countViewControllers {
+            if i > 3 {
+                viewControllers?.remove(at: i)
+            }
+        }
+        self.navigationController?.viewControllers = viewControllers!
         self.navigationController?.popToViewController(controller!, animated: true)
 
     }

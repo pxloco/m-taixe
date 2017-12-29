@@ -50,6 +50,30 @@ class JsonHelper{
         return items
     }
     
+    func parseSeats(_ inputData: Data)-> [Seat]{
+        var seats = [Seat]()
+        do{
+            let json = try JSONSerialization.jsonObject(with: inputData, options: JSONSerialization.ReadingOptions.allowFragments)
+            for item in json as! [[String: AnyObject]]{
+                let seat = Seat()
+                if let seatID =  item["SeatID"] as? Int {
+                    seat.SeatID = seatID
+                }
+                if let status = item["Status"] as? Int{
+                    seat.Status = status
+                }
+                if let seatName = item["SeatName"] as? String{
+                    seat.seatName = seatName
+                }
+                seats.append(seat)
+            }
+        }
+        catch{
+            
+        }
+        return seats
+    }
+    
     func parseRoutes(_ inputData: Data)-> [Route]{
         var routes = [Route]()
         do{
@@ -183,7 +207,7 @@ class JsonHelper{
                     trip.TripId = TripId
                 }
                 
-                if let color = item["color"] as? String {
+                if let color = item["Color"] as? String {
                     trip.color = color
                 }
                 
