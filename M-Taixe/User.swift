@@ -16,4 +16,17 @@ class User{
     var AgentId = String()
     var UserId = String()
     var UserGuid = String()
+    
+    init() {}
+    
+    init(UserName: String, Password: String, DisplayName: String, RoleType: Int, CompanyId: String, AgentId: String, UserId: String, UserGuid: String) {
+        self.UserName = UserName
+        self.Password = Password
+        self.DisplayName = DisplayName
+        self.RoleType = RoleType
+        self.CompanyId = CompanyId
+        self.AgentId = AgentId
+        self.UserId = UserId
+        self.UserGuid = UserGuid
+    }
 }

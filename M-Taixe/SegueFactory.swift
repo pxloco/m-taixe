@@ -15,5 +15,6 @@ enum SegueFactory: String {
     case fromLoginToTabBarViewController          = "fromLoginToTabBarViewController"
     case showChooseRouteView                      = "showChooseRouteView"
     case fromCategoryToSchema                     = "fromCategoryToSchema"
+    case fromLoginToHomeTabBar                    = "fromLoginToHomeTabBar"
 }
 

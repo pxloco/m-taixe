@@ -18,8 +18,6 @@ class LoginController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //Ẩn navigationbar
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
         tfUserName.layer.cornerRadius = 0
         tfPassword.layer.cornerRadius = 0
         btnLogin.layer.cornerRadius = 20
@@ -29,35 +27,18 @@ class LoginController: UIViewController, UITextFieldDelegate {
         tfUserName.delegate = self
         tfPassword.delegate = self
     }
+    
     func navigateToTrip(){
         //Lấy tên đăng nhập từ local
         let defaults = UserDefaults.standard
-        
         let userName = defaults.value(forKey: "UserName")
-        let password = defaults.value(forKey: "Password")
-        let displayName = defaults.value(forKey: "FullName")
-        let roleType = defaults.value(forKey: "RoleType")
-        let companyId = defaults.value(forKey: "CompanyId")
-        let AgentId = defaults.value(forKey: "AgentId")
-        let userId = defaults.value(forKey: "UserId")
-        let userGuid = defaults.value(forKey: "UserGuid")
         
         //Nếu đã đăng nhập rồi chuyển sang trang xem danh sách chuyến
         if userName != nil {
-            let storyBoard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
-            let controller = storyBoard.instantiateViewController(withIdentifier: "Category") as! CategoryController
-
-            controller.currentUser.UserName = userName  as! String
-            controller.currentUser.Password = password as! String
-            controller.currentUser.DisplayName = displayName  as! String
-            controller.currentUser.RoleType = Int.init(roleType as! String)!
-            controller.currentUser.CompanyId = companyId  as! String
-            controller.currentUser.AgentId = AgentId as! String
-            controller.currentUser.UserId = userId  as! String
-            controller.currentUser.UserGuid = userGuid as! String
-            self.navigationController?.pushViewController(controller, animated: false)
+//            let storyBoard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
+//            let controller = storyBoard.instantiateViewController(withIdentifier: "Category") as! CategoryController
+            performSegue(withIdentifier: SegueFactory.fromLoginToHomeTabBar.rawValue, sender: nil)
         }
-
     }
     
     func dismissKeyboard() {
@@ -157,24 +138,10 @@ class LoginController: UIViewController, UITextFieldDelegate {
                 self.alert.showError("Lỗi!", subTitle: "Không có kết nối internet!")
             }
         })
-        
     }
     
     func connectionDidFinishLoading(_ connection: NSURLConnection!) {
-        
     }
     override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
-        self.navigationController?.setToolbarHidden(true, animated: false)
     }
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
 }

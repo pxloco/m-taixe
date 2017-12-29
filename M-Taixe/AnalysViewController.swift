@@ -15,7 +15,7 @@ class AnalysViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        initUI()
+        //initUI()
     }
     
     // MARK: - Init

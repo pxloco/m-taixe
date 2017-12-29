@@ -38,28 +38,28 @@ class ListCallController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     func initUI(){
         tableView.allowsSelection = false
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
-        self.navigationController?.toolbar.barTintColor = UIColor.white
-        self.navigationController?.setToolbarHidden(false, animated: false)
-        //Thêm các nút tác vụ vào toolbar
-        let inforButton = UIBarButtonItem.init(image: UIImage(named: "person-icon"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.navigateToInforView))
-        let listButton = UIBarButtonItem.init(image: UIImage(named: "ListIcon"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.btnListClick))
-        let analysButton = UIBarButtonItem.init(image: UIImage(named: "ListIcon"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(ListCallController.btnAnalysButtonClick(_:)))
-        listButton.tintColor = UIColor(netHex: 0x555555)
-        inforButton.tintColor = UIColor(netHex: 0x555555)
-        let flex = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-        if currentUser.RoleType != 1{
-            let listCallButton = UIBarButtonItem.init(image: UIImage(named: "phone_active"), style: UIBarButtonItemStyle.plain, target: self, action: nil)
-            
-            listCallButton.tintColor = UIColor(netHex: 0x197DAE)
-            let items = [flex,listButton,flex,listCallButton, flex, analysButton, flex, inforButton, flex]
-            self.toolbarItems = items
-        }
-        else{
-            
-            let items = [flex,listButton,flex, inforButton, flex]
-            self.toolbarItems = items
-        }
+//        self.navigationController?.setNavigationBarHidden(true, animated: false)
+//        self.navigationController?.toolbar.barTintColor = UIColor.white
+//        self.navigationController?.setToolbarHidden(false, animated: false)
+//        //Thêm các nút tác vụ vào toolbar
+//        let inforButton = UIBarButtonItem.init(image: UIImage(named: "person-icon"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.navigateToInforView))
+//        let listButton = UIBarButtonItem.init(image: UIImage(named: "ListIcon"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.btnListClick))
+//        let analysButton = UIBarButtonItem.init(image: UIImage(named: "ListIcon"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(ListCallController.btnAnalysButtonClick(_:)))
+//        listButton.tintColor = UIColor(netHex: 0x555555)
+//        inforButton.tintColor = UIColor(netHex: 0x555555)
+//        let flex = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+//        if currentUser.RoleType != 1{
+//            let listCallButton = UIBarButtonItem.init(image: UIImage(named: "phone_active"), style: UIBarButtonItemStyle.plain, target: self, action: nil)
+//
+//            listCallButton.tintColor = UIColor(netHex: 0x197DAE)
+//            let items = [flex,listButton,flex,listCallButton, flex, analysButton, flex, inforButton, flex]
+//            self.toolbarItems = items
+//        }
+//        else{
+//
+//            let items = [flex,listButton,flex, inforButton, flex]
+//            self.toolbarItems = items
+//        }
         
         //lấy ngày hiện tại
         formatter.dateFormat = "yyyyMMdd"

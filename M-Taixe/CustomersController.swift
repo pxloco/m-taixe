@@ -66,8 +66,8 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
         let titleView = UIView.init(frame: CGRect(x: 0, y: 0, width: 300, height: 40))
         self.initSegmentControl()
         titleView.addSubview(segmentControl)
-        let navBarFrame = self.navigationController!.navigationBar.frame
-        titleView.frame = CGRect(x: (navBarFrame.width - segmentControl.frame.width) / 2, y: (navBarFrame.height - segmentControl.frame.height) / 2, width: segmentControl.frame.width, height: segmentControl.frame.height)
+//        let navBarFrame = self.navigationController!.navigationBar.frame
+//        titleView.frame = CGRect(x: (navBarFrame.width - segmentControl.frame.width) / 2, y: (navBarFrame.height - segmentControl.frame.height) / 2, width: segmentControl.frame.width, height: segmentControl.frame.height)
         var attr = NSDictionary(object: UIFont(name: "HelveticaNeue", size: 9.0)!, forKey: NSFontAttributeName as NSCopying)
 
         segmentControl.setTitleTextAttributes(attr as! [AnyHashable : Any], for: UIControlState.normal)
@@ -344,7 +344,7 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         if overTop{
-            navigateToSearch()
+            //navigateToSearch()
         }
     }
     
@@ -382,11 +382,11 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
     
     //Button xem sơ đồ
     func btnSchemaClick(_ sender: UIBarButtonItem) {
-        let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
-        let controller = storyboard.instantiateViewController(withIdentifier: "Schema") as! SchemaViewController
-        //        controller.currentUser = self.currentUser
-        //        controller.inforView = true
-        self.navigationController?.pushViewController(controller, animated: true)
+//        let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
+//        let controller = storyboard.instantiateViewController(withIdentifier: "Schema") as! SchemaViewController
+//        //        controller.currentUser = self.currentUser
+//        //        controller.inforView = true
+//        self.navigationController?.pushViewController(controller, animated: true)
     }
     
     func btnMapClick(_ sender: UIBarButtonItem) {

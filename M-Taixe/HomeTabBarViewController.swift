@@ -1,8 +1,8 @@
 //
-//  HomeTabBarViewController.swift
+//  HomeTabBarController.swift
 //  M-Taixe
 //
-//  Created by M on 12/17/17.
+//  Created by M on 12/29/17.
 //  Copyright © 2017 kha. All rights reserved.
 //
 

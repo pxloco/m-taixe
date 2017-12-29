@@ -14,26 +14,26 @@ class InformationController: UIViewController, UITableViewDataSource, UITableVie
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        let inforButton = UIBarButtonItem.init(image: UIImage(named: "person-icon"), style: UIBarButtonItemStyle.plain, target: nil, action: nil)
-        let listButton = UIBarButtonItem.init(image: UIImage(named: "ListIcon"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(InformationController.btnListClick(_:)))
-        let analysButton = UIBarButtonItem.init(image: UIImage(named: "ListIcon"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(InformationController.btnAnalysButtonClick(_:)))
-        listButton.tintColor = UIColor(netHex: 0x555555)
-        inforButton.tintColor = UIColor(netHex: 0x197DAE)
-        let flex = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-        if currentUser.RoleType != 1{
-            let listCallButton = UIBarButtonItem.init(image: UIImage(named: "phone_active"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.btnListCallClick))
-            
-            listCallButton.tintColor = UIColor(netHex: 0x555555)
-            let items = [flex,listButton,flex,listCallButton, flex, analysButton, flex, inforButton, flex]
-            self.toolbarItems = items
-        }
-        else{
-            
-            let items = [flex,listButton,flex, inforButton, flex]
-            self.toolbarItems = items
-        }
-        self.tableView.allowsSelection = false
-        // Do any additional setup after loading the view.
+//        let inforButton = UIBarButtonItem.init(image: UIImage(named: "person-icon"), style: UIBarButtonItemStyle.plain, target: nil, action: nil)
+//        let listButton = UIBarButtonItem.init(image: UIImage(named: "ListIcon"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(InformationController.btnListClick(_:)))
+//        let analysButton = UIBarButtonItem.init(image: UIImage(named: "ListIcon"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(InformationController.btnAnalysButtonClick(_:)))
+//        listButton.tintColor = UIColor(netHex: 0x555555)
+//        inforButton.tintColor = UIColor(netHex: 0x197DAE)
+//        let flex = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+//        if currentUser.RoleType != 1{
+//            let listCallButton = UIBarButtonItem.init(image: UIImage(named: "phone_active"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.btnListCallClick))
+//            
+//            listCallButton.tintColor = UIColor(netHex: 0x555555)
+//            let items = [flex,listButton,flex,listCallButton, flex, analysButton, flex, inforButton, flex]
+//            self.toolbarItems = items
+//        }
+//        else{
+//            
+//            let items = [flex,listButton,flex, inforButton, flex]
+//            self.toolbarItems = items
+//        }
+//        self.tableView.allowsSelection = false
+//        // Do any additional setup after loading the view.
     }
     func btnListCallClick(_ sender: UIBarButtonItem){
         self.navigationController?.popViewController(animated: true)

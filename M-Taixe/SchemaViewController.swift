@@ -24,6 +24,9 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
     var arrChooseSeatId = [String]()
     var DepartGuid = String()
     var ArrivalGuid = String()
+    var DepartName = String()
+    var ArrivalName = String()
+    
     var ref: DatabaseReference!
     
     @IBOutlet weak var bienSoLabel: UILabel!
@@ -33,6 +36,7 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUpData()
         ref = Database.database().reference(withPath: "m-taixe")
         initNavigationBottomBar()
         getXMLMapView()
@@ -41,12 +45,13 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
     
     // MARK: - Init
 
-    func initDataFromCategory(currentUser: User, tripId: String, gioXuatBen: String, DepartGuid: String, ArrivalGuid: String) {
-        self.currentUser = currentUser
+    func initDataFromCategory(tripId: String, LicensePlate: String, gioXuatBen: String, DepartGuid: String, DepartName: String, ArrivalGuid: String, ArrivalName: String) {
         self.tripId = tripId
         self.gioXuatBen = gioXuatBen
         self.DepartGuid = DepartGuid
         self.ArrivalGuid = ArrivalGuid
+        self.DepartName = DepartName
+        self.ArrivalName = ArrivalName
     }
     
     func initNavigationBottomBar() {
@@ -64,6 +69,28 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
         
         let items = [flex, listCustomerButton, flex, schemaButton, flex, mapButton, flex]
         self.toolbarItems = items
+    }
+    
+    func setUpData() {
+        let defaults = UserDefaults.standard
+        
+        let userName = defaults.value(forKey: "UserName")
+        let password = defaults.value(forKey: "Password")
+        let displayName = defaults.value(forKey: "FullName")
+        let roleType = defaults.value(forKey: "RoleType")
+        let companyId = defaults.value(forKey: "CompanyId")
+        let AgentId = defaults.value(forKey: "AgentId")
+        let userId = defaults.value(forKey: "UserId")
+        let userGuid = defaults.value(forKey: "UserGuid")
+        
+        currentUser.UserName = userName  as! String
+        currentUser.Password = password as! String
+        currentUser.DisplayName = displayName  as! String
+        currentUser.RoleType = Int.init(roleType as! String)!
+        currentUser.CompanyId = companyId  as! String
+        currentUser.AgentId = AgentId as! String
+        currentUser.UserId = userId  as! String
+        currentUser.UserGuid = userGuid as! String
     }
     
     func btnListCustomerClick(_ sender: UIBarButtonItem) {
@@ -224,6 +251,7 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
     }
     
     @IBAction func homeClick(_ sender: Any) {
-        self.navigationController?.popViewController(animated: true)
+//        self.navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true, completion: nil)
     }
 }

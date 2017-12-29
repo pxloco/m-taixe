@@ -42,8 +42,8 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUpData()
         setUpUI()
-//        loadData()
         
         //Load dữ liệu ngày hôm qua lưu xuống local
 //        var currentDate = Date()
@@ -64,17 +64,10 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
-        self.navigationController?.setToolbarHidden(false, animated: false)
         self.overTop = false
         self.collectionViewCatagory.reloadData()
         self.loadDiaDiemDi()
         self.loadRoute()
-//        if isChooseRoute {
-//            btnChooseRoute.setTitle(currentRoute.Name, for: UIControlState.normal)
-////            self.loadData(date, choose: true)
-//
-//        }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -83,37 +76,45 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let segueId = segue.identifier else {
+            return
+        }
+        
+        switch segueId {
+        case SegueFactory.fromCategoryToSchema.rawValue:
+            let indexPath = sender as! IndexPath
+            (segue.destination as! SchemaViewController).initDataFromCategory(tripId: arrTrip[(indexPath as NSIndexPath).row].TripId, LicensePlate: arrTrip[(indexPath as NSIndexPath).row].LicensePlate, gioXuatBen: arrTrip[(indexPath as NSIndexPath).row].StartTime, DepartGuid: currentlocationStartPoint.LocationID, DepartName: currentlocationStartPoint.Name, ArrivalGuid: currentlocationEndPoint.LocationID, ArrivalName: currentlocationEndPoint.Name)
+        default:
+            break
+        }
+    }
+    
     // - MARK: Init
     
+    func setUpData() {
+        let defaults = UserDefaults.standard
+        
+        let userName = defaults.value(forKey: "UserName")
+        let password = defaults.value(forKey: "Password")
+        let displayName = defaults.value(forKey: "FullName")
+        let roleType = defaults.value(forKey: "RoleType")
+        let companyId = defaults.value(forKey: "CompanyId")
+        let AgentId = defaults.value(forKey: "AgentId")
+        let userId = defaults.value(forKey: "UserId")
+        let userGuid = defaults.value(forKey: "UserGuid")
+        
+        currentUser.UserName = userName  as! String
+        currentUser.Password = password as! String
+        currentUser.DisplayName = displayName  as! String
+        currentUser.RoleType = Int.init(roleType as! String)!
+        currentUser.CompanyId = companyId  as! String
+        currentUser.AgentId = AgentId as! String
+        currentUser.UserId = userId  as! String
+        currentUser.UserGuid = userGuid as! String
+    }
+    
     func setUpUI() {
-        // Check role
-        
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
-        self.navigationController?.toolbar.barTintColor = UIColor.white
-        self.navigationController?.setToolbarHidden(false, animated: false)
-        
-        //Thêm các nút tác vụ vào toolbar
-        let inforButton = UIBarButtonItem.init(image: UIImage(named: "person-icon"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(CategoryController.btnInforClick(_:)))
-        let listButton = UIBarButtonItem.init(image: UIImage(named: "ListIcon"), style: UIBarButtonItemStyle.plain, target: self, action: nil)
-        let analysButton = UIBarButtonItem.init(image: UIImage(named: "ListIcon"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(CategoryController.btnAnalysButtonClick(_:)))
-        let flex = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-        
-        listButton.tintColor = UIColor(netHex: 0x197DAE)
-        inforButton.tintColor = UIColor(netHex: 0x555555)
-        analysButton.tintColor = UIColor(netHex: 0x555555)
-        
-        if currentUser.RoleType != 1 {
-            let listCallButton = UIBarButtonItem.init(image: UIImage(named: "phone_active"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.btnListCallClick))
-            
-            listCallButton.tintColor = UIColor(netHex: 0x555555)
-            let items = [flex,listButton, flex, listCallButton, flex, analysButton, flex, inforButton, flex]
-            self.toolbarItems = items
-        }
-        else{
-            let items = [flex,listButton,flex, inforButton, flex]
-            self.toolbarItems = items
-        }
-        
         //lấy ngày hiện tại
         formatter.dateFormat = "yyyyMMdd"
         let d = Date()
@@ -121,24 +122,6 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
         formatter.dateFormat = "dd/MM/yyyy"
         dateLabel.text = formatter.string(from: d)
     }
-    
-//    // Load data from role
-//    func loadData() {
-//        print("role type: \(currentUser.RoleType)")
-//        if currentUser.RoleType == 1 {
-//            contrainsButton.constant = contrainsButton.constant-btnChooseRoute.frame.size.height
-//            btnChooseRoute.isHidden = true
-//        }
-//
-//        alert.showWait("Đang tải dữ liệu!", subTitle: "Vui lòng đợi!")
-//        if currentUser.RoleType != 1 {
-//            loadRoute()
-//        }
-//        else{
-//            //Load dữ liệu
-////            loadData(date, choose: true)
-//        }
-//    }
     
     // - MARK: Connect SOAP
     
@@ -160,7 +143,7 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
             "</tem:Route_GetForBooking>" +
             "</soapenv:Body>" +
         "</soapenv:Envelope>"
-        //print(soapMessage)
+        
         let soapAction = "http://tempuri.org/IMobihomeWcf/Route_GetForBooking"
         let sendPostRequest = SendPostRequest()
         sendPostRequest.sendRequest(soapMessage, soapAction: soapAction){ (string, error) in
@@ -170,7 +153,6 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
                 if self.routes.count > 0 {
                     self.currentRoute = self.routes[0]
                     self.btnChooseRoute.setTitle(self.currentRoute.Name, for: UIControlState.normal)
-                    //print("routeid: \(self.currentRoute.RouteId)")
                 }
                 else{
                     self.currentRoute = Route()
@@ -702,11 +684,12 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let storyBoard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
-        let controller = storyBoard.instantiateViewController(withIdentifier: "Schema") as! SchemaViewController
-        controller.initDataFromCategory(currentUser: self.currentUser, tripId: arrTrip[(indexPath as NSIndexPath).row].TripId, gioXuatBen: arrTrip[(indexPath as NSIndexPath).row].StartTime, DepartGuid: currentlocationStartPoint.LocationID, ArrivalGuid: currentlocationEndPoint.LocationID)
+//        let storyBoard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
+//        let controller = storyBoard.instantiateViewController(withIdentifier: "Schema") as! SchemaViewController
+        performSegue(withIdentifier: SegueFactory.fromCategoryToSchema.rawValue, sender: indexPath)
+//        controller.initDataFromCategory(currentUser: self.currentUser, tripId: arrTrip[(indexPath as NSIndexPath).row].TripId, gioXuatBen: arrTrip[(indexPath as NSIndexPath).row].StartTime, DepartGuid: currentlocationStartPoint.LocationID, ArrivalGuid: currentlocationEndPoint.LocationID)
         
-        self.navigationController?.pushViewController(controller, animated: true)
+//        self.navigationController?.pushViewController(controller, animated: true)
     }
     
     // MARK: - User Action
@@ -719,28 +702,19 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
         DropDown.appearance().backgroundColor = UIColor.white
         DropDown.appearance().selectionBackgroundColor = UIColor.lightGray
         DropDown.appearance().cellHeight = 60
-        
-        // The view to which the drop down will appear on
-        dropDown.anchorView = btnDiemDi // UIView or UIBarButtonItem
+        dropDown.anchorView = btnDiemDi
         
         var arrDropDown = [String]()
         for route in routes {
             arrDropDown.append(route.Name)
         }
-        
-        // The list of items to display. Can be changed dynamically
+
         dropDown.dataSource = arrDropDown
-        
-        // Action triggered on selection
         dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
-            print("Selected item: \(item) at index: \(index)")
             self.btnChooseRoute.setTitle(item, for: .normal)
             self.currentRoute = self.routes[index]
-//            self.loadData(self.date, choose: true)
             self.collectionViewCatagory.reloadData()
         }
-        
-        // Will set a custom width instead of the anchor view width
         dropDown.show()
     }
     
@@ -752,7 +726,6 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
         self.date = dateFormat.string(from: current!)
         dateFormat.dateFormat = "dd/MM/yyyy"
         dateLabel.text = dateFormat.string(from: current!)
-//        loadData(self.date, choose: true)
         self.loadDanhSachXe(self.date, choose: true)
     }
     
@@ -764,7 +737,6 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
         self.date = dateFormat.string(from: current!)
         dateFormat.dateFormat = "dd/MM/yyyy"
         dateLabel.text = dateFormat.string(from: current!)
-//        loadData(self.date, choose: true)
         self.loadDanhSachXe(self.date, choose: true)
     }
     
@@ -782,7 +754,6 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
             self.collectionViewCatagory.reloadData()
             self.alert = SCLAlertView()
             self.alert.showWait("Đang tải dữ liệu!", subTitle: "Vui lòng đợi!")
-//            self.loadData(self.date, choose: true)
             self.loadDanhSachXe(self.date, choose: true)
         }
     }
@@ -802,84 +773,4 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
     @IBAction func btnChonDiemDenClick(_ sender: Any) {
         loadDiaDiemDenLenDropDown()
     }
-
-//
-//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-//        if overTop{
-//            //navigateToSearch()
-//        }
-//    }
-    
-    // MARK: - Function
-    
-    func navigateToSearch() {
-        let transition:CATransition = CATransition()
-        transition.duration = 0.5
-        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromBottom
-        self.navigationController!.view.layer.add(transition, forKey: kCATransition)
-
-        let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
-        let controller = storyboard.instantiateViewController(withIdentifier: "Search") as! SearchController
-        controller.currentUser = self.currentUser
-        self.navigationController?.pushViewController(controller, animated: true)
-    }
-    
-    func btnListCallClick() {
-        var viewControllers = self.navigationController?.viewControllers
-        let countViewControllers: Int = (viewControllers?.count)!
-        let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
-        let controller = storyboard.instantiateViewController(withIdentifier: "ListCall") as! ListCallController
-        controller.currentUser = self.currentUser
-        for i in 0 ... countViewControllers {
-            if i > 3 {
-                viewControllers?.remove(at: i)
-            }
-        }
-        self.navigationController?.viewControllers = viewControllers!
-        self.navigationController?.pushViewController(controller, animated: true)
-    }
-    
-    //Button xem thông tin tk
-    func btnInforClick(_ sender: UIBarButtonItem) {
-        var viewControllers = self.navigationController?.viewControllers
-        let countViewControllers: Int = (viewControllers?.count)!
-        let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
-        let controller = storyboard.instantiateViewController(withIdentifier: "ListCall") as! ListCallController
-        controller.currentUser = self.currentUser
-        controller.inforView = true
-        for i in 0 ... countViewControllers {
-            if i > 3 {
-                viewControllers?.remove(at: i)
-            }
-        }
-        self.navigationController?.viewControllers = viewControllers!
-        self.navigationController?.pushViewController(controller, animated: false)
-    }
-    
-    func btnAnalysButtonClick(_ sender: UIBarButtonItem) {
-        var viewControllers = self.navigationController?.viewControllers
-        let countViewControllers: Int = (viewControllers?.count)!
-        let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
-        let controller = storyboard.instantiateViewController(withIdentifier: "Analys") as! AnalysViewController
-        for i in 0 ... countViewControllers {
-            if i > 3 {
-                viewControllers?.remove(at: i)
-            }
-        }
-        self.navigationController?.viewControllers = viewControllers!
-        self.navigationController?.pushViewController(controller, animated: false)
-    }
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
 }

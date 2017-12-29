@@ -12,6 +12,9 @@
 		0C0DA20E1FEAB223008FF915 /* AppUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0DA20D1FEAB223008FF915 /* AppUtils.swift */; };
 		0C13387D1FDEC75E001E6A4B /* SeatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C13387C1FDEC75E001E6A4B /* SeatCell.swift */; };
 		0C13387F1FDEC791001E6A4B /* SchemaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C13387E1FDEC791001E6A4B /* SchemaViewController.swift */; };
+		0C1508161FF5C710000F18BF /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C1508151FF5C710000F18BF /* Home.storyboard */; };
+		0C1508181FF5CFBA000F18BF /* HomeTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1508171FF5CFBA000F18BF /* HomeTabBarViewController.swift */; };
+		0C1512621FF68C7300347556 /* Schema.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C1512611FF68C7300347556 /* Schema.storyboard */; };
 		0C260A341FED659D00AAF487 /* map.html in Resources */ = {isa = PBXBuildFile; fileRef = 0C260A331FED659D00AAF487 /* map.html */; };
 		0C268EC91FE5147A00DFD811 /* EditRouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C268EC81FE5147A00DFD811 /* EditRouteViewController.swift */; };
 		0C268ECB1FE5148800DFD811 /* ListGoodsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C268ECA1FE5148800DFD811 /* ListGoodsViewController.swift */; };
@@ -20,7 +23,6 @@
 		0C357E721FDCBE8C008490B2 /* SeatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C357E711FDCBE8C008490B2 /* SeatView.swift */; };
 		0C357E741FDCBE99008490B2 /* SeatView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C357E731FDCBE99008490B2 /* SeatView.xib */; };
 		0C357E761FDCC6BE008490B2 /* Seat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C357E751FDCC6BE008490B2 /* Seat.swift */; };
-		0C807DD41FE6D17F0031BB43 /* HomeTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C807DD31FE6D17F0031BB43 /* HomeTabBarViewController.swift */; };
 		0CB9BAAE1FE87F2700A9BABB /* CategoryViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB9BAAD1FE87F2700A9BABB /* CategoryViewCell.swift */; };
 		0CD1BD2E1FF3148A00E32053 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0CD1BD2D1FF3148A00E32053 /* GoogleService-Info.plist */; };
 		0CE4B9331FE5F2BC00992EED /* AnalysViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE4B9321FE5F2BC00992EED /* AnalysViewController.swift */; };
@@ -98,6 +100,9 @@
 		0C0DA20D1FEAB223008FF915 /* AppUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUtils.swift; sourceTree = "<group>"; };
 		0C13387C1FDEC75E001E6A4B /* SeatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeatCell.swift; sourceTree = "<group>"; };
 		0C13387E1FDEC791001E6A4B /* SchemaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaViewController.swift; sourceTree = "<group>"; };
+		0C1508151FF5C710000F18BF /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
+		0C1508171FF5CFBA000F18BF /* HomeTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabBarViewController.swift; sourceTree = "<group>"; };
+		0C1512611FF68C7300347556 /* Schema.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Schema.storyboard; sourceTree = "<group>"; };
 		0C260A331FED659D00AAF487 /* map.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = map.html; sourceTree = "<group>"; };
 		0C268EC81FE5147A00DFD811 /* EditRouteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRouteViewController.swift; sourceTree = "<group>"; };
 		0C268ECA1FE5148800DFD811 /* ListGoodsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListGoodsViewController.swift; sourceTree = "<group>"; };
@@ -106,7 +111,6 @@
 		0C357E711FDCBE8C008490B2 /* SeatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeatView.swift; sourceTree = "<group>"; };
 		0C357E731FDCBE99008490B2 /* SeatView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SeatView.xib; sourceTree = "<group>"; };
 		0C357E751FDCC6BE008490B2 /* Seat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seat.swift; sourceTree = "<group>"; };
-		0C807DD31FE6D17F0031BB43 /* HomeTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabBarViewController.swift; sourceTree = "<group>"; };
 		0CB9BAAD1FE87F2700A9BABB /* CategoryViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewCell.swift; sourceTree = "<group>"; };
 		0CD1BD2D1FF3148A00E32053 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0CE4B9321FE5F2BC00992EED /* AnalysViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysViewController.swift; sourceTree = "<group>"; };
@@ -305,8 +309,8 @@
 		310EE6451D38E14C0003FD8A /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				3127E7AF1D37259D002293D4 /* LoginController.swift */,
 				3127E7E01D378638002293D4 /* CategoryController.swift */,
+				3127E7AF1D37259D002293D4 /* LoginController.swift */,
 				310EE6411D38D2740003FD8A /* CustomersController.swift */,
 				3121F91F1D3CC10F00E3ED8E /* InformationController.swift */,
 				318E7E731DADC7FC005BB52D /* FretController.swift */,
@@ -320,7 +324,7 @@
 				0C268ECA1FE5148800DFD811 /* ListGoodsViewController.swift */,
 				0CE4B9321FE5F2BC00992EED /* AnalysViewController.swift */,
 				0CE4B9341FE6076A00992EED /* MapViewController.swift */,
-				0C807DD31FE6D17F0031BB43 /* HomeTabBarViewController.swift */,
+				0C1508171FF5CFBA000F18BF /* HomeTabBarViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -372,11 +376,13 @@
 				310EE6451D38E14C0003FD8A /* Controller */,
 				310EE6441D38E1340003FD8A /* OtherFile */,
 				3127E7811D372447002293D4 /* Main.storyboard */,
+				0C1512611FF68C7300347556 /* Schema.storyboard */,
 				3127E7861D372448002293D4 /* LaunchScreen.storyboard */,
 				3127E7891D372448002293D4 /* Info.plist */,
 				0CD1BD2D1FF3148A00E32053 /* GoogleService-Info.plist */,
 				3127E77D1D372447002293D4 /* AppDelegate.swift */,
 				3127E7B51D373313002293D4 /* M-Taixe-Bridging-Header.h */,
+				0C1508151FF5C710000F18BF /* Home.storyboard */,
 			);
 			path = "M-Taixe";
 			sourceTree = "<group>";
@@ -526,7 +532,9 @@
 				3127E7881D372448002293D4 /* LaunchScreen.storyboard in Resources */,
 				0CD1BD2E1FF3148A00E32053 /* GoogleService-Info.plist in Resources */,
 				0C357E741FDCBE99008490B2 /* SeatView.xib in Resources */,
+				0C1508161FF5C710000F18BF /* Home.storyboard in Resources */,
 				3127E7851D372448002293D4 /* Assets.xcassets in Resources */,
+				0C1512621FF68C7300347556 /* Schema.storyboard in Resources */,
 				31B307681DCCCDA50039AFBC /* select.html in Resources */,
 				0C260A341FED659D00AAF487 /* map.html in Resources */,
 				3127E7831D372447002293D4 /* Main.storyboard in Resources */,
@@ -721,13 +729,13 @@
 				31C1361A1DD05E9A00B970AA /* Bill.swift in Sources */,
 				0C268ECB1FE5148800DFD811 /* ListGoodsViewController.swift in Sources */,
 				3121F9221D3CD09700E3ED8E /* ColorHelper.swift in Sources */,
+				0C1508181FF5CFBA000F18BF /* HomeTabBarViewController.swift in Sources */,
 				0CE4B9331FE5F2BC00992EED /* AnalysViewController.swift in Sources */,
 				31ABC5A61DCDDDC8000C8DAC /* Call.swift in Sources */,
 				0C03022E1FE94DD000DB4D45 /* Location.swift in Sources */,
 				3182F7CA1DC32B57006517B4 /* CurrentUser.swift in Sources */,
 				3127E7E31D378F6B002293D4 /* Trip.swift in Sources */,
 				0C268EC91FE5147A00DFD811 /* EditRouteViewController.swift in Sources */,
-				0C807DD41FE6D17F0031BB43 /* HomeTabBarViewController.swift in Sources */,
 				31ABC5A81DCDE0EE000C8DAC /* CallCell.swift in Sources */,
 				31B307601DCCA0050039AFBC /* RouteCell.swift in Sources */,
 				31B307641DCCB79E0039AFBC /* AddSeatCell.swift in Sources */,
