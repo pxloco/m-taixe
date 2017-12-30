@@ -27,39 +27,35 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
-        self.navigationController?.setToolbarHidden(true, animated: false)
-        
+        setUpData()
         initBar()
-        initNavigationBottomBar()
-        
-        
-        //Load dữ liệu từ local
-        //loadFirst()
-        
-        //Load dữ liệu từ server
-        loadData()
-        
+        loadFirst()
         //30 s load dữ liệu server 1 lần
         //timer = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(CustomersController.timerTask), userInfo: nil, repeats: true)
         //segmentControl.frame = CGRect(x: 50, y: 50, width: 1000, height: 50)
     }
     
-    func initNavigationBottomBar() {
-        self.navigationController?.setToolbarHidden(false, animated: true)
-        let flex = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+    func setUpData() {
+        let defaults = UserDefaults.standard
         
-        let listCustomerButton = UIBarButtonItem.init(image: #imageLiteral(resourceName: "ListIcon"), style: UIBarButtonItemStyle.plain, target: nil, action: nil)
-        let schemaButton = UIBarButtonItem.init(image: #imageLiteral(resourceName: "map_icon_active"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(CustomersController.btnSchemaClick(_:)))
-        let mapButton = UIBarButtonItem.init(image: #imageLiteral(resourceName: "map_icon_active"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(CustomersController.btnMapClick(_:)))
-        schemaButton.tintColor = UIColor(netHex: 0x555555)
-        listCustomerButton.tintColor = UIColor(netHex: 0x197DAE)
+        let userName = defaults.value(forKey: "UserName")
+        let password = defaults.value(forKey: "Password")
+        let displayName = defaults.value(forKey: "FullName")
+        let roleType = defaults.value(forKey: "RoleType")
+        let companyId = defaults.value(forKey: "CompanyId")
+        let AgentId = defaults.value(forKey: "AgentId")
+        let userId = defaults.value(forKey: "UserId")
+        let userGuid = defaults.value(forKey: "UserGuid")
         
-        let items = [flex, listCustomerButton, flex, schemaButton, flex, mapButton, flex]
-        self.toolbarItems = items
+        currentUser.UserName = userName  as! String
+        currentUser.Password = password as! String
+        currentUser.DisplayName = displayName  as! String
+        currentUser.RoleType = Int.init(roleType as! String)!
+        currentUser.CompanyId = companyId  as! String
+        currentUser.AgentId = AgentId as! String
+        currentUser.UserId = userId  as! String
+        currentUser.UserGuid = userGuid as! String
     }
-    
     
     func initBar() {
         //Add segmentcontrol vào navigationbar
@@ -133,6 +129,7 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
         }
         
     }
+    
     func updateCustomer(_ orderGuid: String){
         let soapMessage = String(format: "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\"><soapenv:Header/><soapenv:Body><tem:UpdateOnBus><!--Optional:--><tem:UserName>\(currentUser.UserName)</tem:UserName><!--Optional:--><tem:Password>\(currentUser.Password)</tem:Password><!--Optional:--><tem:OrderGuid>\(orderGuid)</tem:OrderGuid></tem:UpdateOnBus><tem:SecurityCode>MobihomeAppDv123</tem:SecurityCode></soapenv:Body></soapenv:Envelope>")
         let soapAction = "http://tempuri.org/IMobihomeWcf/UpdateOnBus"
@@ -141,6 +138,7 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
             
         }
     }
+    
     func loadData(){
         
         let soapMessage = String(format: "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\"><soapenv:Header/><soapenv:Body><tem:Order_GetByTrip><!--Optional:--><tem:UserName>\(currentUser.UserName)</tem:UserName><!--Optional:--><tem:Password>\(currentUser.Password)</tem:Password><!--Optional:--><tem:TripId>\(tripId)</tem:TripId><tem:SecurityCode>MobihomeAppDv123</tem:SecurityCode></tem:Order_GetByTrip></soapenv:Body></soapenv:Envelope>")
@@ -183,6 +181,7 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
         }
         
     }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if segmentControl.selectedSegmentIndex == 1{
             return arrCustomers.count
@@ -191,6 +190,7 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
             return arrCustomersChuaDon.count
         }
     }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let transition:CATransition = CATransition()
         transition.duration = 0.5
@@ -207,6 +207,7 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
         self.navigationController?.pushViewController(controller, animated: true)
         self.tableView.deselectRow(at: indexPath, animated: true)
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomerCell") as! CustomerCell
         if segmentControl.selectedSegmentIndex == 1{
@@ -224,7 +225,6 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
         cell.parent = self
         return cell
     }
-    
    
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool
     {
@@ -237,6 +237,7 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
             return false
         }
     }
+    
     @available(iOS 8.0, *)
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]?
     {
@@ -271,6 +272,7 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
         return [daDon, huyVe]
         
     }
+    
     func resetLabelText(){
         do{
             if self.segmentControl.selectedSegmentIndex == 0{
@@ -286,6 +288,7 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
             
         }
     }
+    
     var currentSegmentIndex = 0
     func initSegmentControl(){
         self.segmentControl = UISegmentedControl.init(frame: CGRect(x: 0, y: 0, width: 156, height: 29))
@@ -330,7 +333,6 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
     
     override func viewWillAppear(_ animated: Bool) {
         self.segmentControl.selectedSegmentIndex = currentSegmentIndex
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
         self.overTop = false
         loadData()
     }
@@ -347,20 +349,6 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
             //navigateToSearch()
         }
     }
-    
-    func navigateToSearch(){
-        let transition:CATransition = CATransition()
-        transition.duration = 0.5
-        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromBottom
-        self.navigationController!.view.layer.add(transition, forKey: kCATransition)
-        
-        var storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
-        var controller = storyboard.instantiateViewController(withIdentifier: "Search") as! SearchController
-        controller.currentUser = self.currentUser
-        self.navigationController?.pushViewController(controller, animated: true)
-    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -368,31 +356,5 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-    }
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
-    //Button xem sơ đồ
-    func btnSchemaClick(_ sender: UIBarButtonItem) {
-//        let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
-//        let controller = storyboard.instantiateViewController(withIdentifier: "Schema") as! SchemaViewController
-//        //        controller.currentUser = self.currentUser
-//        //        controller.inforView = true
-//        self.navigationController?.pushViewController(controller, animated: true)
-    }
-    
-    func btnMapClick(_ sender: UIBarButtonItem) {
-        let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
-        let controller = storyboard.instantiateViewController(withIdentifier: "MapViewController") as! MapViewController
-        self.navigationController?.pushViewController(controller, animated: true)
-        
     }
 }

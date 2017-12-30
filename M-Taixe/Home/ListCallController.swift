@@ -13,6 +13,7 @@ class ListCallController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var topbar: UIView!
     var currentPageNum = 1
     var currentPageSize = 20
     var isRecentCall = false
@@ -28,50 +29,51 @@ class ListCallController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setUpData()
         initUI()
-        if inforView{
-            inforView = false
-            navigateToInforView()
-        }
         loadData()
-        // Do any additional setup after loading the view.
     }
-    func initUI(){
-        tableView.allowsSelection = false
-//        self.navigationController?.setNavigationBarHidden(true, animated: false)
-//        self.navigationController?.toolbar.barTintColor = UIColor.white
-//        self.navigationController?.setToolbarHidden(false, animated: false)
-//        //Thêm các nút tác vụ vào toolbar
-//        let inforButton = UIBarButtonItem.init(image: UIImage(named: "person-icon"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.navigateToInforView))
-//        let listButton = UIBarButtonItem.init(image: UIImage(named: "ListIcon"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.btnListClick))
-//        let analysButton = UIBarButtonItem.init(image: UIImage(named: "ListIcon"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(ListCallController.btnAnalysButtonClick(_:)))
-//        listButton.tintColor = UIColor(netHex: 0x555555)
-//        inforButton.tintColor = UIColor(netHex: 0x555555)
-//        let flex = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-//        if currentUser.RoleType != 1{
-//            let listCallButton = UIBarButtonItem.init(image: UIImage(named: "phone_active"), style: UIBarButtonItemStyle.plain, target: self, action: nil)
-//
-//            listCallButton.tintColor = UIColor(netHex: 0x197DAE)
-//            let items = [flex,listButton,flex,listCallButton, flex, analysButton, flex, inforButton, flex]
-//            self.toolbarItems = items
-//        }
-//        else{
-//
-//            let items = [flex,listButton,flex, inforButton, flex]
-//            self.toolbarItems = items
-//        }
+    
+    // MARK: - Init Data
+    
+    func setUpData() {
+        let defaults = UserDefaults.standard
         
+        let userName = defaults.value(forKey: "UserName")
+        let password = defaults.value(forKey: "Password")
+        let displayName = defaults.value(forKey: "FullName")
+        let roleType = defaults.value(forKey: "RoleType")
+        let companyId = defaults.value(forKey: "CompanyId")
+        let AgentId = defaults.value(forKey: "AgentId")
+        let userId = defaults.value(forKey: "UserId")
+        let userGuid = defaults.value(forKey: "UserGuid")
+        
+        currentUser.UserName = userName  as! String
+        currentUser.Password = password as! String
+        currentUser.DisplayName = displayName  as! String
+        currentUser.RoleType = Int.init(roleType as! String)!
+        currentUser.CompanyId = companyId  as! String
+        currentUser.AgentId = AgentId as! String
+        currentUser.UserId = userId  as! String
+        currentUser.UserGuid = userGuid as! String
+    }
+    
+    func initUI() {
+        tableView.allowsSelection = false
         //lấy ngày hiện tại
         formatter.dateFormat = "yyyyMMdd"
         let d = Date()
         date = formatter.string(from: d)
         formatter.dateFormat = "dd/MM/yyyy"
         dateLabel.text = formatter.string(from: d)
+        AppUtils.addShadowToView(view: topbar, width: 1, height: 2, color: UIColor.gray.cgColor, opacity: 0.5, radius: 2)
     }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return calls.count
     }
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String {
         
         formatter.dateFormat = "yyyyMMdd"
         if isRecentCall{
@@ -79,24 +81,21 @@ class ListCallController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         var currentDate = Date()
         currentDate = formatter.date(from: formatter.string(from: currentDate))!
-        var chooseDate = formatter.date(from: date)
-        var duration = chooseDate?.timeIntervalSince(currentDate)
+        let chooseDate = formatter.date(from: date)
+        let duration = chooseDate?.timeIntervalSince(currentDate)
         if duration == 0{
             return "Hôm nay"
         }
         if duration! == -24*60*60{
             return "Hôm qua"
         }
-        var dateFormatter = DateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
         
         return "Ngày \(dateFormatter.string(from: chooseDate!))"
-        
-        
-        
     }
     
-    func loadData(){
+    func loadData() {
         self.alert = SCLAlertView()
         alert.showWait("Đang tải dữ liệu!", subTitle: "Vui lòng đợi")
         calls = [Call]()
@@ -106,12 +105,13 @@ class ListCallController: UIViewController, UITableViewDataSource, UITableViewDe
         if isRecentCall{
             loadRecentCall()
         }
-        else{
+        else {
             loadFilterCall()
         }
     }
-    func loadFilterCall(){
-        var soapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
+    
+    func loadFilterCall() {
+        let soapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
             "<soapenv:Header/>" +
             "<soapenv:Body>" +
             "<tem:Calling_Filter>" +
@@ -138,11 +138,11 @@ class ListCallController: UIViewController, UITableViewDataSource, UITableViewDe
             "</tem:Calling_Filter>" +
             "</soapenv:Body>" +
         "</soapenv:Envelope>"
-        var soapAction = "http://tempuri.org/IMobihomeWcf/Calling_Filter"
+        let soapAction = "http://tempuri.org/IMobihomeWcf/Calling_Filter"
         sendPostRequest.sendRequest(soapMessage, soapAction: soapAction){
             (result, error) in
             if error == nil{
-                var arr = self.jsonHelper.parseCalls(result.data(using: String.Encoding.utf8)!)
+                let arr = self.jsonHelper.parseCalls(result.data(using: String.Encoding.utf8)!)
                 self.currentPageNum += 1
                 self.currentPageSize = arr.count
                 self.calls.append(contentsOf: arr)
@@ -157,8 +157,9 @@ class ListCallController: UIViewController, UITableViewDataSource, UITableViewDe
             }
         }
     }
-    func loadRecentCall(){
-        var soapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
+    
+    func loadRecentCall() {
+        let soapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
             "<soapenv:Header/>" +
             "<soapenv:Body>" +
             "<tem:Calling_GetListRecent>" +
@@ -175,7 +176,7 @@ class ListCallController: UIViewController, UITableViewDataSource, UITableViewDe
             "</tem:Calling_GetListRecent>" +
             "</soapenv:Body>" +
         "</soapenv:Envelope>"
-        var soapAction = "http://tempuri.org/IMobihomeWcf/Calling_GetListRecent"
+        let soapAction = "http://tempuri.org/IMobihomeWcf/Calling_GetListRecent"
         sendPostRequest.sendRequest(soapMessage, soapAction: soapAction){
             (result, error) in
             if error == nil{
@@ -240,22 +241,25 @@ class ListCallController: UIViewController, UITableViewDataSource, UITableViewDe
             self.loadData()
         }
     }
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 30
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(withIdentifier: "CallCell", for: indexPath) as! CallCell
-        var call = calls[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CallCell", for: indexPath) as! CallCell
+        let call = calls[indexPath.row]
         cell.lblCusName.text = call.CustomerName
         cell.lblCusMobile.text = call.PhoneNumber
-        var dateFormatter = DateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyyMMddHHmmss"
-        var callTime = dateFormatter.date(from: "\(call.CallAt)")
+        let callTime = dateFormatter.date(from: "\(call.CallAt)")
         
         dateFormatter.dateFormat = "HH:mm"
         cell.lblTime.text = dateFormatter.string(from: callTime!)
         return cell
     }
+    
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row == calls.count-1 && !isRecentCall {
             if currentPageSize >= 20{
@@ -268,55 +272,7 @@ class ListCallController: UIViewController, UITableViewDataSource, UITableViewDe
         return 1
     }
     
-    func btnListClick(_ sender: UIBarButtonItem){
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    func btnAnalysButtonClick(_ sender: UIBarButtonItem) {
-        var viewControllers = self.navigationController?.viewControllers
-        let countViewControllers: Int = (viewControllers?.count)!
-        let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
-        let controller = storyboard.instantiateViewController(withIdentifier: "Analys") as! AnalysViewController
-        
-        for i in 0 ... countViewControllers {
-            if i > 3 {
-                viewControllers?.remove(at: i)
-            }
-        }
-        self.navigationController?.pushViewController(controller, animated: false)
-        self.navigationController?.viewControllers = viewControllers!
-    }
-    
-    func navigateToInforView(){
-        var viewControllers = self.navigationController?.viewControllers
-        let countViewControllers: Int = (viewControllers?.count)!
-        let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
-        let controller = storyboard.instantiateViewController(withIdentifier: "Information") as! InformationController
-        controller.currentUser = self.currentUser
-        
-        for i in 0 ... countViewControllers {
-            if i > 3 {
-                viewControllers?.remove(at: i)
-            }
-        }
-        self.navigationController?.viewControllers = viewControllers!
-        self.navigationController?.pushViewController(controller, animated: true)
-    }
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

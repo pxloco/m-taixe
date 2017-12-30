@@ -29,20 +29,15 @@ class LoginController: UIViewController, UITextFieldDelegate {
     }
     
     func navigateToTrip(){
-        //Lấy tên đăng nhập từ local
         let defaults = UserDefaults.standard
         let userName = defaults.value(forKey: "UserName")
-        
-        //Nếu đã đăng nhập rồi chuyển sang trang xem danh sách chuyến
+
         if userName != nil {
-//            let storyBoard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
-//            let controller = storyBoard.instantiateViewController(withIdentifier: "Category") as! CategoryController
             performSegue(withIdentifier: SegueFactory.fromLoginToHomeTabBar.rawValue, sender: nil)
         }
     }
     
     func dismissKeyboard() {
-        //Causes the view (or one of its embedded text fields) to resign the first responder status.
         view.endEditing(true)
     }
     
@@ -142,6 +137,7 @@ class LoginController: UIViewController, UITextFieldDelegate {
     
     func connectionDidFinishLoading(_ connection: NSURLConnection!) {
     }
+    
     override func viewWillAppear(_ animated: Bool) {
     }
 }

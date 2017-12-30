@@ -9,6 +9,8 @@
 import UIKit
 import WebKit
 import FirebaseDatabase
+import HPUIViewExtensions
+import HPXibDesignable
 
 class SchemaViewController: UIViewController, UIWebViewDelegate {
 
@@ -27,6 +29,8 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
     var DepartName = String()
     var ArrivalName = String()
     var LicensePlate = String()
+    var DriverName = String()
+    var EmployeeName = String()
     
     var ref: DatabaseReference!
     
@@ -34,19 +38,21 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
     @IBOutlet weak var tuyenDuongLabel: UILabel!
     @IBOutlet weak var taixephuxeLabel: UILabel!
     @IBOutlet weak var schemaWebView: UIWebView!
+    @IBOutlet weak var topbar: UIView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpData()
+        setUpUI()
         ref = Database.database().reference(withPath: "m-taixe")
-        initNavigationBottomBar()
         getXMLMapView()
         getStatusBookedByTrip()
     }
     
     // MARK: - Init
 
-    func initDataFromCategory(tripId: String, LicensePlate: String, gioXuatBen: String, DepartGuid: String, DepartName: String, ArrivalGuid: String, ArrivalName: String) {
+    func initDataFromCategory(tripId: String, LicensePlate: String, gioXuatBen: String, DepartGuid: String, DepartName: String, ArrivalGuid: String, ArrivalName: String, DriverName: String, EmployeeName: String) {
         self.tripId = tripId
         self.LicensePlate = LicensePlate
         self.gioXuatBen = gioXuatBen
@@ -54,23 +60,6 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
         self.ArrivalGuid = ArrivalGuid
         self.DepartName = DepartName
         self.ArrivalName = ArrivalName
-    }
-    
-    func initNavigationBottomBar() {
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
-        self.navigationController?.toolbar.barTintColor = UIColor.white
-        self.navigationController?.setToolbarHidden(false, animated: false)
-        self.navigationController?.setToolbarHidden(false, animated: true)
-        let flex = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-        
-        let listCustomerButton = UIBarButtonItem.init(image: #imageLiteral(resourceName: "ListIcon"), style: UIBarButtonItemStyle.plain, target: nil, action: #selector(SchemaViewController.btnListCustomerClick(_: )))
-        let schemaButton = UIBarButtonItem.init(image: #imageLiteral(resourceName: "map_icon_active"), style: UIBarButtonItemStyle.plain, target: self, action: nil)
-        let mapButton = UIBarButtonItem.init(image: #imageLiteral(resourceName: "map_icon_active"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(SchemaViewController.btnMapClick(_:)))
-        schemaButton.tintColor = UIColor(netHex: 0x555555)
-        listCustomerButton.tintColor = UIColor(netHex: 0x197DAE)
-        
-        let items = [flex, listCustomerButton, flex, schemaButton, flex, mapButton, flex]
-        self.toolbarItems = items
     }
     
     func setUpData() {
@@ -93,6 +82,13 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
         currentUser.AgentId = AgentId as! String
         currentUser.UserId = userId  as! String
         currentUser.UserGuid = userGuid as! String
+    }
+    
+    func setUpUI() {
+        self.bienSoLabel.text = LicensePlate
+        self.tuyenDuongLabel.text = DepartName + " -> " + ArrivalName
+        self.taixephuxeLabel.text = "Tài xế: " + DriverName + " -  Phụ xe: " + EmployeeName
+        AppUtils.addShadowToView(view: topbar, width: 1, height: 2, color: UIColor.gray.cgColor, opacity: 0.5, radius: 2)
     }
     
     func btnListCustomerClick(_ sender: UIBarButtonItem) {
@@ -253,7 +249,6 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
     }
     
     @IBAction func homeClick(_ sender: Any) {
-//        self.navigationController?.popViewController(animated: true)
-        self.dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
 }

@@ -235,6 +235,16 @@ class JsonHelper{
                     trip.Title = Title
                 }
                 
+                if let DriversName = item["DriversName"] as? String
+                {
+                    trip.DriversName = DriversName
+                }
+                
+                if let EmployeesName = item["EmployeesName"] as? String
+                {
+                    trip.EmployeesName = EmployeesName
+                }
+                
                 if let UpdateTime = item["UpdateTime"] as? Double{
                     if UpdateTime > 10000000000000{
                         dateFormatter.dateFormat = "yyyyMMddHHmmss"

@@ -18,6 +18,8 @@ class Trip {
     var UpdateTime = Date()
     var RouteId = Int()
     var color = String()
+    var DriversName = String()
+    var EmployeesName = String()
 }
 
 

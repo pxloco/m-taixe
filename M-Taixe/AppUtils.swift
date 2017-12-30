@@ -49,6 +49,14 @@ class AppUtils {
         return attributedString.string
     }
     
+    class func addShadowToView(view: UIView, width: CGFloat, height: CGFloat, color: CGColor, opacity: Float, radius: CGFloat) {
+        view.layer.masksToBounds = false
+        view.layer.shadowOffset = CGSize(width: width, height: height)
+        view.layer.shadowColor = color
+        view.layer.shadowOpacity = opacity
+        view.layer.shadowRadius = radius
+    }
+    
     class func scriptSeat() -> String {
         return "<script>" +
         "var imageElement;" +

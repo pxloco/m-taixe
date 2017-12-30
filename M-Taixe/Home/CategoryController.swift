@@ -13,13 +13,13 @@ import DropDown
 class CategoryController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource{
     
     @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var contrainsButton: NSLayoutConstraint!
     @IBOutlet weak var btnChooseRoute: HPButton!
     @IBOutlet weak var collectionViewCatagory: UICollectionView!
     @IBOutlet weak var labelDiemDi: UILabel!
     @IBOutlet weak var labelDiemDen: UILabel!
     @IBOutlet weak var btnDiemDi: UIButton!
     @IBOutlet weak var btnDiemDen: UIButton!
+    @IBOutlet weak var topBar: UIView!
     
     var tripJson = Data()
     var currentUser = User()
@@ -94,7 +94,9 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
                         DepartGuid: currentlocationStartPoint.LocationID,
                         DepartName: currentlocationStartPoint.Name,
                         ArrivalGuid: currentlocationEndPoint.LocationID,
-                        ArrivalName: currentlocationEndPoint.Name)
+                        ArrivalName: currentlocationEndPoint.Name,
+                        DriverName: arrTrip[(indexPath as NSIndexPath).row].DriversName,
+                        EmployeeName: arrTrip[(indexPath as NSIndexPath).row].EmployeesName)
                 }
             }
         default:
@@ -133,6 +135,8 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
         date = formatter.string(from: d)
         formatter.dateFormat = "dd/MM/yyyy"
         dateLabel.text = formatter.string(from: d)
+        
+        AppUtils.addShadowToView(view: topBar, width: 1, height: 2, color: UIColor.gray.cgColor, opacity: 0.5, radius: 2)
     }
     
     // - MARK: Connect SOAP

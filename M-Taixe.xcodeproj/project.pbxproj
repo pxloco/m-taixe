@@ -217,6 +217,51 @@
 			path = Api;
 			sourceTree = "<group>";
 		};
+		0C0722071FF73D8E006EEC22 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				31ABC5A31DCDD3A7000C8DAC /* ListCallController.swift */,
+				3127E7E01D378638002293D4 /* CategoryController.swift */,
+				3127E7AF1D37259D002293D4 /* LoginController.swift */,
+				3121F91F1D3CC10F00E3ED8E /* InformationController.swift */,
+				0C268EC81FE5147A00DFD811 /* EditRouteViewController.swift */,
+				0CE4B9321FE5F2BC00992EED /* AnalysViewController.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		0C0722081FF73DA8006EEC22 /* Schema */ = {
+			isa = PBXGroup;
+			children = (
+				310EE6411D38D2740003FD8A /* CustomersController.swift */,
+				0C13387E1FDEC791001E6A4B /* SchemaViewController.swift */,
+				318E7E731DADC7FC005BB52D /* FretController.swift */,
+				318E7E771DADD091005BB52D /* AddFretController.swift */,
+				0C268ECA1FE5148800DFD811 /* ListGoodsViewController.swift */,
+				31B307651DCCC54C0039AFBC /* AddOrderController.swift */,
+				0CE4B9341FE6076A00992EED /* MapViewController.swift */,
+			);
+			name = Schema;
+			sourceTree = "<group>";
+		};
+		0C0722091FF73DB7006EEC22 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				311B2F2C1DD5E42800E27978 /* SearchController.swift */,
+				31B3075B1DCC7CDA0039AFBC /* ChooseRouteController.swift */,
+			);
+			name = Other;
+			sourceTree = "<group>";
+		};
+		0C07220A1FF73E04006EEC22 /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				0C1508171FF5CFBA000F18BF /* HomeTabBarViewController.swift */,
+				0C0722051FF73237006EEC22 /* SchemaTabViewController.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
 		0C0A598F1FD58EA300198D55 /* ViewComponents */ = {
 			isa = PBXGroup;
 			children = (
@@ -311,23 +356,10 @@
 		310EE6451D38E14C0003FD8A /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				3127E7E01D378638002293D4 /* CategoryController.swift */,
-				3127E7AF1D37259D002293D4 /* LoginController.swift */,
-				310EE6411D38D2740003FD8A /* CustomersController.swift */,
-				3121F91F1D3CC10F00E3ED8E /* InformationController.swift */,
-				318E7E731DADC7FC005BB52D /* FretController.swift */,
-				318E7E771DADD091005BB52D /* AddFretController.swift */,
-				31B3075B1DCC7CDA0039AFBC /* ChooseRouteController.swift */,
-				31B307651DCCC54C0039AFBC /* AddOrderController.swift */,
-				31ABC5A31DCDD3A7000C8DAC /* ListCallController.swift */,
-				311B2F2C1DD5E42800E27978 /* SearchController.swift */,
-				0C13387E1FDEC791001E6A4B /* SchemaViewController.swift */,
-				0C268EC81FE5147A00DFD811 /* EditRouteViewController.swift */,
-				0C268ECA1FE5148800DFD811 /* ListGoodsViewController.swift */,
-				0CE4B9321FE5F2BC00992EED /* AnalysViewController.swift */,
-				0CE4B9341FE6076A00992EED /* MapViewController.swift */,
-				0C1508171FF5CFBA000F18BF /* HomeTabBarViewController.swift */,
-				0C0722051FF73237006EEC22 /* SchemaTabViewController.swift */,
+				0C07220A1FF73E04006EEC22 /* TabBar */,
+				0C0722091FF73DB7006EEC22 /* Other */,
+				0C0722081FF73DA8006EEC22 /* Schema */,
+				0C0722071FF73D8E006EEC22 /* Home */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -485,7 +517,7 @@
 				TargetAttributes = {
 					3127E7791D372447002293D4 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = X8AYLQ66B6;
+						DevelopmentTeam = 2XR3A8PMZ9;
 						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -924,7 +956,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = X8AYLQ66B6;
+				DEVELOPMENT_TEAM = 2XR3A8PMZ9;
 				INFOPLIST_FILE = "M-Taixe/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -942,7 +974,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = X8AYLQ66B6;
+				DEVELOPMENT_TEAM = 2XR3A8PMZ9;
 				INFOPLIST_FILE = "M-Taixe/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
