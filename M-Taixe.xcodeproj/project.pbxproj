@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0C00EC3B1FF13F7200FA96EC /* SchemaApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C00EC3A1FF13F7200FA96EC /* SchemaApi.swift */; };
 		0C03022E1FE94DD000DB4D45 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C03022D1FE94DD000DB4D45 /* Location.swift */; };
+		0C0722061FF73237006EEC22 /* SchemaTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0722051FF73237006EEC22 /* SchemaTabViewController.swift */; };
 		0C0DA20E1FEAB223008FF915 /* AppUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0DA20D1FEAB223008FF915 /* AppUtils.swift */; };
 		0C13387D1FDEC75E001E6A4B /* SeatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C13387C1FDEC75E001E6A4B /* SeatCell.swift */; };
 		0C13387F1FDEC791001E6A4B /* SchemaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C13387E1FDEC791001E6A4B /* SchemaViewController.swift */; };
@@ -97,6 +98,7 @@
 		0BE5FC5C9F4893F6D5DCFB3E /* Pods-M-Taixe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-M-Taixe.release.xcconfig"; path = "Pods/Target Support Files/Pods-M-Taixe/Pods-M-Taixe.release.xcconfig"; sourceTree = "<group>"; };
 		0C00EC3A1FF13F7200FA96EC /* SchemaApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaApi.swift; sourceTree = "<group>"; };
 		0C03022D1FE94DD000DB4D45 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		0C0722051FF73237006EEC22 /* SchemaTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaTabViewController.swift; sourceTree = "<group>"; };
 		0C0DA20D1FEAB223008FF915 /* AppUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUtils.swift; sourceTree = "<group>"; };
 		0C13387C1FDEC75E001E6A4B /* SeatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeatCell.swift; sourceTree = "<group>"; };
 		0C13387E1FDEC791001E6A4B /* SchemaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaViewController.swift; sourceTree = "<group>"; };
@@ -325,6 +327,7 @@
 				0CE4B9321FE5F2BC00992EED /* AnalysViewController.swift */,
 				0CE4B9341FE6076A00992EED /* MapViewController.swift */,
 				0C1508171FF5CFBA000F18BF /* HomeTabBarViewController.swift */,
+				0C0722051FF73237006EEC22 /* SchemaTabViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -732,6 +735,7 @@
 				0C1508181FF5CFBA000F18BF /* HomeTabBarViewController.swift in Sources */,
 				0CE4B9331FE5F2BC00992EED /* AnalysViewController.swift in Sources */,
 				31ABC5A61DCDDDC8000C8DAC /* Call.swift in Sources */,
+				0C0722061FF73237006EEC22 /* SchemaTabViewController.swift in Sources */,
 				0C03022E1FE94DD000DB4D45 /* Location.swift in Sources */,
 				3182F7CA1DC32B57006517B4 /* CurrentUser.swift in Sources */,
 				3127E7E31D378F6B002293D4 /* Trip.swift in Sources */,

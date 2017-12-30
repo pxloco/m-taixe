@@ -84,7 +84,19 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
         switch segueId {
         case SegueFactory.fromCategoryToSchema.rawValue:
             let indexPath = sender as! IndexPath
-            (segue.destination as! SchemaViewController).initDataFromCategory(tripId: arrTrip[(indexPath as NSIndexPath).row].TripId, LicensePlate: arrTrip[(indexPath as NSIndexPath).row].LicensePlate, gioXuatBen: arrTrip[(indexPath as NSIndexPath).row].StartTime, DepartGuid: currentlocationStartPoint.LocationID, DepartName: currentlocationStartPoint.Name, ArrivalGuid: currentlocationEndPoint.LocationID, ArrivalName: currentlocationEndPoint.Name)
+            let schemaTabBarViewController = segue.destination as! SchemaTabBarViewController
+            for viewController in schemaTabBarViewController.viewControllers! {
+                if viewController is SchemaViewController {
+                    (viewController as! SchemaViewController).initDataFromCategory(
+                        tripId: arrTrip[(indexPath as NSIndexPath).row].TripId,
+                        LicensePlate: arrTrip[(indexPath as NSIndexPath).row].LicensePlate,
+                        gioXuatBen: arrTrip[(indexPath as NSIndexPath).row].StartTime,
+                        DepartGuid: currentlocationStartPoint.LocationID,
+                        DepartName: currentlocationStartPoint.Name,
+                        ArrivalGuid: currentlocationEndPoint.LocationID,
+                        ArrivalName: currentlocationEndPoint.Name)
+                }
+            }
         default:
             break
         }

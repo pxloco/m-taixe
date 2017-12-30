@@ -26,6 +26,7 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
     var ArrivalGuid = String()
     var DepartName = String()
     var ArrivalName = String()
+    var LicensePlate = String()
     
     var ref: DatabaseReference!
     
@@ -47,6 +48,7 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
 
     func initDataFromCategory(tripId: String, LicensePlate: String, gioXuatBen: String, DepartGuid: String, DepartName: String, ArrivalGuid: String, ArrivalName: String) {
         self.tripId = tripId
+        self.LicensePlate = LicensePlate
         self.gioXuatBen = gioXuatBen
         self.DepartGuid = DepartGuid
         self.ArrivalGuid = ArrivalGuid
