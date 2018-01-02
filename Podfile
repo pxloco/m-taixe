@@ -17,7 +17,8 @@ target 'M-Taixe' do
   pod 'DropDown'
   pod 'Firebase/Core'
   pod 'Firebase/Database'
-  
+  pod 'M13Checkbox'
+  pod 'UICheckbox.Swift'
 
   # Pods for M-Taixe
 

@@ -24,6 +24,9 @@
 		0C357E721FDCBE8C008490B2 /* SeatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C357E711FDCBE8C008490B2 /* SeatView.swift */; };
 		0C357E741FDCBE99008490B2 /* SeatView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C357E731FDCBE99008490B2 /* SeatView.xib */; };
 		0C357E761FDCC6BE008490B2 /* Seat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C357E751FDCC6BE008490B2 /* Seat.swift */; };
+		0C9AE4001FF9DACC00128DBA /* RoutetApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9AE3FF1FF9DACC00128DBA /* RoutetApi.swift */; };
+		0C9AE4021FF9DEE800128DBA /* Bus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9AE4011FF9DEE800128DBA /* Bus.swift */; };
+		0C9AE4041FF9DFF600128DBA /* TicketByBus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9AE4031FF9DFF600128DBA /* TicketByBus.swift */; };
 		0CB9BAAE1FE87F2700A9BABB /* CategoryViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB9BAAD1FE87F2700A9BABB /* CategoryViewCell.swift */; };
 		0CD1BD2E1FF3148A00E32053 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0CD1BD2D1FF3148A00E32053 /* GoogleService-Info.plist */; };
 		0CE4B9331FE5F2BC00992EED /* AnalysViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE4B9321FE5F2BC00992EED /* AnalysViewController.swift */; };
@@ -113,6 +116,9 @@
 		0C357E711FDCBE8C008490B2 /* SeatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeatView.swift; sourceTree = "<group>"; };
 		0C357E731FDCBE99008490B2 /* SeatView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SeatView.xib; sourceTree = "<group>"; };
 		0C357E751FDCC6BE008490B2 /* Seat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seat.swift; sourceTree = "<group>"; };
+		0C9AE3FF1FF9DACC00128DBA /* RoutetApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutetApi.swift; sourceTree = "<group>"; };
+		0C9AE4011FF9DEE800128DBA /* Bus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bus.swift; sourceTree = "<group>"; };
+		0C9AE4031FF9DFF600128DBA /* TicketByBus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketByBus.swift; sourceTree = "<group>"; };
 		0CB9BAAD1FE87F2700A9BABB /* CategoryViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewCell.swift; sourceTree = "<group>"; };
 		0CD1BD2D1FF3148A00E32053 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0CE4B9321FE5F2BC00992EED /* AnalysViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysViewController.swift; sourceTree = "<group>"; };
@@ -213,6 +219,7 @@
 			isa = PBXGroup;
 			children = (
 				0C00EC3A1FF13F7200FA96EC /* SchemaApi.swift */,
+				0C9AE3FF1FF9DACC00128DBA /* RoutetApi.swift */,
 			);
 			path = Api;
 			sourceTree = "<group>";
@@ -332,6 +339,8 @@
 				31C136191DD05E9A00B970AA /* Bill.swift */,
 				0C357E751FDCC6BE008490B2 /* Seat.swift */,
 				0C03022D1FE94DD000DB4D45 /* Location.swift */,
+				0C9AE4011FF9DEE800128DBA /* Bus.swift */,
+				0C9AE4031FF9DFF600128DBA /* TicketByBus.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -653,7 +662,9 @@
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/HPUIViewExtensions/HPUIViewExtensions.framework",
 				"${BUILT_PRODUCTS_DIR}/HPXibDesignable/HPXibDesignable.framework",
+				"${BUILT_PRODUCTS_DIR}/M13Checkbox/M13Checkbox.framework",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
+				"${BUILT_PRODUCTS_DIR}/UICheckbox.Swift/UICheckbox_Swift.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
@@ -663,7 +674,9 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HPUIViewExtensions.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HPXibDesignable.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/M13Checkbox.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UICheckbox_Swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -761,6 +774,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				311F3B7D1D3A00AD004507A5 /* SendPostRequest.swift in Sources */,
+				0C9AE4041FF9DFF600128DBA /* TicketByBus.swift in Sources */,
 				31C1361A1DD05E9A00B970AA /* Bill.swift in Sources */,
 				0C268ECB1FE5148800DFD811 /* ListGoodsViewController.swift in Sources */,
 				3121F9221D3CD09700E3ED8E /* ColorHelper.swift in Sources */,
@@ -782,6 +796,7 @@
 				312B88441D3D023400728743 /* InformationCell.swift in Sources */,
 				31B307621DCCB0E60039AFBC /* OrderInforCell.swift in Sources */,
 				0C13387D1FDEC75E001E6A4B /* SeatCell.swift in Sources */,
+				0C9AE4021FF9DEE800128DBA /* Bus.swift in Sources */,
 				0CB9BAAE1FE87F2700A9BABB /* CategoryViewCell.swift in Sources */,
 				3127E7E91D3798B0002293D4 /* JsonHelper.swift in Sources */,
 				0C13387F1FDEC791001E6A4B /* SchemaViewController.swift in Sources */,
@@ -793,6 +808,7 @@
 				3127E7EB1D379B6B002293D4 /* User.swift in Sources */,
 				3121F9201D3CC10F00E3ED8E /* InformationController.swift in Sources */,
 				31ABC5A41DCDD3A7000C8DAC /* ListCallController.swift in Sources */,
+				0C9AE4001FF9DACC00128DBA /* RoutetApi.swift in Sources */,
 				31B3075C1DCC7CDA0039AFBC /* ChooseRouteController.swift in Sources */,
 				310EE64A1D3916610003FD8A /* CustomerCell.swift in Sources */,
 				310EE6481D38F8A00003FD8A /* Customer.swift in Sources */,

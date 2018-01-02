@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '93F0D35ABEDE65D7626FD1CA'
+               BlueprintIdentifier = '1E29D1D429F8932AE630361A'
                BlueprintName = 'HPXibDesignable'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'HPXibDesignable.framework'>

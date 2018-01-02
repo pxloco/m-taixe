@@ -99,6 +99,8 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
                         EmployeeName: arrTrip[(indexPath as NSIndexPath).row].EmployeesName)
                 }
             }
+        case SegueFactory.fromCategoryToEditCategory.rawValue:
+            (segue.destination as! EditRouteViewController).setUpData(tripId: "00000000-0000-0000-0000-000000000000")
         default:
             break
         }

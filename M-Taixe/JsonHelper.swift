@@ -8,6 +8,49 @@
 
 import Foundation
 class JsonHelper{
+    
+    func parseTicketPriceByBus(_ inputData: Data) -> [TicketByBus] {
+        var ticketByBuses = [TicketByBus]()
+        do {
+            let json = try JSONSerialization.jsonObject(with: inputData, options: JSONSerialization.ReadingOptions.allowFragments)
+            for item in json as! [[String: AnyObject]]{
+                let ticketByBus = TicketByBus()
+                if let MapTicketPriceID =  item["MapTicketPriceID"] as? Int {
+                    ticketByBus.MapTicketPriceID = MapTicketPriceID
+                }
+                if let Title = item["Title"] as? String{
+                    ticketByBus.Title = Title
+                }
+                ticketByBuses.append(ticketByBus)
+            }
+        }
+        catch{
+            
+        }
+        return ticketByBuses
+    }
+    
+    func parseBus(_ inputData: Data) -> [Bus] {
+        var buses = [Bus]()
+        do {
+            let json = try JSONSerialization.jsonObject(with: inputData, options: JSONSerialization.ReadingOptions.allowFragments)
+            for item in json as! [[String: AnyObject]]{
+                let bus = Bus()
+                if let busId =  item["BusId"] as? Int {
+                    bus.BusId = busId
+                }
+                if let LicensePlate = item["LicensePlate"] as? String{
+                    bus.LicensePlate = LicensePlate
+                }
+                buses.append(bus)
+            }
+        }
+        catch{
+            
+        }
+        return buses
+    }
+    
     func parseBills(_ inputData: Data)-> [Bill]{
         var items = [Bill]()
         do{

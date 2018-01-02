@@ -13,6 +13,10 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var lblTongSo: UILabel!
     
+    @IBOutlet weak var topbar: UIView!
+    
+    
+    
     var currentUser = User()
     var segmentControl = UISegmentedControl()
     var tripId = String()
@@ -59,31 +63,32 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
     
     func initBar() {
         //Add segmentcontrol vào navigationbar
-        let titleView = UIView.init(frame: CGRect(x: 0, y: 0, width: 300, height: 40))
+//        let titleView = UIView.init(frame: CGRect(x: 0, y: 0, width: 300, height: 40))
         self.initSegmentControl()
-        titleView.addSubview(segmentControl)
+//        titleView.addSubview(segmentControl)
+        topbar.addSubview(segmentControl)
 //        let navBarFrame = self.navigationController!.navigationBar.frame
-//        titleView.frame = CGRect(x: (navBarFrame.width - segmentControl.frame.width) / 2, y: (navBarFrame.height - segmentControl.frame.height) / 2, width: segmentControl.frame.width, height: segmentControl.frame.height)
-        var attr = NSDictionary(object: UIFont(name: "HelveticaNeue", size: 9.0)!, forKey: NSFontAttributeName as NSCopying)
+//        titleView.frame = CGRect(x: (navBarFrame.width - segmentControl.frame.width) / 2, y: (navBarFrame.height - segmentControl.frame.height) / 2, width: segmentControl.frame.width, height: se`gmentControl.frame.height)
+        let attr = NSDictionary(object: UIFont(name: "HelveticaNeue", size: 9.0)!, forKey: NSFontAttributeName as NSCopying)
 
         segmentControl.setTitleTextAttributes(attr as! [AnyHashable : Any], for: UIControlState.normal)
-        self.navigationItem.titleView = titleView
-        var btnAdd = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.add, target: self, action: #selector(CustomersController.btnAddClick))
+//        self.navigationItem.titleView = titleView
+        let btnAdd = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.add, target: self, action: #selector(CustomersController.btnAddClick))
         self.navigationItem.rightBarButtonItem = btnAdd
         
-        var btnHome = UIButton()
-        btnHome.setBackgroundImage(UIImage(named: "home_icon"), for: UIControlState.normal)
-        var frame = btnHome.frame
-        frame.size.width = 35
-        frame.size.height = 25
-        btnHome.frame = frame
+//        let btnHome = UIButton()
+//        btnHome.setBackgroundImage(UIImage(named: "home_icon"), for: UIControlState.normal)
+//        var frame = btnHome.frame
+//        frame.size.width = 35
+//        frame.size.height = 25
+//        btnHome.frame = frame
+//
+//        btnHome.titleEdgeInsets = UIEdgeInsetsMake(5, 0, 0, 0)
+//        btnHome.addTarget(self, action: #selector(self.btnHomeClick), for: UIControlEvents.touchUpInside)
+//        var right = UIBarButtonItem(customView: btnHome)
         
-        btnHome.titleEdgeInsets = UIEdgeInsetsMake(5, 0, 0, 0)
-        btnHome.addTarget(self, action: #selector(self.btnHomeClick), for: UIControlEvents.touchUpInside)
-        var right = UIBarButtonItem(customView: btnHome)
-        
-        self.navigationItem.setHidesBackButton(true, animated: false)
-        self.navigationItem.leftBarButtonItem = right
+//        self.navigationItem.setHidesBackButton(true, animated: false)
+//        self.navigationItem.leftBarButtonItem = right
 
     }
     
@@ -104,6 +109,7 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
         addController.currentUser = currentUser
         self.navigationController?.pushViewController(addController, animated: false)
     }
+    
     func timerTask(){
         if UIApplication.shared.applicationState == UIApplicationState.active{
             loadData()
@@ -113,15 +119,15 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
     func loadFirst(){
         arrCustomers = [Customer]()
         arrCustomersChuaDon = [Customer]()
-        var json = userDefaults.value(forKey: self.tripId) as? Data
+        let json = userDefaults.value(forKey: self.tripId) as? Data
         if json != nil{
-            var stringJson = String(data: json!, encoding: String.Encoding.utf8)
+            let stringJson = String(data: json!, encoding: String.Encoding.utf8)
             //print("json: \(stringJson)")
             self.arrCustomers = self.jsonHelper.parseCustomers(json!)
         }
         self.tableView.reloadData()
         do{
-            var text = try NSAttributedString(data: "<b>\(gioXuatBen)</b> Tổng số hành khách: \(arrCustomersChuaDon.count)".data(using: String.Encoding.unicode, allowLossyConversion: false)!, options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType], documentAttributes: nil)
+            let text = try NSAttributedString(data: "<b>\(gioXuatBen)</b> Tổng số hành khách: \(arrCustomersChuaDon.count)".data(using: String.Encoding.unicode, allowLossyConversion: false)!, options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType], documentAttributes: nil)
             lblTongSo.attributedText = text
         }
         catch{
@@ -140,7 +146,6 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     func loadData(){
-        
         let soapMessage = String(format: "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\"><soapenv:Header/><soapenv:Body><tem:Order_GetByTrip><!--Optional:--><tem:UserName>\(currentUser.UserName)</tem:UserName><!--Optional:--><tem:Password>\(currentUser.Password)</tem:Password><!--Optional:--><tem:TripId>\(tripId)</tem:TripId><tem:SecurityCode>MobihomeAppDv123</tem:SecurityCode></tem:Order_GetByTrip></soapenv:Body></soapenv:Envelope>")
         let soapAction = "http://tempuri.org/IMobihomeWcf/Order_GetByTrip"
         let sendPostRequest = SendPostRequest()
@@ -149,11 +154,11 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
             if error == nil{
                 
                 //Có phản hồi từ server
-                if string != ""{
+                if string != "" {
                     
                     //Parse dữ liệu của server và set lại thuộc tính đã đón hay chưa đón
                     let data = string.data(using: String.Encoding.utf8, allowLossyConversion: false)
-                    var arrTmp = self.jsonHelper.parseCustomers(data!)
+                    let arrTmp = self.jsonHelper.parseCustomers(data!)
                     
                     let jsonString = self.jsonHelper.customersToJson(self.arrCustomers)
                     let jsonData = jsonString.data(using: String.Encoding.utf8, allowLossyConversion: false)
@@ -248,15 +253,15 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
                     self.arrCustomers[i].IsOnBus = true
                 }
             }
-            var strJson = self.jsonHelper.customersToJson(self.arrCustomers)
-            var dataJson = strJson.data(using: String.Encoding.utf8, allowLossyConversion: false)
+            let strJson = self.jsonHelper.customersToJson(self.arrCustomers)
+            let dataJson = strJson.data(using: String.Encoding.utf8, allowLossyConversion: false)
             print(strJson)
             self.userDefaults.setValue(dataJson, forKey: self.tripId)
             self.userDefaults.synchronize()
             
             self.arrCustomersChuaDon.remove(at: (index as NSIndexPath).row)
             do{
-                var t = try NSAttributedString(data: "<b>\(self.gioXuatBen)</b> Tổng số hành khách: \(self.arrCustomersChuaDon.count)".data(using: String.Encoding.unicode, allowLossyConversion: false)!, options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType], documentAttributes: nil)
+                let t = try NSAttributedString(data: "<b>\(self.gioXuatBen)</b> Tổng số hành khách: \(self.arrCustomersChuaDon.count)".data(using: String.Encoding.unicode, allowLossyConversion: false)!, options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType], documentAttributes: nil)
                 self.lblTongSo.attributedText = t
             }
             catch{
@@ -276,11 +281,11 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
     func resetLabelText(){
         do{
             if self.segmentControl.selectedSegmentIndex == 0{
-                var t = try NSAttributedString(data: "<b>\(self.gioXuatBen)</b> Tổng số hành khách: \(self.arrCustomersChuaDon.count)".data(using: String.Encoding.unicode, allowLossyConversion: false)!, options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType], documentAttributes: nil)
+                let t = try NSAttributedString(data: "<b>\(self.gioXuatBen)</b> Tổng số hành khách: \(self.arrCustomersChuaDon.count)".data(using: String.Encoding.unicode, allowLossyConversion: false)!, options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType], documentAttributes: nil)
                 self.lblTongSo.attributedText = t
             }
             if self.segmentControl.selectedSegmentIndex == 1{
-                var t = try NSAttributedString(data: "<b>\(self.gioXuatBen)</b> Tổng số hành khách: \(self.arrCustomers.count)".data(using: String.Encoding.unicode, allowLossyConversion: false)!, options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType], documentAttributes: nil)
+                let t = try NSAttributedString(data: "<b>\(self.gioXuatBen)</b> Tổng số hành khách: \(self.arrCustomers.count)".data(using: String.Encoding.unicode, allowLossyConversion: false)!, options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType], documentAttributes: nil)
                 self.lblTongSo.attributedText = t
             }
         }
@@ -290,12 +295,12 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     var currentSegmentIndex = 0
-    func initSegmentControl(){
-        self.segmentControl = UISegmentedControl.init(frame: CGRect(x: 0, y: 0, width: 156, height: 29))
+    func initSegmentControl() {
+        self.segmentControl = UISegmentedControl.init(frame: CGRect(x: UIScreen.main.bounds.width/2 - 78, y: 20, width: 156, height: 29))
         self.segmentControl.removeAllSegments()
-        self.segmentControl.insertSegment(withTitle: "Chưa đón", at: 0, animated: false)
-        self.segmentControl.insertSegment(withTitle: "Tất cả", at: 1, animated: false)
-        self.segmentControl.insertSegment(withTitle: "Hàng", at: 2, animated: false)
+        self.segmentControl.insertSegment(withTitle: "Chưa đón", at: 0, animated: true)
+        self.segmentControl.insertSegment(withTitle: "Tất cả", at: 1, animated: true)
+        self.segmentControl.insertSegment(withTitle: "Hàng", at: 2, animated: true)
         self.segmentControl.selectedSegmentIndex = 0
         self.segmentControl.addTarget(self, action: #selector(CustomersController.segmentedControlValueChanged(_:)), for:.valueChanged)
         self.segmentControl.addTarget(self, action: #selector(CustomersController.segmentedControlValueChanged(_:)), for:.touchUpInside)
@@ -357,4 +362,8 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
     
     override func viewWillDisappear(_ animated: Bool) {
     }
+    
+    @IBAction func homeAction(_ sender: Any) {
+    }
+    
 }

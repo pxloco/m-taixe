@@ -7,10 +7,12 @@
 //
 
 import Foundation
-class SendPostRequest: NSObject{
+class SendPostRequest: NSObject {
+    
     public typealias SendPostRequestCallBack = (_ string: String, _ error: NSError?) -> Void
     private var callBack : SendPostRequestCallBack?
     var error: NSError?
+    
     func sendRequest(_ soapMessage: String, soapAction: String, callBack: @escaping SendPostRequestCallBack){
         let urlString = "http://api.mobihome.vn/Mobihome.svc"
         let url = URL(string: urlString)
@@ -89,18 +91,60 @@ class SendPostRequest: NSObject{
                     case "http://tempuri.org/IMobihomeWcf/Ticket_GetStatusBookedByTrip":
                         self.parseStatusBookedByTrip(s: s!, callBack: callBack)
                         break;
+                    case "http://tempuri.org/IMobihomeWcf/Trip_GetBusList":
+                        self.parseTrip_GetBusList(s: s!, callBack: callBack)
+                        break;
+                    case "http://tempuri.org/IMobihomeWcf/Trip_GetTicketPriceByBus":
+                        self.parseTicketPriceByBus(s: s!, callBack: callBack)
+                        break;
+                    case "http://tempuri.org/IMobihomeWcf/Trip_Save":
+                        self.parseTripSave(s: s!, callBack: callBack)
+                        break;
                     default:
                         callBack("", error as NSError?)
                         break;
                     }
                 }
-                else{
+                else {
                     callBack("", error as NSError?)
                 }
             }
-            else{
+            else {
                 callBack("", error as NSError?)
             }
+        }
+    }
+    
+    func parseTripSave(s: NSString,callBack: @escaping SendPostRequestCallBack){
+        var arr = s.components(separatedBy: "Trip_SaveResult")
+        if arr.count > 0 {
+            let result = arr[1].replacingOccurrences(of: ">", with: "").replacingOccurrences(of: "</", with: "")
+            callBack(result, nil)
+        }
+        else {
+            callBack("", NSError())
+        }
+    }
+    
+    func parseTicketPriceByBus(s: NSString,callBack: @escaping SendPostRequestCallBack){
+        var arr = s.components(separatedBy: "Trip_GetTicketPriceByBusResult")
+        if arr.count > 0 {
+            let result = arr[1].replacingOccurrences(of: ">", with: "").replacingOccurrences(of: "</", with: "")
+            callBack(result, nil)
+        }
+        else {
+            callBack("", NSError())
+        }
+    }
+    
+    func parseTrip_GetBusList(s: NSString,callBack: @escaping SendPostRequestCallBack){
+        var arr = s.components(separatedBy: "Trip_GetBusListResult")
+        if arr.count > 0 {
+            let result = arr[1].replacingOccurrences(of: ">", with: "").replacingOccurrences(of: "</", with: "")
+            callBack(result, nil)
+        }
+        else {
+            callBack("", NSError())
         }
     }
     

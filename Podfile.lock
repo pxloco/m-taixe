@@ -24,6 +24,7 @@ PODS:
   - HPUIViewExtensions (0.1.24)
   - HPXibDesignable (0.1.6)
   - leveldb-library (1.20)
+  - M13Checkbox (3.2.1)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
     - nanopb/encode (= 0.3.8)
@@ -32,6 +33,7 @@ PODS:
   - NVActivityIndicatorView (4.0.1):
     - NVActivityIndicatorView/Presenter (= 4.0.1)
   - NVActivityIndicatorView/Presenter (4.0.1)
+  - UICheckbox.Swift (1.0.0)
 
 DEPENDENCIES:
   - DropDown
@@ -39,7 +41,9 @@ DEPENDENCIES:
   - Firebase/Database
   - HPUIViewExtensions
   - HPXibDesignable
+  - M13Checkbox
   - NVActivityIndicatorView
+  - UICheckbox.Swift
 
 SPEC CHECKSUMS:
   DropDown: 75562633a203f57a917021b4edb96c76f293b0ec
@@ -51,10 +55,12 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
   HPUIViewExtensions: 66e4670321bbfd153b49049b69487e7d727a637c
   HPXibDesignable: 9404c89a7a36fe22d892498ac105cbd0ae862dd9
-  leveldb-library: 4f9eedf84ab46b4fa3b7893bf30714b2a1a74022
+  leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
+  M13Checkbox: 12376f5b128189432508c240e4a36dc945ab7e4e
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   NVActivityIndicatorView: 77ed6d7b571643e24899e7858bf9ae2ee4c21f31
+  UICheckbox.Swift: 85715689206fac5bae38b308f19c2a3e00442c3b
 
-PODFILE CHECKSUM: a87e2e5375e3d2f848b236067058c49ae0c2d850
+PODFILE CHECKSUM: 887f820ab84d065ce066e2c278a4b855ba1ff5d7
 
 COCOAPODS: 1.3.1
