@@ -10,7 +10,7 @@ import UIKit
 import HPUIViewExtensions
 import DropDown
 
-class CategoryController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource{
+class CategoryController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var btnChooseRoute: HPButton!
@@ -88,19 +88,17 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
             for viewController in schemaTabBarViewController.viewControllers! {
                 if viewController is SchemaViewController {
                     (viewController as! SchemaViewController).initDataFromCategory(
-                        tripId: arrTrip[(indexPath as NSIndexPath).row].TripId,
-                        LicensePlate: arrTrip[(indexPath as NSIndexPath).row].LicensePlate,
-                        gioXuatBen: arrTrip[(indexPath as NSIndexPath).row].StartTime,
                         DepartGuid: currentlocationStartPoint.LocationID,
                         DepartName: currentlocationStartPoint.Name,
                         ArrivalGuid: currentlocationEndPoint.LocationID,
                         ArrivalName: currentlocationEndPoint.Name,
                         DriverName: arrTrip[(indexPath as NSIndexPath).row].DriversName,
-                        EmployeeName: arrTrip[(indexPath as NSIndexPath).row].EmployeesName)
+                        EmployeeName: arrTrip[(indexPath as NSIndexPath).row].EmployeesName,
+                        trip: arrTrip[indexPath.row])
                 }
             }
         case SegueFactory.fromCategoryToEditCategory.rawValue:
-            (segue.destination as! EditRouteViewController).setUpData(tripId: "00000000-0000-0000-0000-000000000000")
+            (segue.destination as! EditRouteViewController).setUpDataFromCategory(tripId: "00000000-0000-0000-0000-000000000000", dateFromCategory: self.date)
         default:
             break
         }
@@ -702,12 +700,7 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let storyBoard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
-//        let controller = storyBoard.instantiateViewController(withIdentifier: "Schema") as! SchemaViewController
         performSegue(withIdentifier: SegueFactory.fromCategoryToSchema.rawValue, sender: indexPath)
-//        controller.initDataFromCategory(currentUser: self.currentUser, tripId: arrTrip[(indexPath as NSIndexPath).row].TripId, gioXuatBen: arrTrip[(indexPath as NSIndexPath).row].StartTime, DepartGuid: currentlocationStartPoint.LocationID, ArrivalGuid: currentlocationEndPoint.LocationID)
-        
-//        self.navigationController?.pushViewController(controller, animated: true)
     }
     
     // MARK: - User Action

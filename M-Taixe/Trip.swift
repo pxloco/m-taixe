@@ -20,6 +20,14 @@ class Trip {
     var color = String()
     var DriversName = String()
     var EmployeesName = String()
+    var TimeOnRoad = Int()
+    var BusPriceID = Int()
+    var Status = String()
+    var IsLockedAgent = Bool()
+    var IsCommit = Bool()
+    var IsFixed = Bool()
+    var AllowTrustDebit = Bool()
+    var BusId = Int()
 }
 
 

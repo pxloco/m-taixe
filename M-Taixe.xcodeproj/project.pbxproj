@@ -16,6 +16,7 @@
 		0C1508161FF5C710000F18BF /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C1508151FF5C710000F18BF /* Home.storyboard */; };
 		0C1508181FF5CFBA000F18BF /* HomeTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1508171FF5CFBA000F18BF /* HomeTabBarViewController.swift */; };
 		0C1512621FF68C7300347556 /* Schema.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C1512611FF68C7300347556 /* Schema.storyboard */; };
+		0C24A8F71FFD9E230036B297 /* Route.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C24A8F61FFD9E230036B297 /* Route.storyboard */; };
 		0C260A341FED659D00AAF487 /* map.html in Resources */ = {isa = PBXBuildFile; fileRef = 0C260A331FED659D00AAF487 /* map.html */; };
 		0C268EC91FE5147A00DFD811 /* EditRouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C268EC81FE5147A00DFD811 /* EditRouteViewController.swift */; };
 		0C268ECB1FE5148800DFD811 /* ListGoodsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C268ECA1FE5148800DFD811 /* ListGoodsViewController.swift */; };
@@ -108,6 +109,7 @@
 		0C1508151FF5C710000F18BF /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
 		0C1508171FF5CFBA000F18BF /* HomeTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabBarViewController.swift; sourceTree = "<group>"; };
 		0C1512611FF68C7300347556 /* Schema.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Schema.storyboard; sourceTree = "<group>"; };
+		0C24A8F61FFD9E230036B297 /* Route.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Route.storyboard; sourceTree = "<group>"; };
 		0C260A331FED659D00AAF487 /* map.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = map.html; sourceTree = "<group>"; };
 		0C268EC81FE5147A00DFD811 /* EditRouteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRouteViewController.swift; sourceTree = "<group>"; };
 		0C268ECA1FE5148800DFD811 /* ListGoodsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListGoodsViewController.swift; sourceTree = "<group>"; };
@@ -427,6 +429,7 @@
 				3127E77D1D372447002293D4 /* AppDelegate.swift */,
 				3127E7B51D373313002293D4 /* M-Taixe-Bridging-Header.h */,
 				0C1508151FF5C710000F18BF /* Home.storyboard */,
+				0C24A8F61FFD9E230036B297 /* Route.storyboard */,
 			);
 			path = "M-Taixe";
 			sourceTree = "<group>";
@@ -578,6 +581,7 @@
 				0C357E741FDCBE99008490B2 /* SeatView.xib in Resources */,
 				0C1508161FF5C710000F18BF /* Home.storyboard in Resources */,
 				3127E7851D372448002293D4 /* Assets.xcassets in Resources */,
+				0C24A8F71FFD9E230036B297 /* Route.storyboard in Resources */,
 				0C1512621FF68C7300347556 /* Schema.storyboard in Resources */,
 				31B307681DCCCDA50039AFBC /* select.html in Resources */,
 				0C260A341FED659D00AAF487 /* map.html in Resources */,

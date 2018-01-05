@@ -12,11 +12,8 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var lblTongSo: UILabel!
-    
     @IBOutlet weak var topbar: UIView!
-    
-    
-    
+
     var currentUser = User()
     var segmentControl = UISegmentedControl()
     var tripId = String()
@@ -73,7 +70,7 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
 
         segmentControl.setTitleTextAttributes(attr as! [AnyHashable : Any], for: UIControlState.normal)
 //        self.navigationItem.titleView = titleView
-        let btnAdd = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.add, target: self, action: #selector(CustomersController.btnAddClick))
+        let btnAdd = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.add, target: self, action: nil)
         self.navigationItem.rightBarButtonItem = btnAdd
         
 //        let btnHome = UIButton()
@@ -95,20 +92,7 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
     func btnHomeClick(){
         self.navigationController?.popViewController(animated: true)
     }
-    
-    func btnAddClick(){
-        let transition:CATransition = CATransition()
-        transition.duration = 0.5
-        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromTop
-        self.navigationController!.view.layer.add(transition, forKey: kCATransition)
-        let storyboard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
-        let addController = storyboard.instantiateViewController(withIdentifier: "AddOrder") as! AddOrderController
-        addController.tripId = tripId
-        addController.currentUser = currentUser
-        self.navigationController?.pushViewController(addController, animated: false)
-    }
+
     
     func timerTask(){
         if UIApplication.shared.applicationState == UIApplicationState.active{
@@ -117,6 +101,8 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     func loadFirst(){
+        var firstTab = self.tabBarController?.viewControllers![0] as! SchemaViewController
+        self.tripId = firstTab.tripId
         arrCustomers = [Customer]()
         arrCustomersChuaDon = [Customer]()
         let json = userDefaults.value(forKey: self.tripId) as? Data
@@ -184,7 +170,6 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
                 
             }
         }
-        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -203,7 +188,7 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromTop
         self.navigationController!.view.layer.add(transition, forKey: kCATransition)
-        let storyBoard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
+        let storyBoard = UIStoryboard.init(name: "Schema", bundle: Bundle.main)
         let controller = storyBoard.instantiateViewController(withIdentifier: "AddOrder") as! AddOrderController
         controller.orderGuid = arrCustomers[indexPath.row].OrderGuid
         controller.currentOrder = arrCustomers[indexPath.row]
@@ -312,7 +297,7 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
         switch segmentControl.selectedSegmentIndex {
         case 0:
             currentSegmentIndex = 0
-            do{
+            do {
                 let text = try NSAttributedString(data: "<b>\(gioXuatBen)</b> Tổng số hành khách: \(arrCustomersChuaDon.count)".data(using: String.Encoding.unicode, allowLossyConversion: false)!, options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType], documentAttributes: nil)
                 lblTongSo.attributedText = text
             }
@@ -327,6 +312,8 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
             catch{
                 
             }
+        case 2:
+            print("asasdasdsad")
         default:
             let storyBoard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
             let controller = storyBoard.instantiateViewController(withIdentifier: "Fret") as! FretController
@@ -364,6 +351,22 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     @IBAction func homeAction(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
     }
+    
+    @IBAction func addGoodsAction(_ sender: Any) {
+        let transition:CATransition = CATransition()
+        transition.duration = 0.5
+        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromTop
+        self.navigationController!.view.layer.add(transition, forKey: kCATransition)
+        let storyboard = UIStoryboard.init(name: "Schema", bundle: Bundle.main)
+        let addController = storyboard.instantiateViewController(withIdentifier: "AddOrder") as! AddOrderController
+        addController.tripId = tripId
+        addController.currentUser = currentUser
+        self.navigationController?.pushViewController(addController, animated: false)
+    }
+    
     
 }

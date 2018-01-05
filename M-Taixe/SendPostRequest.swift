@@ -100,6 +100,9 @@ class SendPostRequest: NSObject {
                     case "http://tempuri.org/IMobihomeWcf/Trip_Save":
                         self.parseTripSave(s: s!, callBack: callBack)
                         break;
+                    case "http://tempuri.org/IMobihomeWcf/Trip_Delete":
+                        self.parseTripDelete(s: s!, callBack: callBack)
+                        break;
                     default:
                         callBack("", error as NSError?)
                         break;
@@ -112,6 +115,17 @@ class SendPostRequest: NSObject {
             else {
                 callBack("", error as NSError?)
             }
+        }
+    }
+    
+    func parseTripDelete(s: NSString,callBack: @escaping SendPostRequestCallBack){
+        var arr = s.components(separatedBy: "Trip_DeleteResult")
+        if arr.count > 0 {
+            let result = arr[1].replacingOccurrences(of: ">", with: "").replacingOccurrences(of: "</", with: "")
+            callBack(result, nil)
+        }
+        else {
+            callBack("", NSError())
         }
     }
     

@@ -30,6 +30,7 @@ class EditRouteViewController: UIViewController {
     @IBOutlet weak var checkboxLuuGiu: UICheckbox!
     @IBOutlet weak var shadowntopbar: UIView!
     @IBOutlet weak var labelTimeStart: UILabel!
+    @IBOutlet weak var btnHuyChuyen: HPButton!
     
     var arrPhuongTien = [Bus]()
     var arrTuyen = [Route]()
@@ -43,9 +44,15 @@ class EditRouteViewController: UIViewController {
     var timeStart = ""
     var formatter = DateFormatter()
     var tripId = String()
+    var IsLockedAgent = Bool()
+    var IsFixed = Bool()
+    var AllowTrustDebit = Bool()
+    var UseFloorSeat = Bool()
+    var currentTrip = Trip()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUpUserDefaultParam()
         setUpUI()
         setUpView()
         loadPhuongTien()
@@ -58,27 +65,61 @@ class EditRouteViewController: UIViewController {
     }
     
     func setUpUI() {
-        if self.tripId != "00000000-0000-0000-0000-000000000000" {
+        if self.currentTrip.TripId == "00000000-0000-0000-0000-000000000000" {
             titleLabel.text = "Thêm chuyến"
+            btnHuyChuyen.isHidden = true
+            //lấy ngày hiện tại
+            formatter.dateFormat = "HHmm"
+            let d = Date()
+            timeStart = currentTrip.StartDate + formatter.string(from: d)
+            formatter.dateFormat = "HH:mm"
+            labelTimeStart.text = formatter.string(from: d)
         } else {
             titleLabel.text = "Sửa thông tin chuyến"
+            btnHuyChuyen.isHidden = false
+            
+            txtBienSo.text = currentTrip.LicensePlate
+            txtTaiXe.text = currentTrip.DriversName
+            txtTaiXe.text = currentTrip.Title
+            
+            if currentTrip.AllowTrustDebit {
+                checkboxChoDatCoc.isSelected = true
+            } else {
+                checkboxChoDatCoc.isSelected = false
+            }
+            
+            if currentTrip.IsFixed {
+                checkboxBanOnline.isSelected = true
+            } else {
+                checkboxBanOnline.isSelected = false
+            }
+            
+            if currentTrip.IsLockedAgent {
+                checkboxChoDaiLyBan.isSelected = true
+            } else {
+                checkboxChoDaiLyBan.isSelected = false
+            }
+            
+            currentGiaVe.MapTicketPriceID = currentTrip.BusPriceID
+            currentTuyen.RouteId = currentTrip.RouteId
+            currentPhuongTien.BusId = currentTrip.BusPriceID
+            
+            let arrdate = currentTrip.StartDate.components(separatedBy: ":")
+            let currentDate = arrdate[2] + arrdate[1] + arrdate[0]
+            //lấy ngày hiện tại
+            formatter.dateFormat = "HHmm"
+            let d = Date()
+            timeStart = currentDate + formatter.string(from: d)
+            formatter.dateFormat = "HH:mm"
+            labelTimeStart.text = formatter.string(from: d)
         }
-        
-        //lấy ngày hiện tại
-        formatter.dateFormat = "HHmm"
-        let d = Date()
-        timeStart = formatter.string(from: d)
-        formatter.dateFormat = "HH:mm"
-        labelTimeStart.text = formatter.string(from: d)
         
         AppUtils.addShadowToView(view: shadowntopbar, width: 1, height: 2, color: UIColor.gray.cgColor, opacity: 0.5, radius: 2)
         
     }
     
-    func setUpData(tripId: String) {
-        self.tripId = tripId
+    func setUpUserDefaultParam() {
         let defaults = UserDefaults.standard
-        
         let userName = defaults.value(forKey: "UserName")
         let password = defaults.value(forKey: "Password")
         let displayName = defaults.value(forKey: "FullName")
@@ -96,6 +137,16 @@ class EditRouteViewController: UIViewController {
         currentUser.AgentId = AgentId as! String
         currentUser.UserId = userId  as! String
         currentUser.UserGuid = userGuid as! String
+    }
+    
+    func setUpDataFromCategory(tripId: String, dateFromCategory: String) {
+        self.currentTrip.TripId = tripId
+        self.currentTrip.StartDate = dateFromCategory
+    }
+    
+    func setUpDataFromSchema(trip: Trip) {
+        currentTrip = trip
+        tripId = trip.TripId
     }
     
     // MARK: - User Action
@@ -174,32 +225,30 @@ class EditRouteViewController: UIViewController {
     }
     
     @IBAction func btnGioXuatPhat(_ sender: Any) {
-        formatter.dateFormat = "HHmm"
         let datePicker = DatePickerDialog()
+        formatter.dateFormat = "yyyyMMddHHmm"
         datePicker.defaultDate = formatter.date(from: timeStart)
         datePicker.show("Chọn giờ xuất phát", doneButtonTitle: "Chọn", cancelButtonTitle: "Huỷ", datePickerMode: .time) {
             (date) -> Void in
             self.formatter.dateFormat = "HH:mm"
             self.labelTimeStart.text = self.formatter.string(from: date)
+            
+            self.formatter.dateFormat = "HHmm"
+            self.timeStart = self.currentTrip.StartDate + self.formatter.string(from: date)
         }
     }
     
     @IBAction func btnHuyChuyen(_ sender: Any) {
-        
+        self.deleteTrip()
     }
     
     @IBAction func btnLuu(_ sender: Any) {
-        var IsLockedAgent = Bool()
-        var IsFixed = Bool()
-        var AllowTrustDebit = Bool()
-        var UseFloorSeat = Bool()
-        
         IsLockedAgent = checkboxChoDaiLyBan.isSelected
-        IsFixed = checkboxGGioiHanNguoiBan.isSelected
+        IsFixed = checkboxBanOnline.isSelected
         AllowTrustDebit = checkboxBanOnline.isSelected
         UseFloorSeat = checkboxCoGhe.isSelected
         
-        saveTrip(BusId: currentPhuongTien.BusId, Title: txtTaiXe.text ?? "", StartTime: labelTimeStart.text ?? "", TimeOnRoad: "", BusPriceID: currentGiaVe.MapTicketPriceID, RouteId: currentTuyen.RouteId, Status: "", IsLockedAgent: IsLockedAgent, IsFixed: IsFixed, AllowTrustDebit: AllowTrustDebit, UseFloorSeat: UseFloorSeat, Mobile: txtDtChuyen.text ?? "", LicensePlate: txtBienSo.text ?? "")
+        saveTrip(BusId: currentPhuongTien.BusId, Title: txtTaiXe.text ?? "", StartTime: timeStart, TimeOnRoad: "-1", BusPriceID: currentGiaVe.MapTicketPriceID, RouteId: currentTuyen.RouteId, Status: "1", IsLockedAgent: IsLockedAgent, IsFixed: IsFixed, AllowTrustDebit: AllowTrustDebit, UseFloorSeat: UseFloorSeat, Mobile: txtDtChuyen.text ?? "", LicensePlate: txtBienSo.text ?? "")
     }
     
     @IBAction func btnHuy(_ sender: Any) {
@@ -236,9 +285,17 @@ class EditRouteViewController: UIViewController {
                 let data = string.data(using: String.Encoding.utf8, allowLossyConversion: false)
                 self.arrPhuongTien = self.jsonHelper.parseBus(data!)
                 if self.arrPhuongTien.count > 0 {
-                    self.txtPhuongTien.text = self.arrPhuongTien[0].LicensePlate
-                    self.currentPhuongTien = self.arrPhuongTien[0]
-                    self.loadGiaVe(busId: self.currentPhuongTien.BusId)
+                    for phuongtien in self.arrPhuongTien {
+                        if phuongtien.BusId == self.currentPhuongTien.BusId {
+                            self.txtPhuongTien.text = phuongtien.LicensePlate
+                            self.currentPhuongTien = phuongtien
+                            break
+                        } else {
+                            self.txtPhuongTien.text = self.arrPhuongTien[0].LicensePlate
+                            self.currentPhuongTien = self.arrPhuongTien[0]
+                            self.loadGiaVe(busId: self.currentPhuongTien.BusId)
+                        }
+                    }
                 }
             }
             else{
@@ -274,9 +331,18 @@ class EditRouteViewController: UIViewController {
             if error == nil {
                 let data = string.data(using: String.Encoding.utf8, allowLossyConversion: false)
                 self.arrTuyen = self.jsonHelper.parseRoutes(data!)
+                
                 if self.arrTuyen.count > 0 {
-                    self.txtTuyen.text = self.arrTuyen[0].Name
-                    self.currentTuyen = self.arrTuyen[0]
+                    for route in self.arrTuyen {
+                        if route.RouteId == self.currentTuyen.RouteId {
+                            self.txtTuyen.text = route.Name
+                            self.currentTuyen = route
+                            break
+                        } else {
+                            self.txtTuyen.text = self.arrTuyen[0].Name
+                            self.currentTuyen = self.arrTuyen[0]
+                        }
+                    }
                 }
             }
             else {
@@ -314,9 +380,18 @@ class EditRouteViewController: UIViewController {
             if error == nil {
                 let data = string.data(using: String.Encoding.utf8, allowLossyConversion: false)
                 self.arrGiaVe = self.jsonHelper.parseTicketPriceByBus(data!)
+                
                 if self.arrGiaVe.count > 0 {
-                    self.txtGiaVe.text = self.arrGiaVe[0].Title
-                    self.currentGiaVe = self.arrGiaVe[0]
+                    for giave in self.arrGiaVe {
+                        if giave.MapTicketPriceID == self.currentTrip.BusPriceID {
+                            self.txtGiaVe.text = giave.Title
+                            self.currentGiaVe = giave
+                            break
+                        } else {
+                            self.txtGiaVe.text = self.arrGiaVe[0].Title
+                            self.currentGiaVe = self.arrGiaVe[0]
+                        }
+                    }
                 }
             }
             else{
@@ -343,7 +418,7 @@ class EditRouteViewController: UIViewController {
             "<!--Optional:-->" +
             "<tem:SecurityCode>MobihomeAppDv123</tem:SecurityCode>" +
             "<!--Optional:-->" +
-            "<tem:TripId>\(tripId)</tem:TripId>" +
+            "<tem:TripId>\(currentTrip.TripId)</tem:TripId>" +
             "</tem:Trip_Delete>" +
             "</soapenv:Body>" +
         "</soapenv:Envelope>"
@@ -353,10 +428,8 @@ class EditRouteViewController: UIViewController {
         sendPostRequest.sendRequest(soapMessage, soapAction: soapAction){ (string, error) in
             if error == nil {
                 let data = string.data(using: String.Encoding.utf8, allowLossyConversion: false)
-                self.arrGiaVe = self.jsonHelper.parseTicketPriceByBus(data!)
-                if self.arrGiaVe.count > 0 {
-                    self.txtGiaVe.text = self.arrGiaVe[0].Title
-                    self.currentGiaVe = self.arrGiaVe[0]
+                if String(data: data!, encoding: String.Encoding.utf8) as String! == "true" {
+                    self.navigationController?.popViewController(animated: true)
                 }
             }
             else{
@@ -383,7 +456,7 @@ class EditRouteViewController: UIViewController {
             "<!--Optional:-->" +
             "<tem:SecurityCode>MobihomeAppDv123</tem:SecurityCode>" +
             "<!--Optional:-->" +
-            "<tem:TripId>\(tripId)</tem:TripId>" +
+            "<tem:TripId>\(currentTrip.TripId)</tem:TripId>" +
             "<!--Optional:-->" +
             "<tem:BusId>\(BusId)</tem:BusId>" +
             "<!--Optional:-->" +

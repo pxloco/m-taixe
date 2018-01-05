@@ -31,6 +31,7 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
     var LicensePlate = String()
     var DriverName = String()
     var EmployeeName = String()
+    var currentTrip = Trip()
     
     var ref: DatabaseReference!
     
@@ -52,14 +53,28 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
     
     // MARK: - Init
 
-    func initDataFromCategory(tripId: String, LicensePlate: String, gioXuatBen: String, DepartGuid: String, DepartName: String, ArrivalGuid: String, ArrivalName: String, DriverName: String, EmployeeName: String) {
-        self.tripId = tripId
-        self.LicensePlate = LicensePlate
-        self.gioXuatBen = gioXuatBen
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let segueId = segue.identifier else {
+            return
+        }
+        
+        switch segueId {
+        case SegueFactory.fromSchemaToEditRoute.rawValue:
+            (segue.destination as! EditRouteViewController).setUpDataFromSchema(trip: currentTrip)
+        default:
+            break
+        }
+    }
+    
+    func initDataFromCategory(DepartGuid: String, DepartName: String, ArrivalGuid: String, ArrivalName: String, DriverName: String, EmployeeName: String, trip: Trip) {
+        self.tripId = trip.TripId
+        self.LicensePlate = trip.LicensePlate
+        self.gioXuatBen = trip.StartTime
         self.DepartGuid = DepartGuid
         self.ArrivalGuid = ArrivalGuid
         self.DepartName = DepartName
         self.ArrivalName = ArrivalName
+        self.currentTrip = trip
     }
     
     func setUpData() {
@@ -73,6 +88,7 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
         let AgentId = defaults.value(forKey: "AgentId")
         let userId = defaults.value(forKey: "UserId")
         let userGuid = defaults.value(forKey: "UserGuid")
+        
         
         currentUser.UserName = userName  as! String
         currentUser.Password = password as! String
@@ -251,4 +267,21 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
     @IBAction func homeClick(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
+    
+    @IBAction func editRouteAction(_ sender: Any) {
+        performSegue(withIdentifier: SegueFactory.fromSchemaToEditRoute.rawValue, sender: nil)
+    }
+    
+    @IBAction func editDriverAction(_ sender: Any) {
+        
+    }
+    
+ 
+    @IBAction func changeCarAction(_ sender: Any) {
+    }
+    
+
+    @IBAction func listGoodsAction(_ sender: Any) {
+    }
+    
 }

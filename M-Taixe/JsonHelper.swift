@@ -288,6 +288,46 @@ class JsonHelper{
                     trip.EmployeesName = EmployeesName
                 }
                 
+                if let TimeOnRoad = item["TimeOnRoad"] as? Int
+                {
+                    trip.TimeOnRoad = TimeOnRoad
+                }
+                
+                if let BusPriceID = item["BusPriceID"] as? Int
+                {
+                    trip.BusPriceID = BusPriceID
+                }
+                
+                if let Status = item["Status"] as? String
+                {
+                    trip.Status = Status
+                }
+                
+                if let IsLockedAgent = item["IsLockedAgent"] as? Bool
+                {
+                    trip.IsLockedAgent = IsLockedAgent
+                }
+                
+                if let IsCommit = item["IsCommit"] as? Bool
+                {
+                    trip.IsCommit = IsCommit
+                }
+                
+                if let IsFixed = item["IsFixed"] as? Bool
+                {
+                    trip.IsFixed = IsFixed
+                }
+                
+                if let AllowTrustDebit = item["AllowTrustDebit"] as? Bool
+                {
+                    trip.AllowTrustDebit = AllowTrustDebit
+                }
+                
+                if let BusId = item["BusId"] as? Int
+                {
+                    trip.BusId = BusId
+                }
+                
                 if let UpdateTime = item["UpdateTime"] as? Double{
                     if UpdateTime > 10000000000000{
                         dateFormatter.dateFormat = "yyyyMMddHHmmss"
