@@ -96,8 +96,8 @@ class AddOrderController: UITableViewController, UITextFieldDelegate, UIWebViewD
         webviewArrival = inforCell.webviewArrival
         webviewDepart.delegate = self
         webviewArrival.delegate = self
-        var bundle = Bundle.main
-        var file = bundle.path(forResource: "select", ofType: "html")
+        let bundle = Bundle.main
+        let file = bundle.path(forResource: "select", ofType: "html")
         do{
             htmlString = try String.init(contentsOfFile: file!)
         }
@@ -105,6 +105,7 @@ class AddOrderController: UITableViewController, UITextFieldDelegate, UIWebViewD
             
         }
     }
+    
     func webViewDidFinishLoad(_ webView: UIWebView) {
         if self.orderGuid != "00000000-0000-0000-0000-000000000000" {
             print(self.currentOrder.ArrivalText)
@@ -122,6 +123,7 @@ class AddOrderController: UITableViewController, UITextFieldDelegate, UIWebViewD
         }
 
     }
+    
     func parseRouteDetailsToString(routeDetails: [RouteDetail])->String{
         var result = ""
         for routeDetail in routeDetails{
@@ -129,29 +131,37 @@ class AddOrderController: UITableViewController, UITextFieldDelegate, UIWebViewD
         }
         return result
     }
+    
     func btnCancelClick(){
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
         self.navigationController?.popViewController(animated: true);
     }
+    
     func btnSaveClick(){
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
         saveOrder()
     }
+    
     func saveOrder(){
-        var custMobile = inforCell.tfMobile.text ?? ""
-        var custName = inforCell.tfName.text ?? ""
-        var catchAdd = inforCell.tfCatchAddress.text ?? ""
-        var departGuid = webviewDepart.stringByEvaluatingJavaScript(from: "document.getElementById('select').value") ?? ""
-        var arrivalGuid = webviewArrival.stringByEvaluatingJavaScript(from: "document.getElementById('select').value") ?? ""
-        var departText = webviewDepart.stringByEvaluatingJavaScript(from: "getSelectedText()") ?? ""
-        var arrivalText = webviewArrival.stringByEvaluatingJavaScript(from: "getSelectedText()") ?? ""
+        let custMobile = inforCell.tfMobile.text ?? ""
+        let custName = inforCell.tfName.text ?? ""
+        let catchAdd = inforCell.tfCatchAddress.text ?? ""
+        let departGuid = webviewDepart.stringByEvaluatingJavaScript(from: "document.getElementById('select').value") ?? ""
+        let arrivalGuid = webviewArrival.stringByEvaluatingJavaScript(from: "document.getElementById('select').value") ?? ""
+        let departText = webviewDepart.stringByEvaluatingJavaScript(from: "getSelectedText()") ?? ""
+        let arrivalText = webviewArrival.stringByEvaluatingJavaScript(from: "getSelectedText()") ?? ""
         var seats = ""
+        
         for seat in arrSeat{
             seats = "\(seats),\(seat)"
         }
+        
         if custMobile == ""{
             self.alert.showError("Lỗi!", subTitle: "Bạn phải điền số điện thoại của khách!")
             return
         }
-        var soapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
+        
+        let soapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
             "<soapenv:Header/>" +
             "<soapenv:Body>" +
             "<tem:Order_Save>" +
@@ -194,7 +204,7 @@ class AddOrderController: UITableViewController, UITextFieldDelegate, UIWebViewD
             "</tem:Order_Save>" +
             "</soapenv:Body>" +
         "</soapenv:Envelope>"
-        var soapAction = "http://tempuri.org/IMobihomeWcf/Order_Save"
+        let soapAction = "http://tempuri.org/IMobihomeWcf/Order_Save"
         sendPostRequest.sendRequest(soapMessage, soapAction: soapAction){
             (result, error) in
             if error != nil{
@@ -206,6 +216,7 @@ class AddOrderController: UITableViewController, UITextFieldDelegate, UIWebViewD
             }
         }
     }
+    
     override func viewWillDisappear(_ animated: Bool) {
         let transition:CATransition = CATransition()
         transition.duration = 0.5
@@ -214,6 +225,7 @@ class AddOrderController: UITableViewController, UITextFieldDelegate, UIWebViewD
         transition.subtype = kCATransitionFromBottom
         self.navigationController!.view.layer.add(transition, forKey: kCATransition)
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

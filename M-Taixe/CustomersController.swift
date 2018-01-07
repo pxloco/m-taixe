@@ -13,7 +13,8 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var lblTongSo: UILabel!
     @IBOutlet weak var topbar: UIView!
-
+    @IBOutlet weak var addGoodsButton: UIButton!
+    
     var currentUser = User()
     var segmentControl = UISegmentedControl()
     var tripId = String()
@@ -89,7 +90,7 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
 
     }
     
-    func btnHomeClick(){
+    func btnHomeClick() {
         self.navigationController?.popViewController(animated: true)
     }
 
@@ -300,6 +301,7 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
             do {
                 let text = try NSAttributedString(data: "<b>\(gioXuatBen)</b> Tổng số hành khách: \(arrCustomersChuaDon.count)".data(using: String.Encoding.unicode, allowLossyConversion: false)!, options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType], documentAttributes: nil)
                 lblTongSo.attributedText = text
+                addGoodsButton.isHidden = true
             }
             catch{
             }
@@ -308,12 +310,13 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
             do{
                 let text = try NSAttributedString(data: "<b>\(gioXuatBen)</b> Tổng số hành khách: \(arrCustomers.count)".data(using: String.Encoding.unicode, allowLossyConversion: false)!, options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType], documentAttributes: nil)
                 lblTongSo.attributedText = text
+                addGoodsButton.isHidden = true
             }
             catch{
                 
             }
         case 2:
-            print("asasdasdsad")
+            addGoodsButton.isHidden = false
         default:
             let storyBoard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
             let controller = storyBoard.instantiateViewController(withIdentifier: "Fret") as! FretController
