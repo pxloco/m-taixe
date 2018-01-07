@@ -336,6 +336,19 @@ class JsonHelper{
                     }
                    
                 }
+                
+                if let TicketAmount = item["TicketAmount"] as? Int {
+                    trip.TicketAmount = TicketAmount
+                }
+                
+                if let TicketPaidAmount = item["TicketPaidAmount"] as? Int {
+                    trip.TicketPaidAmount = TicketPaidAmount
+                }
+                
+                if let CountPaid = item["CountPaid"] as? Int {
+                    trip.CountPaid = CountPaid
+                }
+                
                 trips.append(trip)
             }
         }

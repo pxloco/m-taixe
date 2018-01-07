@@ -20,6 +20,8 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
     @IBOutlet weak var btnDiemDi: UIButton!
     @IBOutlet weak var btnDiemDen: UIButton!
     @IBOutlet weak var topBar: UIView!
+    @IBOutlet weak var thongKeVeLabel: UILabel!
+    @IBOutlet weak var thongKeHangLabel: UILabel!
     
     var tripJson = Data()
     var currentUser = User()
@@ -413,6 +415,19 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
                         
                         //Load dữ liệu của server trả về
                         self.arrTrip = trips
+                        var tongSoTienVeBanDuoc: Int = 0
+                        var tongSoTienVeChuaThanhToan: Int = 0
+                        var tongSoVeBanDuoc: Int = 0
+                        var tongSoVeChuaThanhToan: Int = 0
+                        for trip in self.arrTrip {
+                            tongSoTienVeBanDuoc += trip.TicketAmount
+                            tongSoTienVeChuaThanhToan += trip.TicketAmount - trip.TicketPaidAmount
+                            tongSoVeBanDuoc += trip.CountBooked
+                            tongSoVeChuaThanhToan += trip.CountBooked - trip.CountPaid
+                        }
+                        self.thongKeVeLabel.text = "Số vé: \(tongSoVeBanDuoc) - \(tongSoTienVeBanDuoc) (\(tongSoVeChuaThanhToan) - \(tongSoTienVeChuaThanhToan) chưa thanh toán)"
+                        
+                        
                         self.collectionViewCatagory.reloadData()
                     }
                 }
