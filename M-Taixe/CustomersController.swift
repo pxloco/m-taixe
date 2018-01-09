@@ -281,6 +281,7 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     var currentSegmentIndex = 0
+    
     func initSegmentControl() {
         self.segmentControl = UISegmentedControl.init(frame: CGRect(x: UIScreen.main.bounds.width/2 - 78, y: 20, width: 156, height: 29))
         self.segmentControl.removeAllSegments()
@@ -315,10 +316,8 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
             catch{
                 
             }
-        case 2:
-            addGoodsButton.isHidden = false
         default:
-            let storyBoard = UIStoryboard.init(name: "Main", bundle: Bundle.main)
+            let storyBoard = UIStoryboard.init(name: "Schema", bundle: Bundle.main)
             let controller = storyBoard.instantiateViewController(withIdentifier: "Fret") as! FretController
             controller.currentUser = currentUser
             controller.tripId = tripId

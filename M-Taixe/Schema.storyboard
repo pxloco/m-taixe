@@ -11,7 +11,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Item-->
+        <!--Sơ đồ-->
         <scene sceneID="LDe-Eg-b7w">
             <objects>
                 <viewController storyboardIdentifier="Schema" id="uDm-ca-5k1" customClass="SchemaViewController" customModule="M_Taixe" customModuleProvider="target" sceneMemberID="viewController">
@@ -186,7 +186,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="TJy-02-NSv"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" image="map_icon_active" id="Lh9-qD-Q1s"/>
+                    <tabBarItem key="tabBarItem" title="Sơ đồ" image="map_icon_active" id="Lh9-qD-Q1s"/>
                     <connections>
                         <outlet property="bienSoLabel" destination="UsC-gj-TlQ" id="7MN-IU-Au2"/>
                         <outlet property="schemaWebView" destination="Mwt-2q-Edu" id="YHl-zM-K1D"/>
@@ -208,7 +208,7 @@
             </objects>
             <point key="canvasLocation" x="3373" y="-3013"/>
         </scene>
-        <!--Item-->
+        <!--Bản đồ-->
         <scene sceneID="24T-WQ-xGV">
             <objects>
                 <viewController storyboardIdentifier="MapViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="pVX-Sg-G4F" customClass="MapViewController" customModule="M_Taixe" customModuleProvider="target" sceneMemberID="viewController">
@@ -263,7 +263,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="qbV-rP-hP6"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" image="map_icon_active" id="zGd-vP-Uf2"/>
+                    <tabBarItem key="tabBarItem" title="Bản đồ" image="map_google_icon" id="zGd-vP-Uf2"/>
                     <connections>
                         <outlet property="topbar" destination="D1n-EX-bCr" id="iKC-4Z-yxY"/>
                     </connections>
@@ -396,7 +396,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SSF-Hm-OsV" userLabel="top bar">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
                                         <subviews>
-                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lw9-Y5-YTv">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lw9-Y5-YTv">
                                                 <rect key="frame" x="329" y="25" width="30" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="bcy-SD-tsS"/>
@@ -452,7 +452,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="EE5-HC-Zge"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" image="phone_active" id="kZI-Ai-nqm"/>
+                    <tabBarItem key="tabBarItem" title="Danh sách" image="phone_active" id="kZI-Ai-nqm"/>
                     <connections>
                         <outlet property="addGoodsButton" destination="lw9-Y5-YTv" id="OxQ-td-9Jo"/>
                         <outlet property="lblTongSo" destination="XDF-U9-kqk" id="v2o-Bi-N4A"/>
@@ -1095,7 +1095,8 @@
         <image name="catch_icon" width="50" height="50"/>
         <image name="depart_icon" width="50" height="50"/>
         <image name="home_icon" width="60" height="50"/>
-        <image name="map_icon_active" width="110" height="70"/>
+        <image name="map_google_icon" width="36" height="36"/>
+        <image name="map_icon_active" width="60" height="60"/>
         <image name="money_icon" width="50" height="50"/>
         <image name="muiten" width="50" height="100"/>
         <image name="phone_active" width="55" height="35"/>

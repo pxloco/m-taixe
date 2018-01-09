@@ -9,6 +9,7 @@
 import UIKit
 import HPUIViewExtensions
 import DropDown
+import SwiftyAttributes
 
 class CategoryController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
@@ -425,8 +426,22 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
                             tongSoVeBanDuoc += trip.CountBooked
                             tongSoVeChuaThanhToan += trip.CountBooked - trip.CountPaid
                         }
-                        self.thongKeVeLabel.text = "Số vé: \(tongSoVeBanDuoc) - \(tongSoTienVeBanDuoc) (\(tongSoVeChuaThanhToan) - \(tongSoTienVeChuaThanhToan) chưa thanh toán)"
                         
+                        let tongSoTienVeBanDuocAttr = "\(tongSoTienVeBanDuoc)".withAttributes([.textColor(.red)])
+                        let tongSoTienVeChuaThanhToanAttr = "\(tongSoTienVeChuaThanhToan)".withAttributes([.textColor(.red)])
+                        let tongSoVeBanDuocAttr = "\(tongSoVeBanDuoc)".withAttributes([.textColor(.black)])
+                         let tongSoVeChuaThanhToanAttr = "\(tongSoVeChuaThanhToan)".withAttributes([.textColor(.black)])
+                    
+                        let sove = "Số vé: ".withAttributes([.textColor(.black)])
+                        let mongoac = " ( ".withAttributes([.textColor(.black)])
+                        let dongngoac = " )".withAttributes([.textColor(.black)])
+                        let gach = " - ".withAttributes([.textColor(.black)])
+                        let chuathanhtoan = " chưa thanh toán".withAttributes([.textColor(.black)])
+                        
+                        self.thongKeVeLabel.attributedText = sove + tongSoVeBanDuocAttr + gach + tongSoTienVeBanDuocAttr + mongoac + tongSoVeChuaThanhToanAttr + gach + tongSoTienVeChuaThanhToanAttr + chuathanhtoan + dongngoac
+                        
+//                        self.thongKeVeLabel.text = "\(tongSoVeBanDuoc) - \(tongSoTienVeBanDuocRed) (\(tongSoVeChuaThanhToan) - \(tongSoTienVeChuaThanhToanRed) chưa thanh toán)"
+//
                         
                         self.collectionViewCatagory.reloadData()
                     }

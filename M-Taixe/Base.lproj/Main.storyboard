@@ -381,7 +381,7 @@
             </objects>
             <point key="canvasLocation" x="1509" y="902"/>
         </scene>
-        <!--Item-->
+        <!--Danh sách-->
         <scene sceneID="jOa-a1-FoL">
             <objects>
                 <viewController id="i0h-3w-kmo" customClass="CategoryController" customModule="M_Taixe" customModuleProvider="target" sceneMemberID="viewController">
@@ -910,7 +910,7 @@
                             <constraint firstAttribute="trailing" secondItem="Qul-gO-38s" secondAttribute="trailing" id="voS-Og-vSA"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" image="ListIcon" id="kcq-KP-OUE"/>
+                    <tabBarItem key="tabBarItem" title="Danh sách" image="ListIcon" id="kcq-KP-OUE"/>
                     <connections>
                         <outlet property="btnChooseRoute" destination="hkx-Sf-4oY" id="alO-Ft-xKn"/>
                         <outlet property="btnDiemDen" destination="o6y-bX-1mQ" id="1SD-y8-eVN"/>
@@ -1025,7 +1025,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="8L0-aT-Q72" secondAttribute="trailing" constant="-20" id="zil-Pn-Ye1"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" image="person-icon" id="HwO-fs-xII"/>
+                    <tabBarItem key="tabBarItem" title="Xem thêm" image="person-icon" id="HwO-fs-xII"/>
                     <connections>
                         <outlet property="tableView" destination="8L0-aT-Q72" id="L8N-6M-7Zx"/>
                     </connections>
@@ -1176,7 +1176,7 @@
                             <constraint firstItem="Wv3-xH-m42" firstAttribute="leading" secondItem="obj-AW-OUi" secondAttribute="leading" constant="16" id="ozO-Kx-lkZ"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" image="arrival_icon" id="pXp-oG-UYw"/>
+                    <tabBarItem key="tabBarItem" title="Thống kê" image="analys_icon" id="pXp-oG-UYw"/>
                     <connections>
                         <outlet property="dateLabel" destination="7V1-NC-iD3" id="rhU-Ms-Gch"/>
                         <outlet property="topbar" destination="qwe-yN-fK8" id="Vxo-kK-L9S"/>
@@ -1323,9 +1323,8 @@
                                             <action selector="recentCallClick:" destination="h9L-w6-UlI" eventType="touchUpInside" id="a9n-2g-Vio"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ynN-yH-YLt" userLabel="Choose date Button" customClass="HPButton" customModule="HPUIViewExtensions">
-                                        <rect key="frame" x="36" y="10" width="80" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ynN-yH-YLt" userLabel="Choose date Button" customClass="HPButton" customModule="HPUIViewExtensions">
+                                        <rect key="frame" x="68" y="20" width="80" height="30"/>
                                         <connections>
                                             <action selector="chooseDateClick:" destination="h9L-w6-UlI" eventType="touchUpInside" id="egV-fN-JNJ"/>
                                         </connections>
@@ -1334,19 +1333,23 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="G8i-Ap-xci" firstAttribute="centerY" secondItem="Isw-wb-f3j" secondAttribute="centerY" id="26e-ZC-gi7"/>
+                                    <constraint firstItem="ynN-yH-YLt" firstAttribute="trailing" secondItem="8uq-Ys-Geo" secondAttribute="trailing" id="41x-vQ-8j2"/>
                                     <constraint firstItem="Xaz-1R-cde" firstAttribute="centerY" secondItem="Isw-wb-f3j" secondAttribute="centerY" id="63R-DO-cVP"/>
                                     <constraint firstItem="8uq-Ys-Geo" firstAttribute="leading" secondItem="G8i-Ap-xci" secondAttribute="trailing" constant="8" id="8ng-ZT-HpU"/>
                                     <constraint firstAttribute="trailing" secondItem="Ydl-56-0yZ" secondAttribute="trailing" id="KkB-Rk-3UD"/>
+                                    <constraint firstItem="ynN-yH-YLt" firstAttribute="top" secondItem="G8i-Ap-xci" secondAttribute="top" id="Nug-80-DJN"/>
                                     <constraint firstItem="Ydl-56-0yZ" firstAttribute="leading" secondItem="Isw-wb-f3j" secondAttribute="leading" id="T6Q-fj-wuU"/>
                                     <constraint firstAttribute="trailing" secondItem="MWv-zV-Un2" secondAttribute="trailing" constant="8" id="VVU-YW-xmZ"/>
                                     <constraint firstItem="Xaz-1R-cde" firstAttribute="leading" secondItem="Isw-wb-f3j" secondAttribute="leading" constant="40" id="aJI-uZ-WLU"/>
                                     <constraint firstItem="G8i-Ap-xci" firstAttribute="leading" secondItem="Xaz-1R-cde" secondAttribute="trailing" constant="8" id="cIk-3X-WCX"/>
+                                    <constraint firstItem="ynN-yH-YLt" firstAttribute="bottom" secondItem="G8i-Ap-xci" secondAttribute="bottom" id="dbG-RM-FMO"/>
                                     <constraint firstItem="Ydl-56-0yZ" firstAttribute="top" secondItem="Isw-wb-f3j" secondAttribute="top" id="gCf-ZL-BK1"/>
                                     <constraint firstAttribute="bottom" secondItem="Ydl-56-0yZ" secondAttribute="bottom" id="h4D-aJ-XN0"/>
                                     <constraint firstAttribute="height" constant="70" id="jKV-m5-HlH"/>
                                     <constraint firstItem="8uq-Ys-Geo" firstAttribute="centerY" secondItem="Isw-wb-f3j" secondAttribute="centerY" id="kBB-Rg-ZqA"/>
                                     <constraint firstItem="WWW-qx-Z0A" firstAttribute="leading" secondItem="8uq-Ys-Geo" secondAttribute="trailing" constant="8" id="kDw-xC-CX7"/>
                                     <constraint firstItem="MWv-zV-Un2" firstAttribute="centerY" secondItem="Isw-wb-f3j" secondAttribute="centerY" id="keA-u4-RlQ"/>
+                                    <constraint firstItem="ynN-yH-YLt" firstAttribute="leading" secondItem="G8i-Ap-xci" secondAttribute="leading" id="o5C-Y7-Ip4"/>
                                     <constraint firstItem="WWW-qx-Z0A" firstAttribute="centerY" secondItem="Isw-wb-f3j" secondAttribute="centerY" id="pcO-6y-I3O"/>
                                 </constraints>
                             </view>
@@ -1362,7 +1365,7 @@
                             <constraint firstItem="Isw-wb-f3j" firstAttribute="top" secondItem="d1l-TN-193" secondAttribute="top" id="x2W-TE-gad"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" image="phone_active" id="wq7-u1-jWI"/>
+                    <tabBarItem key="tabBarItem" title="DS cuộc gọi" image="phone_active" id="wq7-u1-jWI"/>
                     <connections>
                         <outlet property="dateLabel" destination="8uq-Ys-Geo" id="LVo-hj-EIe"/>
                         <outlet property="tableView" destination="ysj-gU-dgk" id="Jmc-Qn-CFR"/>
@@ -1371,12 +1374,13 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iTe-w9-fQk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-219" y="-455"/>
+            <point key="canvasLocation" x="-219.375" y="-455.28169014084506"/>
         </scene>
     </scenes>
     <resources>
         <image name="ListIcon" width="55" height="35"/>
         <image name="add_seat_icon" width="50" height="50"/>
+        <image name="analys_icon" width="29" height="29"/>
         <image name="arrival_icon" width="50" height="50"/>
         <image name="backgroundtextfield" width="100" height="50"/>
         <image name="call_thumbnail" width="50" height="50"/>

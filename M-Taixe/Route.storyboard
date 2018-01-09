@@ -13,7 +13,6 @@
         <!--Edit Route View Controller-->
         <scene sceneID="wSg-6L-VoY">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="G9D-Ge-iQX" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="BZL-HB-IbW" customClass="EditRouteViewController" customModule="M_Taixe" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ETj-R0-bVV"/>
@@ -66,7 +65,7 @@
                                 </constraints>
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="neL-q0-Ccc">
-                                <rect key="frame" x="0.0" y="70" width="320" height="650"/>
+                                <rect key="frame" x="0.0" y="75" width="320" height="645"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4zF-Az-4sO">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="650"/>
@@ -678,7 +677,7 @@
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="Pu9-5X-WrR" secondAttribute="trailing" id="2MB-3j-bhN"/>
                             <constraint firstAttribute="trailing" secondItem="neL-q0-Ccc" secondAttribute="trailing" id="AoK-CG-qkz"/>
-                            <constraint firstItem="neL-q0-Ccc" firstAttribute="top" secondItem="Pu9-5X-WrR" secondAttribute="bottom" id="CJT-lb-iWw"/>
+                            <constraint firstItem="neL-q0-Ccc" firstAttribute="top" secondItem="Pu9-5X-WrR" secondAttribute="bottom" constant="5" id="CJT-lb-iWw"/>
                             <constraint firstItem="Pu9-5X-WrR" firstAttribute="leading" secondItem="WbQ-y8-JQ7" secondAttribute="leading" id="DCq-np-dft"/>
                             <constraint firstItem="neL-q0-Ccc" firstAttribute="leading" secondItem="WbQ-y8-JQ7" secondAttribute="leading" id="Dcc-dm-9Bq"/>
                             <constraint firstItem="sw3-eY-6Nv" firstAttribute="top" secondItem="neL-q0-Ccc" secondAttribute="bottom" id="MRT-dB-eDx"/>
@@ -707,6 +706,7 @@
                         <outlet property="txtTuyen" destination="nhV-II-peK" id="P2f-Hq-D2f"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="G9D-Ge-iQX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="875.625" y="-2285.9154929577467"/>
         </scene>

@@ -31,7 +31,7 @@ class CategoryViewCell: UICollectionViewCell {
             progressView.topRightRounded = false
         }
         
-        if trip.CountBooked == 0 {
+        if (trip.CountBooked - trip.CountPaid) == 0 {
             soVeChuaTienView.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0)
             soVeChuaTienView.borderWidth = 0
         } else {
