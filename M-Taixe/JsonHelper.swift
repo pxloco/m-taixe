@@ -264,6 +264,26 @@ class JsonHelper{
                     trip.StartTime = newFormatter.string(from: date)
                 }
                 
+                if let StartTimeFull = item["StartTime"] as? Double
+                {
+                    let time = Int64(StartTimeFull)
+                    dateFormatter.dateFormat = "yyyyMMddHHmm"
+                    let date = dateFormatter.date(from: "\(time)")!
+                    let newFormatter = DateFormatter()
+                    newFormatter.dateFormat = "yyyyMMddHHmm"
+                    trip.StartTimeFull = newFormatter.string(from: date)
+                }
+            
+                if let EndTime = item["EndTime"] as? Double
+                {
+                    let time = Int64(EndTime)
+                    dateFormatter.dateFormat = "yyyyMMddHHmm"
+                    let date = dateFormatter.date(from: "\(time)")!
+                    let newFormatter = DateFormatter()
+                    newFormatter.dateFormat = "yyyyMMddHHmm"
+                    trip.EndTime = newFormatter.string(from: date)
+                }
+                
                 if let StartDate = item["StartDate"] as? Int
                 {
                     dateFormatter.dateFormat = "yyyyMMdd"

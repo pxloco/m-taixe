@@ -13,6 +13,8 @@ class Trip {
     var LicensePlate = String()
     var TripId = String()
     var StartTime = String()
+    var StartTimeFull = String()
+    var EndTime = String()
     var StartDate = String()
     var Title = String()
     var UpdateTime = Date()
@@ -31,6 +33,7 @@ class Trip {
     var TicketAmount = Int()
     var TicketPaidAmount = Int()
     var CountPaid = Int()
+    
 }
 
 

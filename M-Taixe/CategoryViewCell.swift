@@ -11,6 +11,7 @@ import HPXibDesignable
 import HPUIViewExtensions
 
 class CategoryViewCell: UICollectionViewCell {
+    
     @IBOutlet weak var backgroundCategory: HPView!
     @IBOutlet weak var labelBienSo: UILabel!
     @IBOutlet weak var labelTrangThaiBanVe: UILabel!
@@ -22,7 +23,24 @@ class CategoryViewCell: UICollectionViewCell {
     @IBOutlet weak var soLuongVeView: HPView!
     @IBOutlet weak var progressView: HPView!
     
+    var formatter = DateFormatter()
+    
     func setData(trip: Trip) {
+        formatter.dateFormat = "yyyyMMddHHmm"
+        if let currentTime = formatter.date(from: formatter.string(from: Date())) {
+            if let startTime = formatter.date(from: trip.StartTimeFull) {
+                if let endTime  = formatter.date(from: trip.EndTime) {
+                    if currentTime > endTime {
+                        imageTrangThai.image = #imageLiteral(resourceName: "circle_red_icon")
+                    } else if currentTime < startTime {
+                        imageTrangThai.image = #imageLiteral(resourceName: "circle_green_icon")
+                    } else {
+                        imageTrangThai.image = #imageLiteral(resourceName: "play_icon")
+                    }
+                }
+            }
+        }
+        
         if trip.CountBooked == trip.CountTicket {
             progressView.botRightRounded = true
             progressView.topRightRounded = true

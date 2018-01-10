@@ -767,7 +767,7 @@
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icn-dropdown" translatesAutoresizingMaskIntoConstraints="NO" id="o4c-P9-wEK">
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="play_icon" translatesAutoresizingMaskIntoConstraints="NO" id="o4c-P9-wEK">
                                                                     <rect key="frame" x="122" y="5" width="20" height="20"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="20" id="bvR-hn-cBm"/>
@@ -1394,6 +1394,7 @@
         <image name="logo_mobihome" width="241" height="155"/>
         <image name="person-icon" width="55" height="35"/>
         <image name="phone_active" width="55" height="35"/>
+        <image name="play_icon" width="256" height="256"/>
         <image name="recent_icon" width="50" height="50"/>
         <image name="right_icon" width="30" height="75"/>
         <image name="search_icon" width="126" height="125"/>
