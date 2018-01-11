@@ -924,11 +924,20 @@
                         <outlet property="topBar" destination="EmQ-A6-CsU" id="KhQ-Xw-s0p"/>
                         <segue destination="Z96-ra-Mgp" kind="show" identifier="fromCategoryToSchema" id="DHE-Ol-dTe"/>
                         <segue destination="l7Y-8p-N3K" kind="show" identifier="fromCategoryToEditCategory" id="gCM-xt-hXF"/>
+                        <segue destination="eva-b8-d3p" kind="show" identifier="fromCategoryToGoods" id="YcP-SK-So9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IOl-6g-KHA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-219.375" y="-1514.7887323943662"/>
+        </scene>
+        <!--Goods-->
+        <scene sceneID="j8j-bc-VSF">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Goods" id="eva-b8-d3p" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JeP-x7-Xn4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="517" y="-1756"/>
         </scene>
         <!--Route-->
         <scene sceneID="n69-o8-n1c">
@@ -936,7 +945,7 @@
                 <viewControllerPlaceholder storyboardName="Route" id="l7Y-8p-N3K" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qnA-8W-A2H" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="773" y="-1924"/>
+            <point key="canvasLocation" x="525" y="-1515"/>
         </scene>
         <!--Schema-->
         <scene sceneID="aE4-Ff-eUg">
@@ -944,7 +953,7 @@
                 <viewControllerPlaceholder storyboardName="Schema" id="Z96-ra-Mgp" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="55l-ma-AJR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="877" y="-1230"/>
+            <point key="canvasLocation" x="526" y="-1252"/>
         </scene>
         <!--Information Controller-->
         <scene sceneID="JsK-n4-Y6u">

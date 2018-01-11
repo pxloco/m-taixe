@@ -11,6 +11,7 @@ import UIKit
 class FretController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var topBarMenu: UIView!
     
     var tripId = String()
     var currentUser = User()
@@ -24,8 +25,39 @@ class FretController: UIViewController, UITableViewDataSource, UITableViewDelega
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         setupBar()
+        //setUpToolbar()
         loadData()
     }
+    
+//    func setUpToolbar() {
+//        self.navigationController?.toolbar.barTintColor = UIColor.white
+//        self.navigationController?.setToolbarHidden(false, animated: false)
+//        //Thêm các nút tác vụ vào toolbar
+//
+//        let chemaButton = UIBarButtonItem.init(image: #imageLiteral(resourceName: "map_icon_active"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.btnSchemaClick(_:)))
+//
+//        let listButton = UIBarButtonItem.init(image: #imageLiteral(resourceName: "phone_active"), style: UIBarButtonItemStyle.plain, target: nil, action: nil)
+//
+//        let flex = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+//
+//        let mapButton = UIBarButtonItem.init(image: #imageLiteral(resourceName: "map_google_icon"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.btnMapClick(_:)))
+//
+//        listButton.tintColor = UIColor(netHex: 0x197DAE)
+//        chemaButton.tintColor = UIColor(netHex: 0x555555)
+//        mapButton.tintColor = UIColor(netHex: 0x555555)
+//        let items = [flex,chemaButton,flex,listButton, flex, mapButton, flex]
+//        self.toolbarItems = items
+//    }
+//
+//    func btnSchemaClick(_ sender: UIBarButtonItem) {
+//        self.navigationController?.popViewController(animated: false)
+//        self.navigationController?.setNavigationBarHidden(true, animated: false)
+//    }
+//
+//    func btnMapClick(_ sender: UIBarButtonItem){
+//        self.navigationController?.popViewController(animated: false)
+//        self.navigationController?.setNavigationBarHidden(true, animated: false)
+//    }
     
     func loadData(){
         let soapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
@@ -64,12 +96,13 @@ class FretController: UIViewController, UITableViewDataSource, UITableViewDelega
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "BillCell", for: indexPath) as! BillCell
         let bill = bills[indexPath.row]
-        cell.lblShipper.text = "\(bill.ShipperName) - \(bill.ShipperMobile)"
-        cell.lblConsignee.text = "\(bill.Consignee) - \(bill.ConsigneeMobile)"
+        cell.lblShipper.text = "Gửi: \(bill.ShipperName) - \(bill.ShipperMobile)"
+        cell.lblConsignee.text = "Nhận: \(bill.Consignee) - \(bill.ConsigneeMobile)"
         cell.btnCall.tag = indexPath.row
+//        let theStringNameOfGoods = bill.NameOfGoods.withFont(.systemFont(ofSize: 18))
         let theString = "<label style=\"font-size: 18px;\">\(bill.NameOfGoods) - <b>\(bill.TotalCharges)</b></label>"
         
-        let theAttributedString = try! NSAttributedString(data: theString.data(using: String.Encoding.utf8, allowLossyConversion: false)!,
+        let theAttributedString = try! NSAttributedString(data: theString.data(using: String.Encoding.unicode, allowLossyConversion: false)!,
                                                           options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType],
                                                           documentAttributes: nil)
         cell.lblBillName.attributedText = theAttributedString
@@ -85,7 +118,7 @@ class FretController: UIViewController, UITableViewDataSource, UITableViewDelega
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromTop
         self.navigationController!.view.layer.add(transition, forKey: kCATransition)
-        let storyboard = UIStoryboard.init(name: "Schema", bundle: Bundle.main)
+        let storyboard = UIStoryboard.init(name: "Goods", bundle: Bundle.main)
         let addController = storyboard.instantiateViewController(withIdentifier: "AddFret") as! AddFretController
         addController.currentUser = currentUser
         addController.tripId = tripId
@@ -156,62 +189,70 @@ class FretController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
 
     }
+    
     func setupBar(){
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+         AppUtils.addShadowToView(view: topBarMenu, width: 1, height: 2, color: UIColor.gray.cgColor, opacity: 0.5, radius: 2)
         initSegmentControl()
-        let titleView = UIView.init(frame: CGRect(x: 0, y: 0, width: 200, height: 40))
-        let titleImage = UIImageView(image: UIImage(named: "muiten"))
-        titleView.addSubview(segmentControl)
-        let navBarFrame = self.navigationController!.navigationBar.frame
-        titleView.frame = CGRect(x: (navBarFrame.width - segmentControl.frame.width) / 2, y: (navBarFrame.height - segmentControl.frame.height) / 2, width: segmentControl.frame.width, height: segmentControl.frame.height)
+        topBarMenu.addSubview(segmentControl)
         let attr = NSDictionary(object: UIFont(name: "HelveticaNeue", size: 9.0)!, forKey: NSFontAttributeName as NSCopying)
+        self.segmentControl.setTitleTextAttributes(attr as! [AnyHashable : Any], for: UIControlState.normal)
         
-        segmentControl.setTitleTextAttributes(attr as! [AnyHashable : Any], for: UIControlState.normal)
+//        let titleView = UIView.init(frame: CGRect(x: 0, y: 0, width: 200, height: 40))
+//        let titleImage = UIImageView(image: UIImage(named: "muiten"))
+//        titleView.addSubview(segmentControl)
+//        let navBarFrame = self.navigationController!.navigationBar.frame
+//        titleView.frame = CGRect(x: (navBarFrame.width - segmentControl.frame.width) / 2, y: (navBarFrame.height - segmentControl.frame.height) / 2, width: segmentControl.frame.width, height: segmentControl.frame.height)
+//        let attr = NSDictionary(object: UIFont(name: "HelveticaNeue", size: 9.0)!, forKey: NSFontAttributeName as NSCopying)
+//
+//        segmentControl.setTitleTextAttributes(attr as! [AnyHashable : Any], for: UIControlState.normal)
         
-        self.navigationItem.titleView = titleView
-        
-        let btnAdd = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.add, target: self, action: #selector(self.btnAddClick))
-        self.navigationItem.rightBarButtonItem = btnAdd
-        
-        
-        let btnHome = UIButton()
-        btnHome.setBackgroundImage(UIImage(named: "home_icon"), for: UIControlState.normal)
-        var frame = btnHome.frame
-        frame.size.width = 35
-        frame.size.height = 25
-        btnHome.frame = frame
-        
-        btnHome.titleEdgeInsets = UIEdgeInsetsMake(5, 0, 0, 0)
-        btnHome.addTarget(self, action: #selector(self.btnHomeClick), for: UIControlEvents.touchUpInside)
-        let right = UIBarButtonItem(customView: btnHome)
-        
-        self.navigationItem.setHidesBackButton(true, animated: false)
-        self.navigationItem.leftBarButtonItem = right
+//        self.navigationItem.titleView = titleView
+//
+//        let btnAdd = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.add, target: self, action: #selector(self.btnAddClick))
+//        self.navigationItem.rightBarButtonItem = btnAdd
+//
+//
+//        let btnHome = UIButton()
+//        btnHome.setBackgroundImage(UIImage(named: "home_icon"), for: UIControlState.normal)
+//        var frame = btnHome.frame
+//        frame.size.width = 35
+//        frame.size.height = 25
+//        btnHome.frame = frame
+//
+//        btnHome.titleEdgeInsets = UIEdgeInsetsMake(5, 0, 0, 0)
+//        btnHome.addTarget(self, action: #selector(self.btnHomeClick), for: UIControlEvents.touchUpInside)
+//        let right = UIBarButtonItem(customView: btnHome)
+//
+//        self.navigationItem.setHidesBackButton(true, animated: false)
+//        self.navigationItem.leftBarButtonItem = right
         
     }
-    func btnHomeClick() {
-        let controller = self.navigationController?.viewControllers[(self.navigationController?.viewControllers.count)!-3]
-        self.navigationController?.popToViewController(controller!, animated: true)
-    }
-    func btnAddClick() {
-        let transition:CATransition = CATransition()
-        transition.duration = 0.5
-        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromTop
-        self.navigationController!.view.layer.add(transition, forKey: kCATransition)
-        let storyboard = UIStoryboard.init(name: "Schema", bundle: Bundle.main)
-        let addController = storyboard.instantiateViewController(withIdentifier: "AddFret") as! AddFretController
-        addController.currentUser = currentUser
-        addController.tripId = tripId
-        self.navigationController?.pushViewController(addController, animated: false)
-    }
+//    func btnHomeClick() {
+//        self.navigationController?.setNavigationBarHidden(true, animated: false)
+//        let controller = self.navigationController?.viewControllers[(self.navigationController?.viewControllers.count)!-3]
+//        self.navigationController?.popToViewController(controller!, animated: true)
+//    }
+//    func btnAddClick() {
+//        let transition:CATransition = CATransition()
+//        transition.duration = 0.5
+//        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+//        transition.type = kCATransitionPush
+//        transition.subtype = kCATransitionFromTop
+//        self.navigationController!.view.layer.add(transition, forKey: kCATransition)
+//        let storyboard = UIStoryboard.init(name: "Goods", bundle: Bundle.main)
+//        let addController = storyboard.instantiateViewController(withIdentifier: "AddFret") as! AddFretController
+//        addController.currentUser = currentUser
+//        addController.tripId = tripId
+//        self.navigationController?.pushViewController(addController, animated: false)
+//    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
     func initSegmentControl(){
-        self.segmentControl = UISegmentedControl.init(frame: CGRect(x: 0, y: 0, width: 156, height: 29))
+        self.segmentControl = UISegmentedControl.init(frame: CGRect(x: UIScreen.main.bounds.width/2 - 78, y: 20, width: 156, height: 29))
         self.segmentControl.removeAllSegments()
         self.segmentControl.insertSegment(withTitle: "Chưa đón", at: 0, animated: false)
         self.segmentControl.insertSegment(withTitle: "Tất cả", at: 1, animated: false)
@@ -235,10 +276,12 @@ class FretController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     override func viewWillAppear(_ animated: Bool) {
         self.overTop = false
-        self.navigationController?.setNavigationBarHidden(false, animated: false)
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
         loadData()
     }
+    
     var overTop = false
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
 //        if tableView.contentOffset.y < -30{
 //            overTop = true
@@ -249,6 +292,7 @@ class FretController: UIViewController, UITableViewDataSource, UITableViewDelega
             navigateToSearch()
         }
     }
+    
     func navigateToSearch(){
         let transition:CATransition = CATransition()
         transition.duration = 0.5
@@ -262,6 +306,29 @@ class FretController: UIViewController, UITableViewDataSource, UITableViewDelega
         controller.currentUser = self.currentUser
         self.navigationController?.pushViewController(controller, animated: true)
     }
+    
+    // MARK: - user action
+    
+    @IBAction func homeAction(_ sender: Any) {
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        let controller = self.navigationController?.viewControllers[(self.navigationController?.viewControllers.count)!-3]
+        self.navigationController?.popToViewController(controller!, animated: true)
+    }
+    
+    @IBAction func addGoodsAction(_ sender: Any) {
+        let transition:CATransition = CATransition()
+        transition.duration = 0.5
+        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromTop
+        self.navigationController!.view.layer.add(transition, forKey: kCATransition)
+        let storyboard = UIStoryboard.init(name: "Goods", bundle: Bundle.main)
+        let addController = storyboard.instantiateViewController(withIdentifier: "AddFret") as! AddFretController
+        addController.currentUser = currentUser
+        addController.tripId = tripId
+        self.navigationController?.pushViewController(addController, animated: false)
+    }
+    
     /*
      // MARK: - Navigation
      

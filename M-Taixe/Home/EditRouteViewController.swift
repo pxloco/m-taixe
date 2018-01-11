@@ -429,7 +429,8 @@ class EditRouteViewController: UIViewController {
             if error == nil {
                 let data = string.data(using: String.Encoding.utf8, allowLossyConversion: false)
                 if String(data: data!, encoding: String.Encoding.utf8) as String! == "true" {
-                    self.navigationController?.popViewController(animated: true)
+                    let controller = self.navigationController?.viewControllers[(self.navigationController?.viewControllers.count)!-3]
+                    self.navigationController?.popToViewController(controller!, animated: true)
                 }
             }
             else{
@@ -491,7 +492,12 @@ class EditRouteViewController: UIViewController {
         let sendPostRequest = SendPostRequest()
         sendPostRequest.sendRequest(soapMessage, soapAction: soapAction){ (string, error) in
             if error == nil {
-               self.navigationController?.popViewController(animated: true)
+                if self.currentTrip.TripId == "00000000-0000-0000-0000-000000000000" {
+                    self.navigationController?.popViewController(animated: true)
+                } else {
+                    let controller = self.navigationController?.viewControllers[(self.navigationController?.viewControllers.count)!-3]
+                    self.navigationController?.popToViewController(controller!, animated: true)
+                }
             }
             else{
                 self.alert.hideView()

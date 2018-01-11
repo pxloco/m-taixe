@@ -276,7 +276,6 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
         
     }
     
- 
     @IBAction func changeCarAction(_ sender: Any) {
     }
     

@@ -18,12 +18,16 @@ class AddFretController: UIViewController {
     @IBOutlet weak var tfConsigneeMobile: UITextField!
     @IBOutlet weak var tfShipperName: UITextField!
     @IBOutlet weak var tfShipperMobile: UITextField!
+    
+    @IBOutlet weak var topBarMenu: UIView!
+    
     @IBOutlet weak var groupDrop: UIView!
     @IBOutlet weak var groupCatch: UIView!
     @IBOutlet weak var groupCost: UIView!
     @IBOutlet weak var groupName: UIView!
     @IBOutlet weak var groupConsignee: UIView!
     @IBOutlet weak var groupShipper: UIView!
+    
     var billID = 0
     var tripId = ""
     var bill = Bill()
@@ -31,18 +35,22 @@ class AddFretController: UIViewController {
     var alert = SCLAlertView()
     var sendPostRequest = SendPostRequest()
     var jsonHelper = JsonHelper()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setUpUI()
+        
         //self.navigationController?.setNavigationBarHidden(true, animated: false)
-        self.navigationItem.setHidesBackButton(true, animated: false)
-        var cancelButton = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.cancel, target: self, action: #selector(self.btnCancelClick))
-        cancelButton = UIBarButtonItem.init(title: "Huỷ", style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.btnCancelClick))
-        self.navigationItem.leftBarButtonItem = cancelButton;
+        //self.navigationItem.setHidesBackButton(true, animated: false)
+//        var cancelButton = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.cancel, target: self, action: #selector(self.btnCancelClick))
+//        cancelButton = UIBarButtonItem.init(title: "Huỷ", style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.btnCancelClick))
+//        self.navigationItem.leftBarButtonItem = cancelButton;
         
-        var saveButton = UIBarButtonItem.init(title: "Lưu", style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.btnSaveClick))
-        self.navigationItem.rightBarButtonItem = saveButton
-        
-        self.navigationItem.title = "Thêm vé"
+//        var saveButton = UIBarButtonItem.init(title: "Lưu", style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.btnSaveClick))
+//        self.navigationItem.rightBarButtonItem = saveButton
+//
+//        self.navigationItem.title = "Thêm vé"
 
         // Do any additional setup after loading the view.
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(LoginController.dismissKeyboard))
@@ -58,14 +66,49 @@ class AddFretController: UIViewController {
             tfBillName.text = bill.NameOfGoods
         }
     }
+    
+    func setUpUI() {
+        AppUtils.addShadowToView(view: topBarMenu, width: 1, height: 2, color: UIColor.gray.cgColor, opacity: 0.5, radius: 2)
+    }
+    
     func dismissKeyboard() {
         //Causes the view (or one of its embedded text fields) to resign the first responder status.
         view.endEditing(true)
     }
+    
     func btnCancelClick(){
         self.navigationController?.popViewController(animated: true);
     }
-    func btnSaveClick(){
+    
+   
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        let transition:CATransition = CATransition()
+        transition.duration = 0.5
+        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromBottom
+        self.navigationController!.view.layer.add(transition, forKey: kCATransition)
+    }
+    
+    // MARK: - User Action
+    
+    @IBAction func cancelAction(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true);
+    }
+    
+    @IBAction func saveAction(_ sender: Any) {
+        btnSaveClick()
+    }
+    
+    // MARK: Get API
+    
+    func btnSaveClick() {
         var billName = tfBillName.text ?? ""
         var shipperName = tfShipperName.text ?? ""
         var shipperMobile = tfShipperMobile.text ?? ""
@@ -145,19 +188,7 @@ class AddFretController: UIViewController {
             }
         }
     }
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        let transition:CATransition = CATransition()
-        transition.duration = 0.5
-        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromBottom
-        self.navigationController!.view.layer.add(transition, forKey: kCATransition)
-    }
     /*
     // MARK: - Navigation
 

@@ -147,6 +147,7 @@ class SearchController: UIViewController, UITableViewDataSource, UITableViewDele
         self.navigationController?.pushViewController(controller, animated: true)
         self.tableView.deselectRow(at: indexPath, animated: true)
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomerCell") as! CustomerCell
             let customer = arrCustomers[(indexPath as NSIndexPath).row]

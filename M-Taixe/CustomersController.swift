@@ -64,7 +64,10 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
 //        let titleView = UIView.init(frame: CGRect(x: 0, y: 0, width: 300, height: 40))
         self.initSegmentControl()
 //        titleView.addSubview(segmentControl)
+        
         topbar.addSubview(segmentControl)
+        AppUtils.addShadowToView(view: topbar, width: 1, height: 2, color: UIColor.gray.cgColor, opacity: 0.5, radius: 2)
+        
 //        let navBarFrame = self.navigationController!.navigationBar.frame
 //        titleView.frame = CGRect(x: (navBarFrame.width - segmentControl.frame.width) / 2, y: (navBarFrame.height - segmentControl.frame.height) / 2, width: segmentControl.frame.width, height: se`gmentControl.frame.height)
         let attr = NSDictionary(object: UIFont(name: "HelveticaNeue", size: 9.0)!, forKey: NSFontAttributeName as NSCopying)
@@ -317,7 +320,7 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
                 
             }
         default:
-            let storyBoard = UIStoryboard.init(name: "Schema", bundle: Bundle.main)
+            let storyBoard = UIStoryboard.init(name: "Goods", bundle: Bundle.main)
             let controller = storyBoard.instantiateViewController(withIdentifier: "Fret") as! FretController
             controller.currentUser = currentUser
             controller.tripId = tripId
@@ -363,7 +366,7 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromTop
         self.navigationController!.view.layer.add(transition, forKey: kCATransition)
-        let storyboard = UIStoryboard.init(name: "Schema", bundle: Bundle.main)
+        let storyboard = UIStoryboard.init(name: "Goods", bundle: Bundle.main)
         let addController = storyboard.instantiateViewController(withIdentifier: "AddOrder") as! AddOrderController
         addController.tripId = tripId
         addController.currentUser = currentUser
