@@ -45,7 +45,7 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpData()
+        
         setUpUI()
         
         //Load dữ liệu ngày hôm qua lưu xuống local
@@ -67,10 +67,13 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.overTop = false
-        self.collectionViewCatagory.reloadData()
-        self.loadDiaDiemDi()
-        self.loadRoute()
+        DispatchQueue.main.async {
+            self.setUpData()
+            self.loadDiaDiemDi()
+            self.loadRoute()
+            self.overTop = false
+            self.collectionViewCatagory.reloadData()
+        }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -173,7 +176,7 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
                     self.currentRoute = self.routes[0]
                     self.btnChooseRoute.setTitle(self.currentRoute.Name, for: UIControlState.normal)
                 }
-                else{
+                else {
                     self.currentRoute = Route()
                 }
             }
@@ -217,11 +220,13 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
         let sendPostRequest = SendPostRequest()
         sendPostRequest.sendRequest(soapMessage, soapAction: soapAction){ (string, error) in
             if error == nil {
-                let data = string.data(using: String.Encoding.utf8, allowLossyConversion: false)
-                self.locationStartPoint = self.jsonHelper.parseRouteLocation(data!)
-                self.labelDiemDi.text = self.locationStartPoint[0].Name
-                self.currentlocationStartPoint = self.locationStartPoint[0]
-                self.loadDiaDiemDen()
+                DispatchQueue.main.async {
+                    let data = string.data(using: String.Encoding.utf8, allowLossyConversion: false)
+                    self.locationStartPoint = self.jsonHelper.parseRouteLocation(data!)
+                    self.labelDiemDi.text = self.locationStartPoint[0].Name
+                    self.currentlocationStartPoint = self.locationStartPoint[0]
+                    self.loadDiaDiemDen()
+                }
             }
             else{
                 self.alert.hideView()
@@ -297,11 +302,13 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
         let sendPostRequest = SendPostRequest()
         sendPostRequest.sendRequest(soapMessage, soapAction: soapAction){ (string, error) in
             if error == nil {
-                let data = string.data(using: String.Encoding.utf8, allowLossyConversion: false)
-                self.locationEndPoint = self.jsonHelper.parseRouteLocation(data!)
-                self.labelDiemDen.text = self.locationEndPoint[0].Name
-                self.currentlocationEndPoint = self.locationEndPoint[0]
-                self.loadDanhSachXe(self.date, choose: true)
+                DispatchQueue.main.async {
+                    let data = string.data(using: String.Encoding.utf8, allowLossyConversion: false)
+                    self.locationEndPoint = self.jsonHelper.parseRouteLocation(data!)
+                    self.labelDiemDen.text = self.locationEndPoint[0].Name
+                    self.currentlocationEndPoint = self.locationEndPoint[0]
+                    self.loadDanhSachXe(self.date, choose: true)
+                }
             }
             else {
                 self.alert.hideView()

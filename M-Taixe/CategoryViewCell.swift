@@ -64,6 +64,12 @@ class CategoryViewCell: UICollectionViewCell {
         labelTrangThaiBanVe.text = "Còn trống \(choTrong)/\(trip.CountTicket)"
         backgroundCategory.backgroundColor = AppUtils.hexStringToUIColor(hex: trip.color)
         soVeChuaTien.text = "\(trip.CountBooked - trip.CountPaid) CT"
-        trainlingProgress.constant = widthProgressBar - (CGFloat(trip.CountBooked)/CGFloat(trip.CountTicket)) * CGFloat(widthProgressBar)
+        
+        do {
+            trainlingProgress.constant = widthProgressBar - (CGFloat(trip.CountBooked)/CGFloat(trip.CountTicket)) * CGFloat(widthProgressBar)
+        } catch {
+             trainlingProgress.constant = 0
+        }
+        
     }
 }

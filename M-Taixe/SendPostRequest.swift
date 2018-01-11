@@ -285,7 +285,7 @@ class SendPostRequest: NSObject {
     }
     func parseRoutes(s: NSString,callBack: @escaping SendPostRequestCallBack){
         var arr = s.components(separatedBy: "Route_GetForBookingResult")
-        if arr.count > 0{
+        if arr.count > 0 {
             var result = arr[1].replacingOccurrences(of: ">", with: "").replacingOccurrences(of: "</", with: "") ?? ""
             callBack(result, nil)
         }
