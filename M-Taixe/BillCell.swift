@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UICheckbox_Swift
 
 class BillCell: UITableViewCell {
 
@@ -15,14 +16,15 @@ class BillCell: UITableViewCell {
     @IBOutlet weak var lblConsignee: UILabel!
     @IBOutlet weak var lblShipper: UILabel!
     @IBOutlet weak var lblBillName: UILabel!
+    @IBOutlet weak var selectedGood: UICheckbox!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         // Configure the view for the selected state
     }
 

@@ -105,6 +105,8 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
             }
         case SegueFactory.fromCategoryToEditCategory.rawValue:
             (segue.destination as! EditRouteViewController).setUpDataFromCategory(tripId: "00000000-0000-0000-0000-000000000000", dateFromCategory: self.date)
+        case SegueFactory.fromCategoryToGoods.rawValue:
+            (segue.destination as! ListGoodsViewController).initData(trips: arrTrip, currentDate: self.date)
         default:
             break
         }
@@ -502,125 +504,9 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func timerTask() {
         if UIApplication.shared.applicationState == UIApplicationState.active{
-//            loadData(self.date, choose: false)
+            //            loadData(self.date, choose: false)
         }
     }
-   
-    //Hàm load dữ liệu
-    
-//    func loadData(_ byDate: String, choose: Bool) {
-//        var soapMessage = String()
-//        var soapAction = ""
-//        if currentUser.RoleType == 1 {
-//            soapMessage = String(format: "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\"><soapenv:Header/><soapenv:Body><tem:TripDriver_GetByDate><!--Optional:--><tem:UserName>\(currentUser.UserName)</tem:UserName><!--Optional:--><tem:Password>\(currentUser.Password)</tem:Password><!--Optional:--><tem:TripDate>\(byDate)</tem:TripDate><tem:SecurityCode>MobihomeAppDv123</tem:SecurityCode></tem:TripDriver_GetByDate></soapenv:Body></soapenv:Envelope>")
-//            soapAction = "http://tempuri.org/IMobihomeWcf/TripDriver_GetByDate"
-//        }
-//        else{
-//            soapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
-//                "<soapenv:Header/>" +
-//                "<soapenv:Body>" +
-//                "<tem:Trip_GetForBooking>" +
-//                "<!--Optional:-->" +
-//                "<tem:CompanyId>\(currentUser.CompanyId)</tem:CompanyId>" +
-//                "<!--Optional:-->" +
-//                "<tem:UserId>\(currentUser.UserId)</tem:UserId>" +
-//                "<!--Optional:-->" +
-//                "<tem:Password>\(currentUser.Password)</tem:Password>" +
-//                "<!--Optional:-->" +
-//                "<tem:SelectDate>\(byDate)</tem:SelectDate>" +
-//                "<!--Optional:-->" +
-//                "<tem:RouteId>\(currentRoute.RouteId)</tem:RouteId>" +
-//                "<!--Optional:-->" +
-//                "<tem:SecurityCode>MobihomeAppDv123</tem:SecurityCode>" +
-//                "</tem:Trip_GetForBooking>" +
-//                "</soapenv:Body>" +
-//            "</soapenv:Envelope>"
-//
-//            soapAction = "http://tempuri.org/IMobihomeWcf/Trip_GetForBooking"
-//        }
-//
-//        //Gửi yêu cầu lấy danh sách chuyến trong ngày "bydate"
-//        sendPostRequest.sendRequest(soapMessage, soapAction: soapAction) { (string, error) in
-//            if error == nil {
-//
-//                //Parse dữ liệu trả về sang NSData
-//                let data = string.data(using: String.Encoding.utf8, allowLossyConversion: false)
-//                var trips = [Trip]()
-//
-//                //Chuyển sang danh sách chuyến
-//                trips = self.jsonHelper.parseTrips(data!)
-//
-//                //Nếu có dữ liẹu trả về từ server thì lưu xuống bộ nhớ local
-//                if string != ""{
-//                    self.userDefaults.setValue(data, forKey: byDate)
-//                    self.userDefaults.synchronize()
-//                }
-//
-//                //Nếu là load ngày dc chọn
-//                if self.date == byDate {
-//                    self.arrTrip = [Trip]()
-//                    self.alert.hideView()
-//
-//                    //Nếu ko nhận dc dữ liệu từ server (server lỗi)
-//                    if string == ""{
-//                        if choose{
-//                            self.alert = SCLAlertView()
-//                            self.alert.showError("Lỗi!", subTitle: "Không kết nối được server!")
-//                        }
-//                        //Lấy danh sách chuyến từ local
-//                        let jsonTrips = self.userDefaults.value(forKey: self.date) as? NSData
-//                        if jsonTrips != nil{
-//                            self.arrTrip = self.jsonHelper.parseTrips(jsonTrips! as Data)
-//                        }
-//                        self.collectionViewCatagory.reloadData()
-//                    }
-//                    else{
-//
-//                        //Load dữ liệu của server trả về
-//                        self.arrTrip = trips
-//                        self.collectionViewCatagory.reloadData()
-//                    }
-//                }
-//
-//                //Chạy ngầm tính năng lưu dữ liệu xuống local
-//                self.backgroundThread(0.0, background: {
-//
-//                    //Lưu danh sách khách hàng của từng chuyến
-//                    for i in 0 ..< trips.count {
-//                        let trip = trips[i]
-//                        self.insertCustomer(trip.TripId, atDate: byDate)
-//                    }
-//
-//                    //Xoá dữ liệu cách đây 30ngày
-//                    var currentDate = NSDate()
-//                    let dateFormat = DateFormatter()
-//                    dateFormat.dateFormat = "yyyyMMdd"
-//                    currentDate = currentDate.addingTimeInterval(TimeInterval(-30*60*60*24))
-//                    self.deleteTrips(currentDate as Date)
-//                })
-//            }
-//            else{
-//
-//                //Nếu là load ngày đang chọn
-//                if self.date == byDate{
-//
-//                    //Lấy dữ liệu từ local
-//                    self.arrTrip = [Trip]()
-//                    self.alert.hideView()
-//                    let jsonTrips = self.userDefaults.value(forKey: self.date) as? NSData
-//                    if jsonTrips != nil{
-//                        self.arrTrip = self.jsonHelper.parseTrips(jsonTrips! as Data)
-//                    }
-//                    self.collectionViewCatagory.reloadData()
-//                    if choose{
-//                        self.alert = SCLAlertView()
-//                        self.alert.showError("Lỗi!", subTitle: "Không có kết nối mạng!")
-//
-//                    }
-//                }
-//            }
-//        }
-//    }
     
     //Hàm xoá dữ liệu
     func deleteTrips(_ tripDate: Date?){
@@ -817,7 +703,7 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     @IBAction func goToListGoods(_ sender: Any) {
-       
+       performSegue(withIdentifier: SegueFactory.fromCategoryToGoods.rawValue, sender: nil)
     }
     
     @IBAction func btnChonDiemDiClick(_ sender: Any) {

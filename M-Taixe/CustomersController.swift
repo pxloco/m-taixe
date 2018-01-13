@@ -102,7 +102,7 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
         transition.type = kCATransitionPush
         transition.subtype = kCATransitionFromTop
         self.navigationController!.view.layer.add(transition, forKey: kCATransition)
-        let storyBoard = UIStoryboard.init(name: "Schema", bundle: Bundle.main)
+        let storyBoard = UIStoryboard.init(name: "Goods", bundle: Bundle.main)
         let controller = storyBoard.instantiateViewController(withIdentifier: "AddOrder") as! AddOrderController
         controller.orderGuid = arrCustomers[indexPath.row].OrderGuid
         controller.currentOrder = arrCustomers[indexPath.row]
@@ -129,7 +129,6 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
             cell.lblCatch.text = "\(bill.ShipperAdd) - \(bill.ConsigneeAdd)"
             cell.btnCall.addTarget(self, action: #selector(self.btnCallClick(sender:)), for: UIControlEvents.touchUpInside)
             return cell
-            
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CustomerCell") as! CustomerCell
             
@@ -158,8 +157,7 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     @available(iOS 8.0, *)
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]?
-    {
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let daDon = UITableViewRowAction(style: .default, title: "Đã đón")
         { action, index in
             for i in 0 ..< self.arrCustomers.count {

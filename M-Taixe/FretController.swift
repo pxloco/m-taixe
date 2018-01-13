@@ -20,6 +20,7 @@ class FretController: UIViewController, UITableViewDataSource, UITableViewDelega
     var sendPostRequest = SendPostRequest()
     var jsonHelper = JsonHelper()
     var alert = SCLAlertView()
+    var callBill = Bill()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -126,7 +127,7 @@ class FretController: UIViewController, UITableViewDataSource, UITableViewDelega
         addController.bill = bills[indexPath.row]
         self.navigationController?.pushViewController(addController, animated: false)
     }
-    var callBill = Bill()
+
     
     func btnCallClick(sender: UIButton){
         callBill = bills[sender.tag]

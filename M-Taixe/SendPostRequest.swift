@@ -9,12 +9,17 @@
 import Foundation
 class SendPostRequest: NSObject {
     
+    enum URLKey: String {
+        case homeURL = "http://api.mobihome.vn/Mobihome.svc"
+        case billURL = "http://api.mobihome.vn/Bill.svc"
+    }
+    
     public typealias SendPostRequestCallBack = (_ string: String, _ error: NSError?) -> Void
     private var callBack : SendPostRequestCallBack?
     var error: NSError?
     
-    func sendRequest(_ soapMessage: String, soapAction: String, callBack: @escaping SendPostRequestCallBack){
-        let urlString = "http://api.mobihome.vn/Mobihome.svc"
+    func sendRequest(_ soapMessage: String, soapAction: String, urlKey: URLKey = .homeURL, callBack: @escaping SendPostRequestCallBack){
+        let urlString = urlKey.rawValue
         let url = URL(string: urlString)
         let theRequest = NSMutableURLRequest.init(url: url!, cachePolicy: NSURLRequest.CachePolicy.useProtocolCachePolicy, timeoutInterval: 3)
         let msgLength = soapMessage.count
@@ -31,7 +36,7 @@ class SendPostRequest: NSObject {
             self.callBack = callBack
             if error == nil {
                 let httpResponse = response as! HTTPURLResponse
-                if httpResponse.statusCode == 200{
+                if httpResponse.statusCode == 200 {
                     let s = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
                     switch (soapAction){
                     case "http://tempuri.org/IMobihomeWcf/Order_GetByTrip":
@@ -103,18 +108,31 @@ class SendPostRequest: NSObject {
                     case "http://tempuri.org/IMobihomeWcf/Trip_Delete":
                         self.parseTripDelete(s: s!, callBack: callBack)
                         break;
+                    case "http://tempuri.org/IBillWcf/FilterWaitTrip":
+                        self.parseFilterWaitTrip(s: s!, callBack: callBack)
+                        break;
                     default:
                         callBack("", error as NSError?)
                         break;
                     }
-                }
-                else {
+                } else {
                     callBack("", error as NSError?)
                 }
             }
             else {
                 callBack("", error as NSError?)
             }
+        }
+    }
+    
+    func parseFilterWaitTrip(s: NSString,callBack: @escaping SendPostRequestCallBack){
+        var arr = s.components(separatedBy: "FilterWaitTripResult")
+        if arr.count > 0 {
+            let result = arr[1].replacingOccurrences(of: ">", with: "").replacingOccurrences(of: "</", with: "")
+            callBack(result, nil)
+        }
+        else {
+            callBack("", NSError())
         }
     }
     

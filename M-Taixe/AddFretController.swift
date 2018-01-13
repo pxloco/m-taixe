@@ -18,12 +18,7 @@ class AddFretController: UIViewController {
     @IBOutlet weak var tfConsigneeMobile: UITextField!
     @IBOutlet weak var tfShipperName: UITextField!
     @IBOutlet weak var tfShipperMobile: UITextField!
-    
     @IBOutlet weak var topBarMenu: UIView!
-    
-    @IBOutlet weak var groupDrop: UIView!
-    @IBOutlet weak var groupCatch: UIView!
-    @IBOutlet weak var groupCost: UIView!
     @IBOutlet weak var groupName: UIView!
     @IBOutlet weak var groupConsignee: UIView!
     @IBOutlet weak var groupShipper: UIView!
@@ -41,18 +36,7 @@ class AddFretController: UIViewController {
         
         setUpData()
         setUpUI()
-    
-        //self.navigationController?.setNavigationBarHidden(true, animated: false)
-        //self.navigationItem.setHidesBackButton(true, animated: false)
-//        var cancelButton = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.cancel, target: self, action: #selector(self.btnCancelClick))
-//        cancelButton = UIBarButtonItem.init(title: "Huỷ", style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.btnCancelClick))
-//        self.navigationItem.leftBarButtonItem = cancelButton;
         
-//        var saveButton = UIBarButtonItem.init(title: "Lưu", style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.btnSaveClick))
-//        self.navigationItem.rightBarButtonItem = saveButton
-//
-//        self.navigationItem.title = "Thêm vé"
-
         // Do any additional setup after loading the view.
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(LoginController.dismissKeyboard))
         view.addGestureRecognizer(tap)
@@ -107,12 +91,9 @@ class AddFretController: UIViewController {
     func btnCancelClick(){
         self.navigationController?.popViewController(animated: true);
     }
-    
-   
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -137,15 +118,15 @@ class AddFretController: UIViewController {
     // MARK: Get API
     
     func btnSaveClick() {
-        var billName = tfBillName.text ?? ""
-        var shipperName = tfShipperName.text ?? ""
-        var shipperMobile = tfShipperMobile.text ?? ""
-        var shipperAdd = tfShipperAdd.text ?? ""
-        var consigneeName = tfConsigneeName.text ?? ""
-        var consigneeMobile = tfConsigneeMobile.text ?? ""
-        var consigneeAdd = tfConsigneeAdd.text ?? ""
-        var cost = tfCost.text ?? ""
-        var soapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
+        let billName = tfBillName.text ?? ""
+        let shipperName = tfShipperName.text ?? ""
+        let shipperMobile = tfShipperMobile.text ?? ""
+        let shipperAdd = tfShipperAdd.text ?? ""
+        let consigneeName = tfConsigneeName.text ?? ""
+        let consigneeMobile = tfConsigneeMobile.text ?? ""
+        let consigneeAdd = tfConsigneeAdd.text ?? ""
+        let cost = tfCost.text ?? ""
+        let soapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
             "<soapenv:Header/>" +
             "<soapenv:Body>" +
             "<tem:BillFreight_Save>" +
@@ -204,7 +185,7 @@ class AddFretController: UIViewController {
             "</tem:BillFreight_Save>" +
             "</soapenv:Body>" +
         "</soapenv:Envelope>"
-        var soapAction = "http://tempuri.org/IMobihomeWcf/BillFreight_Save"
+        let soapAction = "http://tempuri.org/IMobihomeWcf/BillFreight_Save"
         sendPostRequest.sendRequest(soapMessage, soapAction: soapAction){
             (result, error) in
             if error == nil{

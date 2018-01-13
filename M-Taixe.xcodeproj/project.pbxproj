@@ -28,6 +28,7 @@
 		0C9AE4021FF9DEE800128DBA /* Bus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9AE4011FF9DEE800128DBA /* Bus.swift */; };
 		0C9AE4041FF9DFF600128DBA /* TicketByBus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9AE4031FF9DFF600128DBA /* TicketByBus.swift */; };
 		0CB9BAAE1FE87F2700A9BABB /* CategoryViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB9BAAD1FE87F2700A9BABB /* CategoryViewCell.swift */; };
+		0CC9BB0C2009A643003152F3 /* ListGoodsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC9BB0B2009A643003152F3 /* ListGoodsViewController.swift */; };
 		0CD1BD2E1FF3148A00E32053 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0CD1BD2D1FF3148A00E32053 /* GoogleService-Info.plist */; };
 		0CE4B9331FE5F2BC00992EED /* AnalysViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE4B9321FE5F2BC00992EED /* AnalysViewController.swift */; };
 		0CE4B9351FE6076A00992EED /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE4B9341FE6076A00992EED /* MapViewController.swift */; };
@@ -120,6 +121,7 @@
 		0C9AE4011FF9DEE800128DBA /* Bus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bus.swift; sourceTree = "<group>"; };
 		0C9AE4031FF9DFF600128DBA /* TicketByBus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketByBus.swift; sourceTree = "<group>"; };
 		0CB9BAAD1FE87F2700A9BABB /* CategoryViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewCell.swift; sourceTree = "<group>"; };
+		0CC9BB0B2009A643003152F3 /* ListGoodsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListGoodsViewController.swift; sourceTree = "<group>"; };
 		0CD1BD2D1FF3148A00E32053 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0CE4B9321FE5F2BC00992EED /* AnalysViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysViewController.swift; sourceTree = "<group>"; };
 		0CE4B9341FE6076A00992EED /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 				318E7E771DADD091005BB52D /* AddFretController.swift */,
 				31B307651DCCC54C0039AFBC /* AddOrderController.swift */,
 				0CE4B9341FE6076A00992EED /* MapViewController.swift */,
+				0CC9BB0B2009A643003152F3 /* ListGoodsViewController.swift */,
 			);
 			name = Schema;
 			sourceTree = "<group>";
@@ -793,6 +796,7 @@
 				31B307641DCCB79E0039AFBC /* AddSeatCell.swift in Sources */,
 				3127E77E1D372447002293D4 /* AppDelegate.swift in Sources */,
 				0CE4B9351FE6076A00992EED /* MapViewController.swift in Sources */,
+				0CC9BB0C2009A643003152F3 /* ListGoodsViewController.swift in Sources */,
 				3109C16E1D37BFFA00C3BDE4 /* DatePickerDialog.swift in Sources */,
 				3127E7E11D378638002293D4 /* CategoryController.swift in Sources */,
 				312B88441D3D023400728743 /* InformationCell.swift in Sources */,

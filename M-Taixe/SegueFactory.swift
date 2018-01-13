@@ -19,5 +19,6 @@ enum SegueFactory: String {
     case fromSchemaToEditRoute                    = "fromSchemaToEditRoute"
     case fromCategoryToGoods                      = "fromCategoryToGoods"
     case fromCustomerToAddGoods                   = "fromCustomerToAddGoods"
+    case fromGoodsToAddGoods                      = "fromGoodsToAddGoods"
 }
 
