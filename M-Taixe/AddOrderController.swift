@@ -40,16 +40,14 @@ class AddOrderController: UITableViewController, UITextFieldDelegate, UIWebViewD
         var cancelButton = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.cancel, target: self, action: #selector(self.btnCancelClick))
         cancelButton = UIBarButtonItem.init(title: "Huỷ", style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.btnCancelClick))
         self.navigationItem.leftBarButtonItem = cancelButton;
-        if !isSearch{
+        if !isSearch {
             saveButton = UIBarButtonItem.init(title: "Lưu", style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.btnSaveClick))
             self.navigationItem.rightBarButtonItem = saveButton
-            
         }
         
         self.navigationItem.title = "Thêm vé"
         initSelect()
         if self.tripId != "" {
-            
             loadOneTrip()
         }
         
@@ -68,12 +66,12 @@ class AddOrderController: UITableViewController, UITextFieldDelegate, UIWebViewD
         if isSearch{
             inforCell.tfName.isEnabled = false
             inforCell.tfCatchAddress.isEnabled = false
-            var depart = RouteDetail()
+            let depart = RouteDetail()
             depart.Name = currentOrder.DepartText
             depart.StopPointId = currentOrder.DepartGuid
             departs.append(depart)
             
-            var arrival = RouteDetail()
+            let arrival = RouteDetail()
             arrival.Name = currentOrder.ArrivalText
             arrival.StopPointId = currentOrder.ArrivalGuid
             arrivals.append(arrival)
@@ -89,7 +87,6 @@ class AddOrderController: UITableViewController, UITextFieldDelegate, UIWebViewD
     }
 
     func initSelect(){
-        
         inforCell = tableViewSeat.dequeueReusableCell(withIdentifier: "OrderInfor") as! OrderInforCell
         inforCell.frame = inforCell.contentView.frame
         webviewDepart = inforCell.webviewDepart
@@ -262,14 +259,14 @@ class AddOrderController: UITableViewController, UITextFieldDelegate, UIWebViewD
            return inforCell
         }
         else if indexPath.row == arrSeat.count+1{
-            var cell = tableViewSeat.dequeueReusableCell(withIdentifier: "AddSeatCell", for: indexPath) as! AddSeatCell
+            let cell = tableViewSeat.dequeueReusableCell(withIdentifier: "AddSeatCell", for: indexPath) as! AddSeatCell
             cell.btnAdd.addTarget(self, action: #selector(self.btnAddSeatClick(_:)), for: UIControlEvents.touchUpInside)
             cell.iconAdd.addTarget(self, action: #selector(self.btnAddSeatClick(_:)), for: UIControlEvents.touchUpInside)
             
             return cell
         }
         else{
-            var cell = tableViewSeat.dequeueReusableCell(withIdentifier: "SeatCell") as! AddCustomerViewCell
+            let cell = tableViewSeat.dequeueReusableCell(withIdentifier: "SeatCell") as! AddCustomerViewCell
             cell.tfSeatNum.text = arrSeat[indexPath.row-1]
             cell.tfSeatNum.tag = indexPath.row-1
             cell.tfSeatNum.delegate = self
@@ -319,7 +316,7 @@ class AddOrderController: UITableViewController, UITextFieldDelegate, UIWebViewD
         self.alert.hideView()
     }
     func loadDeparts(){
-        var soapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
+        let soapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
         "<soapenv:Header/>" +
         "<soapenv:Body>" +
         "<tem:Place_SearchDepart>" +
@@ -340,7 +337,7 @@ class AddOrderController: UITableViewController, UITextFieldDelegate, UIWebViewD
         "</tem:Place_SearchDepart>" +
         "</soapenv:Body>" +
         "</soapenv:Envelope>"
-        var soapAction = "http://tempuri.org/IMobihomeWcf/Place_SearchDepart"
+        let soapAction = "http://tempuri.org/IMobihomeWcf/Place_SearchDepart"
         sendPostRequest.sendRequest(soapMessage, soapAction: soapAction){
             (result, error) in
             if result != ""{
@@ -353,7 +350,7 @@ class AddOrderController: UITableViewController, UITextFieldDelegate, UIWebViewD
         }
     }
     func loadArrivals(){
-        var soapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
+        let soapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
             "<soapenv:Header/>" +
             "<soapenv:Body>" +
             "<tem:Place_SearchArrival>" +
@@ -374,7 +371,7 @@ class AddOrderController: UITableViewController, UITextFieldDelegate, UIWebViewD
             "</tem:Place_SearchArrival>" +
             "</soapenv:Body>" +
         "</soapenv:Envelope>"
-        var soapAction = "http://tempuri.org/IMobihomeWcf/Place_SearchArrival"
+        let soapAction = "http://tempuri.org/IMobihomeWcf/Place_SearchArrival"
         sendPostRequest.sendRequest(soapMessage, soapAction: soapAction){
             (result, error) in
             if result != ""{
@@ -386,7 +383,7 @@ class AddOrderController: UITableViewController, UITextFieldDelegate, UIWebViewD
         }
     }
     func loadOneTrip(){
-        var soapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
+        let soapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
             "<soapenv:Header/>" +
             "<soapenv:Body>" +
             "<tem:Trip_GetOne>" +
@@ -403,15 +400,15 @@ class AddOrderController: UITableViewController, UITextFieldDelegate, UIWebViewD
             "</tem:Trip_GetOne>" +
             "</soapenv:Body>" +
         "</soapenv:Envelope>"
-        var soapAction = "http://tempuri.org/IMobihomeWcf/Trip_GetOne"
+        let soapAction = "http://tempuri.org/IMobihomeWcf/Trip_GetOne"
         
-        var sendPostRequest = SendPostRequest()
+        let sendPostRequest = SendPostRequest()
         sendPostRequest.sendRequest(soapMessage, soapAction: soapAction){
             (result, error) in
             
             if error == nil{
-                var text = "[\(result)]"
-                var jsonHelper = JsonHelper()
+                let text = "[\(result)]"
+                let jsonHelper = JsonHelper()
                 var trips = jsonHelper.parseTrips(text.data(using: String.Encoding.utf8)!)
                 self.currentTrip = trips[0]
                 if self.currentTrip.RouteId > 0{
@@ -429,7 +426,7 @@ class AddOrderController: UITableViewController, UITextFieldDelegate, UIWebViewD
         }
     }
     func loadStartEnd(){
-        var soapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
+        let soapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
             "<soapenv:Header/>" +
             "<soapenv:Body>" +
             "<tem:Place_GetStartEnd>" +
@@ -448,14 +445,14 @@ class AddOrderController: UITableViewController, UITextFieldDelegate, UIWebViewD
             "</tem:Place_GetStartEnd>" +
             "</soapenv:Body>" +
         "</soapenv:Envelope>"
-        var soapAction = "http://tempuri.org/IMobihomeWcf/Place_GetStartEnd"
-        var sendPost = SendPostRequest()
+        let soapAction = "http://tempuri.org/IMobihomeWcf/Place_GetStartEnd"
+        let sendPost = SendPostRequest()
         sendPost.sendRequest(soapMessage, soapAction: soapAction) {
             (result, error) in
             if error == nil{
                 
-                var jsonHelper = JsonHelper()
-                var startEnd = jsonHelper.parseRouteDetail(result.data(using: String.Encoding.utf8)!)
+                let jsonHelper = JsonHelper()
+                let startEnd = jsonHelper.parseRouteDetail(result.data(using: String.Encoding.utf8)!)
                 for detail in startEnd {
                     if detail.IsStartPoint{
                         self.departs.append(detail)
@@ -465,14 +462,10 @@ class AddOrderController: UITableViewController, UITextFieldDelegate, UIWebViewD
                     }
                 }
                 self.loadDeparts()
-                
-                
-            }
-            else{
+            } else {
                 self.alert.hideView()
                     self.alert = SCLAlertView()
                     self.alert.showError("Lỗi!", subTitle: "Không thể kết nối server!")
-                
             }
         }
     }

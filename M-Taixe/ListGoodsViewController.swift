@@ -116,6 +116,7 @@ class ListGoodsViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "BillCell", for: indexPath) as! BillCell
+        cell.selectionStyle = .none
         let bill = bills[indexPath.row]
         cell.lblShipper.text = "Gửi: \(bill.ShipperName) - \(bill.ShipperMobile)"
         cell.lblConsignee.text = "Nhận: \(bill.Consignee) - \(bill.ConsigneeMobile)"

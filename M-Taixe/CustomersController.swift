@@ -95,27 +95,52 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
         }
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if segmentControl.selectedSegmentIndex == 2 {
+            return 100
+        } else {
+            return 80
+        }
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let transition:CATransition = CATransition()
-        transition.duration = 0.5
-        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromTop
-        self.navigationController!.view.layer.add(transition, forKey: kCATransition)
-        let storyBoard = UIStoryboard.init(name: "Goods", bundle: Bundle.main)
-        let controller = storyBoard.instantiateViewController(withIdentifier: "AddOrder") as! AddOrderController
-        controller.orderGuid = arrCustomers[indexPath.row].OrderGuid
-        controller.currentOrder = arrCustomers[indexPath.row]
-        controller.tripId = tripId
-        controller.currentUser = currentUser
-        self.navigationController?.pushViewController(controller, animated: true)
-        self.tableView.deselectRow(at: indexPath, animated: true)
+        if segmentControl.selectedSegmentIndex == 2 {
+            let transition:CATransition = CATransition()
+            transition.duration = 0.5
+            transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+            transition.type = kCATransitionPush
+            transition.subtype = kCATransitionFromTop
+            self.navigationController!.view.layer.add(transition, forKey: kCATransition)
+            let storyboard = UIStoryboard.init(name: "Goods", bundle: Bundle.main)
+            let addController = storyboard.instantiateViewController(withIdentifier: "AddFret") as! AddFretController
+            addController.currentUser = currentUser
+            addController.tripId = tripId
+            addController.billID = bills[indexPath.row].BillID
+            addController.bill = bills[indexPath.row]
+            self.navigationController?.pushViewController(addController, animated: false)
+        } else {
+            let transition:CATransition = CATransition()
+            transition.duration = 0.5
+            transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+            transition.type = kCATransitionPush
+            transition.subtype = kCATransitionFromTop
+            self.navigationController!.view.layer.add(transition, forKey: kCATransition)
+            let storyBoard = UIStoryboard.init(name: "Schema ", bundle: Bundle.main)
+            let controller = storyBoard.instantiateViewController(withIdentifier: "AddOrder") as! AddOrderController
+            controller.orderGuid = arrCustomers[indexPath.row].OrderGuid
+            controller.currentOrder = arrCustomers[indexPath.row]
+            controller.tripId = tripId
+            controller.currentUser = currentUser
+            self.navigationController?.pushViewController(controller, animated: true)
+            self.tableView.deselectRow(at: indexPath, animated: true)
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if segmentControl.selectedSegmentIndex == 2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "BillCell", for: indexPath) as! BillCell
             let bill = bills[indexPath.row]
+            cell.selectionStyle = .none
             cell.lblShipper.text = "Gửi: \(bill.ShipperName) - \(bill.ShipperMobile)"
             cell.lblConsignee.text = "Nhận: \(bill.Consignee) - \(bill.ConsigneeMobile)"
             cell.btnCall.tag = indexPath.row
@@ -131,7 +156,7 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CustomerCell") as! CustomerCell
-            
+            cell.selectionStyle = .none
             if segmentControl.selectedSegmentIndex == 1 {
                 let customer = arrCustomers[(indexPath as NSIndexPath).row]
                 cell.lblCustomerName.text = customer.CustomerName
