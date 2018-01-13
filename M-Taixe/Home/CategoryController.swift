@@ -427,28 +427,34 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
                         var tongSoTienVeChuaThanhToan: Int = 0
                         var tongSoVeBanDuoc: Int = 0
                         var tongSoVeChuaThanhToan: Int = 0
+                        var tongSoHangChuaTien: Int = 0
+                        var tongSoTienHangChuaTien: Int = 0
+                        
                         for trip in self.arrTrip {
                             tongSoTienVeBanDuoc += trip.TicketAmount
                             tongSoTienVeChuaThanhToan += trip.TicketAmount - trip.TicketPaidAmount
                             tongSoVeBanDuoc += trip.CountBooked
                             tongSoVeChuaThanhToan += trip.CountBooked - trip.CountPaid
+                            tongSoHangChuaTien += trip.BillFreightCount - trip.BillFreightPaidCount
+                            tongSoTienHangChuaTien += trip.BillFreightAmount - trip.BillFreightPaidAmount
                         }
                         
                         let tongSoTienVeBanDuocAttr = "\(tongSoTienVeBanDuoc)".withAttributes([.textColor(.red)])
                         let tongSoTienVeChuaThanhToanAttr = "\(tongSoTienVeChuaThanhToan)".withAttributes([.textColor(.red)])
                         let tongSoVeBanDuocAttr = "\(tongSoVeBanDuoc)".withAttributes([.textColor(.black)])
-                         let tongSoVeChuaThanhToanAttr = "\(tongSoVeChuaThanhToan)".withAttributes([.textColor(.black)])
+                        let tongSoVeChuaThanhToanAttr = "\(tongSoVeChuaThanhToan)".withAttributes([.textColor(.black)])
+                        let tongSoTienHangAttr = "\(tongSoTienHangChuaTien)".withAttribute(.textColor(.red))
+                        let tongSoHangAttr = "\(tongSoHangChuaTien)".withAttribute(.textColor(.black))
                     
                         let sove = "Số vé: ".withAttributes([.textColor(.black)])
                         let mongoac = " ( ".withAttributes([.textColor(.black)])
                         let dongngoac = " )".withAttributes([.textColor(.black)])
                         let gach = " - ".withAttributes([.textColor(.black)])
                         let chuathanhtoan = " chưa thanh toán".withAttributes([.textColor(.black)])
+                        let hang = "Hàng: ".withAttribute(.textColor(.black))
                         
                         self.thongKeVeLabel.attributedText = sove + tongSoVeBanDuocAttr + gach + tongSoTienVeBanDuocAttr + mongoac + tongSoVeChuaThanhToanAttr + gach + tongSoTienVeChuaThanhToanAttr + chuathanhtoan + dongngoac
-                        
-//                        self.thongKeVeLabel.text = "\(tongSoVeBanDuoc) - \(tongSoTienVeBanDuocRed) (\(tongSoVeChuaThanhToan) - \(tongSoTienVeChuaThanhToanRed) chưa thanh toán)"
-//
+                        self.thongKeHangLabel.attributedText = hang + tongSoHangAttr + mongoac + tongSoTienHangAttr + dongngoac
                         
                         self.collectionViewCatagory.reloadData()
                     }

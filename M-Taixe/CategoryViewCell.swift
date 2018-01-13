@@ -22,6 +22,8 @@ class CategoryViewCell: UICollectionViewCell {
     @IBOutlet weak var trainlingProgress: NSLayoutConstraint!
     @IBOutlet weak var soLuongVeView: HPView!
     @IBOutlet weak var progressView: HPView!
+    @IBOutlet weak var goodsNotPaidview: HPView!
+    @IBOutlet weak var countGoodsNotPaidLabel: UILabel!
     
     var formatter = DateFormatter()
     
@@ -47,6 +49,13 @@ class CategoryViewCell: UICollectionViewCell {
         } else {
             progressView.botRightRounded = false
             progressView.topRightRounded = false
+        }
+        
+        if (trip.BillFreightCount - trip.BillFreightPaidCount) == 0 {
+            goodsNotPaidview.isHidden = true
+        } else {
+            goodsNotPaidview.isHidden = false
+            countGoodsNotPaidLabel.text = "\(trip.BillFreightCount - trip.BillFreightPaidCount)"
         }
         
         if (trip.CountBooked - trip.CountPaid) == 0 {

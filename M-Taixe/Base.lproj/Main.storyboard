@@ -742,6 +742,29 @@
                                                                         </userDefinedRuntimeAttribute>
                                                                     </userDefinedRuntimeAttributes>
                                                                 </view>
+                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QvO-Q5-BT0" userLabel="Goods not paid view" customClass="HPView" customModule="HPUIViewExtensions">
+                                                                    <rect key="frame" x="65" y="-17" width="20" height="30"/>
+                                                                    <subviews>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TcB-1z-XlM" userLabel="Count goods not paid">
+                                                                            <rect key="frame" x="0.0" y="5" width="20" height="19.5"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                                            <nil key="textColor"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                    </subviews>
+                                                                    <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="20" id="BuM-EW-BCu"/>
+                                                                        <constraint firstItem="TcB-1z-XlM" firstAttribute="centerY" secondItem="QvO-Q5-BT0" secondAttribute="centerY" id="UbH-2y-OEz"/>
+                                                                        <constraint firstItem="TcB-1z-XlM" firstAttribute="centerX" secondItem="QvO-Q5-BT0" secondAttribute="centerX" id="dDQ-9G-Cc5"/>
+                                                                        <constraint firstAttribute="height" constant="30" id="udE-jt-1ua"/>
+                                                                    </constraints>
+                                                                    <userDefinedRuntimeAttributes>
+                                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                            <real key="value" value="4"/>
+                                                                        </userDefinedRuntimeAttribute>
+                                                                    </userDefinedRuntimeAttributes>
+                                                                </view>
                                                             </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
@@ -756,6 +779,8 @@
                                                                 <constraint firstItem="jxn-Jg-wvC" firstAttribute="centerY" secondItem="K2X-MJ-7T3" secondAttribute="centerY" id="k4b-XP-vl4"/>
                                                                 <constraint firstAttribute="height" constant="100" id="n7s-KQ-wxz"/>
                                                                 <constraint firstItem="jxn-Jg-wvC" firstAttribute="top" secondItem="wI0-Bw-dfm" secondAttribute="top" id="sNf-Ba-51V"/>
+                                                                <constraint firstItem="QvO-Q5-BT0" firstAttribute="centerX" secondItem="wI0-Bw-dfm" secondAttribute="centerX" id="wH7-br-B3V"/>
+                                                                <constraint firstItem="QvO-Q5-BT0" firstAttribute="top" secondItem="wI0-Bw-dfm" secondAttribute="top" constant="-17" id="xJI-C1-7RA"/>
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gjZ-1X-PVQ" userLabel="Time Group ">
@@ -841,6 +866,8 @@
                                         <size key="customSize" width="150" height="150"/>
                                         <connections>
                                             <outlet property="backgroundCategory" destination="jxn-Jg-wvC" id="iBv-C5-QWf"/>
+                                            <outlet property="countGoodsNotPaidLabel" destination="TcB-1z-XlM" id="od7-45-c2v"/>
+                                            <outlet property="goodsNotPaidview" destination="QvO-Q5-BT0" id="IED-kU-n8O"/>
                                             <outlet property="imageTrangThai" destination="o4c-P9-wEK" id="qkO-2v-tIk"/>
                                             <outlet property="labelBienSo" destination="K2X-MJ-7T3" id="K5g-WS-6MY"/>
                                             <outlet property="labelGioXuatBen" destination="CkI-vO-wvy" id="0Ww-0A-ipJ"/>

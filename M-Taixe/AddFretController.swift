@@ -39,8 +39,9 @@ class AddFretController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setUpData()
         setUpUI()
-        
+    
         //self.navigationController?.setNavigationBarHidden(true, animated: false)
         //self.navigationItem.setHidesBackButton(true, animated: false)
 //        var cancelButton = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.cancel, target: self, action: #selector(self.btnCancelClick))
@@ -65,6 +66,33 @@ class AddFretController: UIViewController {
             tfCost.text = "\(bill.TotalCharges)"
             tfBillName.text = bill.NameOfGoods
         }
+    }
+    
+    func setUpData(tripId: String) {
+        self.tripId = tripId
+    }
+    
+    func setUpData() {
+        let defaults = UserDefaults.standard
+        
+        let userName = defaults.value(forKey: "UserName")
+        let password = defaults.value(forKey: "Password")
+        let displayName = defaults.value(forKey: "FullName")
+        let roleType = defaults.value(forKey: "RoleType")
+        let companyId = defaults.value(forKey: "CompanyId")
+        let AgentId = defaults.value(forKey: "AgentId")
+        let userId = defaults.value(forKey: "UserId")
+        let userGuid = defaults.value(forKey: "UserGuid")
+        
+        
+        currentUser.UserName = userName  as! String
+        currentUser.Password = password as! String
+        currentUser.DisplayName = displayName  as! String
+        currentUser.RoleType = Int.init(roleType as! String)!
+        currentUser.CompanyId = companyId  as! String
+        currentUser.AgentId = AgentId as! String
+        currentUser.UserId = userId  as! String
+        currentUser.UserGuid = userGuid as! String
     }
     
     func setUpUI() {

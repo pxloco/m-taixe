@@ -26,6 +26,12 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
     var jsonHelper = JsonHelper()
     var userDefaults = UserDefaults.standard
     var gioXuatBen = ""
+    let sendPostRequest = SendPostRequest()
+    var bills = [Bill]()
+    var overTop = false
+    var callBill = Bill()
+    
+    // MARK: Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +41,154 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
         //30 s load dữ liệu server 1 lần
         //timer = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(CustomersController.timerTask), userInfo: nil, repeats: true)
         //segmentControl.frame = CGRect(x: 50, y: 50, width: 1000, height: 50)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.segmentControl.selectedSegmentIndex = currentSegmentIndex
+        self.overTop = false
+        loadData()
+        loadGoodsData()
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if tableView.contentOffset.y < -30{
+            overTop = true
+        }
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if overTop{
+            //navigateToSearch()
+        }
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let segueId = segue.identifier else {
+            return
+        }
+        
+        switch segueId {
+        case SegueFactory.fromCustomerToAddGoods.rawValue:
+            (segue.destination as! AddFretController).setUpData(tripId: tripId)
+        default:
+            break
+        }
+    }
+    
+    // MARK: Table
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if segmentControl.selectedSegmentIndex == 2 {
+            return bills.count
+        } else if segmentControl.selectedSegmentIndex == 1 {
+            return arrCustomers.count
+        } else {
+            return arrCustomersChuaDon.count
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let transition:CATransition = CATransition()
+        transition.duration = 0.5
+        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromTop
+        self.navigationController!.view.layer.add(transition, forKey: kCATransition)
+        let storyBoard = UIStoryboard.init(name: "Schema", bundle: Bundle.main)
+        let controller = storyBoard.instantiateViewController(withIdentifier: "AddOrder") as! AddOrderController
+        controller.orderGuid = arrCustomers[indexPath.row].OrderGuid
+        controller.currentOrder = arrCustomers[indexPath.row]
+        controller.tripId = tripId
+        controller.currentUser = currentUser
+        self.navigationController?.pushViewController(controller, animated: true)
+        self.tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if segmentControl.selectedSegmentIndex == 2 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "BillCell", for: indexPath) as! BillCell
+            let bill = bills[indexPath.row]
+            cell.lblShipper.text = "Gửi: \(bill.ShipperName) - \(bill.ShipperMobile)"
+            cell.lblConsignee.text = "Nhận: \(bill.Consignee) - \(bill.ConsigneeMobile)"
+            cell.btnCall.tag = indexPath.row
+            //        let theStringNameOfGoods = bill.NameOfGoods.withFont(.systemFont(ofSize: 18))
+            let theString = "<label style=\"font-size: 18px;\">\(bill.NameOfGoods) - <b>\(bill.TotalCharges)</b></label>"
+            
+            let theAttributedString = try! NSAttributedString(data: theString.data(using: String.Encoding.unicode, allowLossyConversion: false)!,
+                                                              options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType],
+                                                              documentAttributes: nil)
+            cell.lblBillName.attributedText = theAttributedString
+            cell.lblCatch.text = "\(bill.ShipperAdd) - \(bill.ConsigneeAdd)"
+            cell.btnCall.addTarget(self, action: #selector(self.btnCallClick(sender:)), for: UIControlEvents.touchUpInside)
+            return cell
+            
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CustomerCell") as! CustomerCell
+            
+            if segmentControl.selectedSegmentIndex == 1 {
+                let customer = arrCustomers[(indexPath as NSIndexPath).row]
+                cell.lblCustomerName.text = customer.CustomerName
+                cell.lblCustomerNumber.text = customer.CustomerMobile
+                cell.lblCatchAddress.text = customer.CatchAddress
+            } else if segmentControl.selectedSegmentIndex == 0 {
+                let customer = arrCustomersChuaDon[(indexPath as NSIndexPath).row]
+                cell.lblCustomerName.text = customer.CustomerName
+                cell.lblCustomerNumber.text = "\(customer.CustomerMobile)"
+                cell.lblCatchAddress.text = customer.CatchAddress
+            }
+            cell.parent = self
+            return cell
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if self.segmentControl.selectedSegmentIndex == 0 {
+            return true
+        } else {  
+            return false
+        }
+    }
+    
+    @available(iOS 8.0, *)
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]?
+    {
+        let daDon = UITableViewRowAction(style: .default, title: "Đã đón")
+        { action, index in
+            for i in 0 ..< self.arrCustomers.count {
+                if self.arrCustomers[i].OrderGuid == self.arrCustomersChuaDon[(index as NSIndexPath).row].OrderGuid{
+                    self.arrCustomers[i].IsOnBus = true
+                }
+            }
+            let strJson = self.jsonHelper.customersToJson(self.arrCustomers)
+            let dataJson = strJson.data(using: String.Encoding.utf8, allowLossyConversion: false)
+            print(strJson)
+            self.userDefaults.setValue(dataJson, forKey: self.tripId)
+            self.userDefaults.synchronize()
+            
+            self.arrCustomersChuaDon.remove(at: (index as NSIndexPath).row)
+            do{
+                let t = try NSAttributedString(data: "<b>\(self.gioXuatBen)</b> Tổng số hành khách: \(self.arrCustomersChuaDon.count)".data(using: String.Encoding.unicode, allowLossyConversion: false)!, options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType], documentAttributes: nil)
+                self.lblTongSo.attributedText = t
+            }
+            catch{
+                
+            }
+            self.tableView.reloadData()
+        }
+        daDon.backgroundColor = UIColor.init(hexString: "00aff0")
+        let huyVe = UITableViewRowAction.init(style: .normal, title: "Huỷ vé") { (action, index) in
+            
+        }
+        huyVe.backgroundColor = UIColor.red
+        return [daDon, huyVe]
     }
     
     func setUpData() {
@@ -74,8 +228,8 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
 
         segmentControl.setTitleTextAttributes(attr as! [AnyHashable : Any], for: UIControlState.normal)
 //        self.navigationItem.titleView = titleView
-        let btnAdd = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.add, target: self, action: nil)
-        self.navigationItem.rightBarButtonItem = btnAdd
+//        let btnAdd = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.add, target: self, action: nil)
+//        self.navigationItem.rightBarButtonItem = btnAdd
         
 //        let btnHome = UIButton()
 //        btnHome.setBackgroundImage(UIImage(named: "home_icon"), for: UIControlState.normal)
@@ -135,7 +289,7 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
         }
     }
     
-    func loadData(){
+    func loadData() {
         let soapMessage = String(format: "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\"><soapenv:Header/><soapenv:Body><tem:Order_GetByTrip><!--Optional:--><tem:UserName>\(currentUser.UserName)</tem:UserName><!--Optional:--><tem:Password>\(currentUser.Password)</tem:Password><!--Optional:--><tem:TripId>\(tripId)</tem:TripId><tem:SecurityCode>MobihomeAppDv123</tem:SecurityCode></tem:Order_GetByTrip></soapenv:Body></soapenv:Envelope>")
         let soapAction = "http://tempuri.org/IMobihomeWcf/Order_GetByTrip"
         let sendPostRequest = SendPostRequest()
@@ -176,96 +330,7 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
         }
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if segmentControl.selectedSegmentIndex == 1{
-            return arrCustomers.count
-        }
-        else {
-            return arrCustomersChuaDon.count
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let transition:CATransition = CATransition()
-        transition.duration = 0.5
-        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromTop
-        self.navigationController!.view.layer.add(transition, forKey: kCATransition)
-        let storyBoard = UIStoryboard.init(name: "Schema", bundle: Bundle.main)
-        let controller = storyBoard.instantiateViewController(withIdentifier: "AddOrder") as! AddOrderController
-        controller.orderGuid = arrCustomers[indexPath.row].OrderGuid
-        controller.currentOrder = arrCustomers[indexPath.row]
-        controller.tripId = tripId
-        controller.currentUser = currentUser
-        self.navigationController?.pushViewController(controller, animated: true)
-        self.tableView.deselectRow(at: indexPath, animated: true)
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CustomerCell") as! CustomerCell
-        if segmentControl.selectedSegmentIndex == 1{
-            let customer = arrCustomers[(indexPath as NSIndexPath).row]
-            cell.lblCustomerName.text = customer.CustomerName
-            cell.lblCustomerNumber.text = customer.CustomerMobile
-            cell.lblCatchAddress.text = customer.CatchAddress
-        }
-        else{
-            let customer = arrCustomersChuaDon[(indexPath as NSIndexPath).row]
-            cell.lblCustomerName.text = customer.CustomerName
-            cell.lblCustomerNumber.text = "\(customer.CustomerMobile)"
-            cell.lblCatchAddress.text = customer.CatchAddress
-        }
-        cell.parent = self
-        return cell
-    }
    
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool
-    {
-        if self.segmentControl.selectedSegmentIndex == 0
-        {
-            return true
-        }
-        else {
-            
-            return false
-        }
-    }
-    
-    @available(iOS 8.0, *)
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]?
-    {
-        let daDon = UITableViewRowAction(style: .default, title: "Đã đón")
-        { action, index in
-            for i in 0 ..< self.arrCustomers.count {
-                if self.arrCustomers[i].OrderGuid == self.arrCustomersChuaDon[(index as NSIndexPath).row].OrderGuid{
-                    self.arrCustomers[i].IsOnBus = true
-                }
-            }
-            let strJson = self.jsonHelper.customersToJson(self.arrCustomers)
-            let dataJson = strJson.data(using: String.Encoding.utf8, allowLossyConversion: false)
-            print(strJson)
-            self.userDefaults.setValue(dataJson, forKey: self.tripId)
-            self.userDefaults.synchronize()
-            
-            self.arrCustomersChuaDon.remove(at: (index as NSIndexPath).row)
-            do{
-                let t = try NSAttributedString(data: "<b>\(self.gioXuatBen)</b> Tổng số hành khách: \(self.arrCustomersChuaDon.count)".data(using: String.Encoding.unicode, allowLossyConversion: false)!, options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType], documentAttributes: nil)
-                self.lblTongSo.attributedText = t
-            }
-            catch{
-                
-            }
-            self.tableView.reloadData()
-        }
-        daDon.backgroundColor = UIColor.init(hexString: "00aff0")
-        let huyVe = UITableViewRowAction.init(style: .normal, title: "Huỷ vé") { (action, index) in
-            
-        }
-        huyVe.backgroundColor = UIColor.red
-        return [daDon, huyVe]
-        
-    }
     
     func resetLabelText(){
         do{
@@ -278,7 +343,7 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
                 self.lblTongSo.attributedText = t
             }
         }
-        catch{
+        catch {
             
         }
     }
@@ -306,6 +371,7 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
                 let text = try NSAttributedString(data: "<b>\(gioXuatBen)</b> Tổng số hành khách: \(arrCustomersChuaDon.count)".data(using: String.Encoding.unicode, allowLossyConversion: false)!, options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType], documentAttributes: nil)
                 lblTongSo.attributedText = text
                 addGoodsButton.isHidden = true
+                lblTongSo.isHidden = false
             }
             catch{
             }
@@ -314,64 +380,136 @@ class CustomersController: UIViewController, UITableViewDataSource, UITableViewD
             do{
                 let text = try NSAttributedString(data: "<b>\(gioXuatBen)</b> Tổng số hành khách: \(arrCustomers.count)".data(using: String.Encoding.unicode, allowLossyConversion: false)!, options: [NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType], documentAttributes: nil)
                 lblTongSo.attributedText = text
+                lblTongSo.isHidden = false
                 addGoodsButton.isHidden = true
             }
             catch{
                 
             }
+        case 2:
+            currentSegmentIndex = 2
+            lblTongSo.isHidden = true
+            addGoodsButton.isHidden = false
         default:
-            let storyBoard = UIStoryboard.init(name: "Goods", bundle: Bundle.main)
-            let controller = storyBoard.instantiateViewController(withIdentifier: "Fret") as! FretController
-            controller.currentUser = currentUser
-            controller.tripId = tripId
-            self.navigationController?.pushViewController(controller, animated: false)
+            break
+//            let storyBoard = UIStoryboard.init(name: "Goods", bundle: Bundle.main)
+//            let controller = storyBoard.instantiateViewController(withIdentifier: "Fret") as! FretController
+//            controller.currentUser = currentUser
+//            controller.tripId = tripId
+//            self.navigationController?.pushViewController(controller, animated: false)
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        self.segmentControl.selectedSegmentIndex = currentSegmentIndex
-        self.overTop = false
-        loadData()
-    }
+    // MARK: - Goods Cell
     
-    var overTop = false
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if tableView.contentOffset.y < -30{
-            overTop = true
+    func loadGoodsData(){
+        let soapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
+            "<soapenv:Header/>" +
+            "<soapenv:Body>" +
+            "<tem:GetBillOnTrip>" +
+            "<!--Optional:-->" +
+            "<tem:TripId>\(tripId)</tem:TripId>" +
+            "<!--Optional:-->" +
+            "<tem:Password>\(currentUser.Password)</tem:Password>" +
+            "<!--Optional:-->" +
+            "<tem:Mobile>\(currentUser.UserName)</tem:Mobile>" +
+            "<!--Optional:-->" +
+            "<tem:SecurityCode>MobihomeAppDv123</tem:SecurityCode>" +
+            "</tem:GetBillOnTrip>" +
+            "</soapenv:Body>" +
+        "</soapenv:Envelope>"
+        let soapAction = "http://tempuri.org/IMobihomeWcf/GetBillOnTrip"
+        sendPostRequest.sendRequest(soapMessage, soapAction: soapAction){
+            (result, error) in
+            if error == nil{
+                self.bills = self.jsonHelper.parseBills(result.data(using: String.Encoding.utf8)!)
+                self.tableView.reloadData()
+            }
         }
     }
     
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        if overTop{
-            //navigateToSearch()
-        }
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-    }
+    // MARK: - User Action
     
     @IBAction func homeAction(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func addGoodsAction(_ sender: Any) {
-        let transition:CATransition = CATransition()
-        transition.duration = 0.5
-        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-        transition.type = kCATransitionPush
-        transition.subtype = kCATransitionFromTop
-        self.navigationController!.view.layer.add(transition, forKey: kCATransition)
-        let storyboard = UIStoryboard.init(name: "Goods", bundle: Bundle.main)
-        let addController = storyboard.instantiateViewController(withIdentifier: "AddOrder") as! AddOrderController
-        addController.tripId = tripId
-        addController.currentUser = currentUser
-        self.navigationController?.pushViewController(addController, animated: false)
+        performSegue(withIdentifier: SegueFactory.fromCustomerToAddGoods.rawValue, sender: nil)
+        
+        
+//        let transition:CATransition = CATransition()
+//        transition.duration = 0.5
+//        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+//        transition.type = kCATransitionPush
+//        transition.subtype = kCATransitionFromTop
+//        self.navigationController!.view.layer.add(transition, forKey: kCATransition)
+//        let storyboard = UIStoryboard.init(name: "Goods", bundle: Bundle.main)
+//        let addController = storyboard.instantiateViewController(withIdentifier: "AddOrder") as! AddOrderController
+//        addController.tripId = tripId
+//        addController.currentUser = currentUser
+//        self.navigationController?.pushViewController(addController, animated: false)
     }
     
+    func btnCallClick(sender: UIButton){
+        callBill = bills[sender.tag]
+        if #available(iOS 8.0, *) {
+            let confirm = UIAlertController(title: "Hỏi?", message: "Bạn muốn gọi cho người gửi hay người nhận?", preferredStyle: .alert)
+            let shipperClick = UIAlertAction.init(title: "Người gửi", style: .cancel, handler: { (UIAlertAction) in
+                self.makeCall(self.callBill.ShipperMobile)
+            })
+            let consigneeClick = UIAlertAction.init(title: "Người nhận", style: .default, handler: { (UIAlertAction) in
+                self.makeCall(self.callBill.ConsigneeMobile)
+            })
+            confirm.addAction(shipperClick)
+            confirm.addAction(consigneeClick)
+            self.present(confirm, animated: true, completion:{
+                confirm.view.superview?.isUserInteractionEnabled = true
+                confirm.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.alertControllerBackgroundTapped)))
+            })
+        } else {
+            // Fallback on earlier versions
+        }
+    }
     
+    func makeCall(_ tel: String){
+        let trimmedString = tel.trimmingCharacters(in: CharacterSet.whitespaces)
+        let telUrl:URL? = URL(string: "telprompt://"+tel)
+        if ((telUrl) != nil){
+            if(UIApplication.shared.canOpenURL(telUrl!)){
+                UIApplication.shared.openURL(telUrl!)
+            }else
+            {
+                print("Call not available")
+            }
+        }
+    }
+    
+    func alertControllerBackgroundTapped()
+    {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func alertView(_ alertView: UIAlertView, clickedButtonAt buttonIndex: Int) {
+        var tel = ""
+        switch buttonIndex {
+        case 0:
+            tel = callBill.ShipperMobile
+            break
+        case 1:
+            tel = callBill.ConsigneeMobile
+            break
+        default:
+            break
+        }
+        let telUrl:URL? = URL(string: "telprompt://"+tel)
+        if ((telUrl) != nil){
+            if(UIApplication.shared.canOpenURL(telUrl!)){
+                UIApplication.shared.openURL(telUrl!)
+            }else
+            {
+                print("Call not available")
+            }
+        }
+    }
 }

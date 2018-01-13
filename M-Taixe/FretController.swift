@@ -127,6 +127,7 @@ class FretController: UIViewController, UITableViewDataSource, UITableViewDelega
         self.navigationController?.pushViewController(addController, animated: false)
     }
     var callBill = Bill()
+    
     func btnCallClick(sender: UIButton){
         callBill = bills[sender.tag]
         if #available(iOS 8.0, *) {
@@ -148,6 +149,7 @@ class FretController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
        
     }
+    
     func makeCall(_ tel: String){
         let trimmedString = tel.trimmingCharacters(in: CharacterSet.whitespaces)
         let telUrl:URL? = URL(string: "telprompt://"+tel)
