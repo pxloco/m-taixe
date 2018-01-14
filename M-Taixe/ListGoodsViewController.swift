@@ -245,7 +245,7 @@ class ListGoodsViewController: UIViewController, UITableViewDelegate, UITableVie
         let storyboard = UIStoryboard.init(name: "Goods", bundle: Bundle.main)
         let addController = storyboard.instantiateViewController(withIdentifier: "AddFret") as! AddFretController
         addController.currentUser = currentUser
-        addController.tripId = ""
+        addController.tripId = "00000000-0000-0000-0000-000000000000"
         self.navigationController?.pushViewController(addController, animated: false)
     }
     

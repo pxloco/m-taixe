@@ -279,8 +279,10 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
     @IBAction func changeCarAction(_ sender: Any) {
     }
     
-
     @IBAction func listGoodsAction(_ sender: Any) {
+        self.tabBarController?.selectedIndex = 1
+        let customerController =  tabBarController?.viewControllers![1] as! CustomersController
+        customerController.segmentControl.selectedSegmentIndex = 2
     }
     
 }

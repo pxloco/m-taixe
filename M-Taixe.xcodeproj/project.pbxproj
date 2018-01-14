@@ -32,6 +32,10 @@
 		0CD1BD2E1FF3148A00E32053 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0CD1BD2D1FF3148A00E32053 /* GoogleService-Info.plist */; };
 		0CE4B9331FE5F2BC00992EED /* AnalysViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE4B9321FE5F2BC00992EED /* AnalysViewController.swift */; };
 		0CE4B9351FE6076A00992EED /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE4B9341FE6076A00992EED /* MapViewController.swift */; };
+		0CECD540200B4FA0005D3017 /* ChangeCarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CECD53F200B4FA0005D3017 /* ChangeCarViewController.swift */; };
+		0CECD542200B4FB0005D3017 /* EditDriverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CECD541200B4FB0005D3017 /* EditDriverViewController.swift */; };
+		0CECD544200B4FD3005D3017 /* DriverViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CECD543200B4FD3005D3017 /* DriverViewCell.swift */; };
+		0CECD546200B4FE2005D3017 /* CarViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CECD545200B4FE2005D3017 /* CarViewCell.swift */; };
 		3109C16E1D37BFFA00C3BDE4 /* DatePickerDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3109C16D1D37BFFA00C3BDE4 /* DatePickerDialog.swift */; };
 		310EE6421D38D2740003FD8A /* CustomersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310EE6411D38D2740003FD8A /* CustomersController.swift */; };
 		310EE6481D38F8A00003FD8A /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310EE6471D38F8A00003FD8A /* Customer.swift */; };
@@ -125,6 +129,10 @@
 		0CD1BD2D1FF3148A00E32053 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0CE4B9321FE5F2BC00992EED /* AnalysViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysViewController.swift; sourceTree = "<group>"; };
 		0CE4B9341FE6076A00992EED /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		0CECD53F200B4FA0005D3017 /* ChangeCarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeCarViewController.swift; sourceTree = "<group>"; };
+		0CECD541200B4FB0005D3017 /* EditDriverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDriverViewController.swift; sourceTree = "<group>"; };
+		0CECD543200B4FD3005D3017 /* DriverViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverViewCell.swift; sourceTree = "<group>"; };
+		0CECD545200B4FE2005D3017 /* CarViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarViewCell.swift; sourceTree = "<group>"; };
 		19EA599949F8B6D7E34FBD43 /* Pods_M_Taixe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_M_Taixe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3109C16D1D37BFFA00C3BDE4 /* DatePickerDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerDialog.swift; sourceTree = "<group>"; };
 		310EE6411D38D2740003FD8A /* CustomersController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomersController.swift; sourceTree = "<group>"; };
@@ -249,6 +257,8 @@
 				31B307651DCCC54C0039AFBC /* AddOrderController.swift */,
 				0CE4B9341FE6076A00992EED /* MapViewController.swift */,
 				0CC9BB0B2009A643003152F3 /* ListGoodsViewController.swift */,
+				0CECD53F200B4FA0005D3017 /* ChangeCarViewController.swift */,
+				0CECD541200B4FB0005D3017 /* EditDriverViewController.swift */,
 			);
 			name = Schema;
 			sourceTree = "<group>";
@@ -285,6 +295,8 @@
 				31C1361B1DD0642000B970AA /* BillCell.swift */,
 				0C13387C1FDEC75E001E6A4B /* SeatCell.swift */,
 				0CB9BAAD1FE87F2700A9BABB /* CategoryViewCell.swift */,
+				0CECD543200B4FD3005D3017 /* DriverViewCell.swift */,
+				0CECD545200B4FE2005D3017 /* CarViewCell.swift */,
 			);
 			name = ViewComponents;
 			sourceTree = "<group>";
@@ -418,8 +430,8 @@
 				0CB77B341FDC424800BF720E /* Custom View */,
 				310EE6431D38E1260003FD8A /* Model */,
 				0C326B6B1FDBD4EE003CBCD4 /* Ultils */,
-				0C0A598F1FD58EA300198D55 /* ViewComponents */,
 				310EE6451D38E14C0003FD8A /* Controller */,
+				0C0A598F1FD58EA300198D55 /* ViewComponents */,
 				310EE6441D38E1340003FD8A /* OtherFile */,
 				3127E7811D372447002293D4 /* Main.storyboard */,
 				0C1512611FF68C7300347556 /* Schema.storyboard */,
@@ -529,7 +541,7 @@
 				TargetAttributes = {
 					3127E7791D372447002293D4 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 2XR3A8PMZ9;
+						DevelopmentTeam = X8AYLQ66B6;
 						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -787,6 +799,7 @@
 				0CE4B9331FE5F2BC00992EED /* AnalysViewController.swift in Sources */,
 				31ABC5A61DCDDDC8000C8DAC /* Call.swift in Sources */,
 				0C0722061FF73237006EEC22 /* SchemaTabViewController.swift in Sources */,
+				0CECD546200B4FE2005D3017 /* CarViewCell.swift in Sources */,
 				0C03022E1FE94DD000DB4D45 /* Location.swift in Sources */,
 				3182F7CA1DC32B57006517B4 /* CurrentUser.swift in Sources */,
 				3127E7E31D378F6B002293D4 /* Trip.swift in Sources */,
@@ -810,6 +823,7 @@
 				0C357E761FDCC6BE008490B2 /* Seat.swift in Sources */,
 				31C9156C1DB0A9CC00385C79 /* TextFiledExtension.swift in Sources */,
 				0C0DA20E1FEAB223008FF915 /* AppUtils.swift in Sources */,
+				0CECD540200B4FA0005D3017 /* ChangeCarViewController.swift in Sources */,
 				310EE6421D38D2740003FD8A /* CustomersController.swift in Sources */,
 				3127E7EB1D379B6B002293D4 /* User.swift in Sources */,
 				3121F9201D3CC10F00E3ED8E /* InformationController.swift in Sources */,
@@ -832,6 +846,8 @@
 				318E7E781DADD091005BB52D /* AddFretController.swift in Sources */,
 				31B3075E1DCC83D90039AFBC /* Route.swift in Sources */,
 				3127E7E71D379704002293D4 /* CategoryCell.swift in Sources */,
+				0CECD544200B4FD3005D3017 /* DriverViewCell.swift in Sources */,
+				0CECD542200B4FB0005D3017 /* EditDriverViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -978,7 +994,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = 2XR3A8PMZ9;
+				DEVELOPMENT_TEAM = X8AYLQ66B6;
 				INFOPLIST_FILE = "M-Taixe/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -996,7 +1012,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = 2XR3A8PMZ9;
+				DEVELOPMENT_TEAM = X8AYLQ66B6;
 				INFOPLIST_FILE = "M-Taixe/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
