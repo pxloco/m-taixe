@@ -36,9 +36,7 @@ class CategoryViewCell: UICollectionViewCell {
                         imageTrangThai.image = #imageLiteral(resourceName: "circle_red_icon")
                     } else if currentTime < startTime {
                         imageTrangThai.image = #imageLiteral(resourceName: "circle_green_icon")
-                    } else {
-                        imageTrangThai.image = #imageLiteral(resourceName: "play_icon")
-                    }
+                    } 
                 }
             }
         }
@@ -70,15 +68,17 @@ class CategoryViewCell: UICollectionViewCell {
         let choTrong = trip.CountTicket - trip.CountBooked
         labelBienSo.text = "\(trip.LicensePlate)"
         labelGioXuatBen.text = trip.StartTime
-        labelTrangThaiBanVe.text = "Còn trống \(choTrong)/\(trip.CountTicket)"
+        
         backgroundCategory.backgroundColor = AppUtils.hexStringToUIColor(hex: trip.color)
         soVeChuaTien.text = "\(trip.CountBooked - trip.CountPaid) CT"
-        
-        do {
+ 
+        if trip.CountBooked == 0 && trip.CountTicket == 0 {
+             trainlingProgress.constant  = widthProgressBar
+            labelTrangThaiBanVe.text = "Chưa  bán vé"
+            imageTrangThai.image = #imageLiteral(resourceName: "play_icon")
+        } else {
             trainlingProgress.constant = widthProgressBar - (CGFloat(trip.CountBooked)/CGFloat(trip.CountTicket)) * CGFloat(widthProgressBar)
-        } catch {
-             trainlingProgress.constant = 0
+            labelTrangThaiBanVe.text = "Còn trống \(choTrong)/\(trip.CountTicket)"
         }
-        
     }
 }

@@ -61,6 +61,8 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
         switch segueId {
         case SegueFactory.fromSchemaToEditRoute.rawValue:
             (segue.destination as! EditRouteViewController).setUpDataFromSchema(trip: currentTrip)
+        case SegueFactory.fromSchemaToEditDriver.rawValue:
+            (segue.destination as! EditDriverViewController).initData(trip: currentTrip)
         default:
             break
         }
@@ -273,10 +275,11 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
     }
     
     @IBAction func editDriverAction(_ sender: Any) {
-        
+        performSegue(withIdentifier: SegueFactory.fromSchemaToEditDriver.rawValue, sender: nil)
     }
     
     @IBAction func changeCarAction(_ sender: Any) {
+        performSegue(withIdentifier: SegueFactory.fromSchemaToChangeCar.rawValue, sender: nil)
     }
     
     @IBAction func listGoodsAction(_ sender: Any) {

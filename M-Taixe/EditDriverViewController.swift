@@ -8,21 +8,83 @@
 
 import UIKit
 
-class EditDriverViewController: UIViewController {
-    
+class EditDriverViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+
     @IBOutlet weak var segmentControl: UISegmentedControl!
     
     @IBOutlet weak var bienSoLabel: UILabel!
-    @IBOutlet var startTimeLabel: UIView!
+  
+    @IBOutlet weak var startTimeLabel: UILabel!
+    
+    @IBOutlet weak var searchTextField: UITextField!
+    
     @IBOutlet weak var driverTableView: UITableView!
+    
+    var trip = Trip()
+    var currentUser = User()
+    var pageNumber: Int = 1
+    var pageSize: Int = 50
+    var employees = [Employee]()
+    var alert = SCLAlertView()
+    var jsonHelper = JsonHelper()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUpData()
+        setUpUI()
+        getEmployee(positionId: 1, searchText: "")
+    }
+    
+    func initData(trip: Trip) {
+        self.trip = trip
+    }
+    
+    func setUpData() {
+        let defaults = UserDefaults.standard
+        
+        let userName = defaults.value(forKey: "UserName")
+        let password = defaults.value(forKey: "Password")
+        let displayName = defaults.value(forKey: "FullName")
+        let roleType = defaults.value(forKey: "RoleType")
+        let companyId = defaults.value(forKey: "CompanyId")
+        let AgentId = defaults.value(forKey: "AgentId")
+        let userId = defaults.value(forKey: "UserId")
+        let userGuid = defaults.value(forKey: "UserGuid")
+        
+        currentUser.UserName = userName  as! String
+        currentUser.Password = password as! String
+        currentUser.DisplayName = displayName  as! String
+        currentUser.RoleType = Int.init(roleType as! String)!
+        currentUser.CompanyId = companyId  as! String
+        currentUser.AgentId = AgentId as! String
+        currentUser.UserId = userId  as! String
+        currentUser.UserGuid = userGuid as! String
+    }
+    
+    func setUpUI() {
+        bienSoLabel.text = trip.LicensePlate
+        startTimeLabel.text = trip.StartTime
+    }
+    
+    // MARK:  - Table View
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return employees.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "employeeViewCell", for: indexPath) as! DriverViewCell
+        cell.selectionStyle = .none
+        let data = employees[indexPath.row]
+        cell.setDataToView(employee: data)
+        
+        return cell
     }
     
     // MARK: - User Action
     
     @IBAction func cancelAction(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func saveAction(_ sender: Any) {
@@ -30,6 +92,53 @@ class EditDriverViewController: UIViewController {
     
     
     @IBAction func searchAction(_ sender: Any) {
+    }
+    
+    // MAKR: Get API
+    
+    func getEmployee(positionId: Int, searchText: String) {
+        let soapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
+            "<soapenv:Header/>" +
+            "<soapenv:Body>" +
+            "<tem:Trip_DriverForChange>" +
+            "<!--Optional:-->" +
+            "<tem:CompanyId>\(currentUser.CompanyId)</tem:CompanyId>" +
+            "<!--Optional:-->" +
+            "<tem:UserId>\(currentUser.UserId)</tem:UserId>" +
+            "<!--Optional:-->" +
+            "<tem:UserName>\(currentUser.UserName)</tem:UserName>" +
+            "<!--Optional:-->" +
+            "<tem:Password>\(currentUser.Password)</tem:Password>" +
+            "<!--Optional:-->" +
+            "<tem:SecurityCode>MobihomeAppDv123</tem:SecurityCode>" +
+            "<!--Optional:-->" +
+            "<tem:SearchText>\(searchText)</tem:SearchText>" +
+            "<!--Optional:-->" +
+            "<tem:PositionID>\(positionId)</tem:PositionID>" +
+            "<!--Optional:-->" +
+            "<tem:pageNumber>\(pageNumber)</tem:pageNumber>" +
+            "<!--Optional:-->" +
+            "<tem:pageSize>\(pageSize)</tem:pageSize>" +
+            "</tem:Trip_DriverForChange>" +
+            "</soapenv:Body>" +
+        "</soapenv:Envelope>"
+        
+        let soapAction = "http://tempuri.org/IMobihomeWcf/Trip_DriverForChange"
+        let sendPostRequest = SendPostRequest()
+        sendPostRequest.sendRequest(soapMessage, soapAction: soapAction){ (string, error) in
+            if error == nil {
+                DispatchQueue.main.async {
+                    let data = string.data(using: String.Encoding.utf8, allowLossyConversion: false)
+                    self.employees = self.jsonHelper.parseEmployee(data!)
+                    self.driverTableView.reloadData()
+                }
+            }
+            else {
+                self.alert.hideView()
+                self.alert = SCLAlertView()
+                self.alert.showError("Lỗi!", subTitle: "Không kết nối được server!")
+            }
+        }
     }
     
 }

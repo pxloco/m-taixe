@@ -15,5 +15,9 @@ class DriverViewCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var phoneNumberLabel: UILabel!
     @IBOutlet weak var checkBox: UICheckbox!
-    
+ 
+    func setDataToView(employee: Employee) {
+        nameLabel.text = employee.EmployeeName
+        phoneNumberLabel.text = employee.EmployeeMobile
+    }
 }

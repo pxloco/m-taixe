@@ -394,7 +394,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zRm-M8-bT5">
-                                <rect key="frame" x="0.0" y="196" width="320" height="50"/>
+                                <rect key="frame" x="0.0" y="148" width="320" height="50"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrival_icon" translatesAutoresizingMaskIntoConstraints="NO" id="Yzs-g5-bON">
                                         <rect key="frame" x="16" y="5" width="40" height="40"/>
@@ -514,25 +514,21 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fFZ-bl-SHi" customClass="HPButton" customModule="HPUIViewExtensions">
-                                        <rect key="frame" x="272" y="15" width="40" height="40"/>
+                                        <rect key="frame" x="282" y="20" width="30" height="30"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="KcU-dU-H2Z"/>
-                                            <constraint firstAttribute="width" constant="40" id="pIf-hj-SoF"/>
+                                            <constraint firstAttribute="height" constant="30" id="KcU-dU-H2Z"/>
+                                            <constraint firstAttribute="width" constant="30" id="pIf-hj-SoF"/>
                                         </constraints>
-                                        <state key="normal" image="add_seat_icon"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="image" keyPath="buttonImage" value="add_seat_icon"/>
-                                            <userDefinedRuntimeAttribute type="image" keyPath="bgImage" value="add_seat_icon"/>
-                                        </userDefinedRuntimeAttributes>
+                                        <state key="normal" image="package_icon"/>
                                         <connections>
                                             <action selector="goToListGoods:" destination="i0h-3w-kmo" eventType="touchUpInside" id="sjZ-xP-lS7"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1KX-e0-ylM" customClass="HPButton" customModule="HPUIViewExtensions">
-                                        <rect key="frame" x="224" y="15" width="40" height="40"/>
+                                        <rect key="frame" x="244" y="20" width="30" height="30"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="40" id="DGv-AV-Tfo"/>
-                                            <constraint firstAttribute="height" constant="40" id="Hxg-Rt-YOw"/>
+                                            <constraint firstAttribute="width" constant="30" id="DGv-AV-Tfo"/>
+                                            <constraint firstAttribute="height" constant="30" id="Hxg-Rt-YOw"/>
                                         </constraints>
                                         <state key="normal" image="add_seat_icon"/>
                                         <userDefinedRuntimeAttributes>
@@ -568,30 +564,8 @@
                                     <constraint firstItem="aFS-Ax-L1S" firstAttribute="leading" secondItem="i3W-tp-tjg" secondAttribute="trailing" id="xmN-Kv-CYb"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hkx-Sf-4oY" customClass="HPButton" customModule="HPUIViewExtensions">
-                                <rect key="frame" x="32" y="90" width="256" height="40"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="E4g-Ai-USd"/>
-                                </constraints>
-                                <state key="normal" title="Chọn chuyến"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="20"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                        <color key="value" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="btnChooseRouteClick:" destination="i0h-3w-kmo" eventType="touchUpInside" id="6gD-3l-w5A"/>
-                                </connections>
-                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DWk-OO-sdX">
-                                <rect key="frame" x="0.0" y="138" width="320" height="50"/>
+                                <rect key="frame" x="0.0" y="90" width="320" height="50"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="depart_icon" translatesAutoresizingMaskIntoConstraints="NO" id="eky-1y-3VG">
                                         <rect key="frame" x="16" y="5" width="40" height="40"/>
@@ -660,7 +634,7 @@
                                 </constraints>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Zuf-3z-aKf">
-                                <rect key="frame" x="20" y="262" width="280" height="227"/>
+                                <rect key="frame" x="20" y="214" width="280" height="275"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="j0p-FN-0rM">
                                     <size key="itemSize" width="150" height="150"/>
@@ -707,7 +681,7 @@
                                                                     <rect key="frame" x="5" y="78" width="140" height="20"/>
                                                                     <subviews>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CBM-bb-UfA" userLabel="Progressbar View" customClass="HPView" customModule="HPUIViewExtensions">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="40" height="20"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="140" height="20"/>
                                                                             <color key="backgroundColor" red="0.81329314720812185" green="0.060909121920933187" blue="0.10036759023774718" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <userDefinedRuntimeAttributes>
                                                                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -728,13 +702,14 @@
                                                                     </subviews>
                                                                     <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                                                     <constraints>
+                                                                        <constraint firstItem="CBM-bb-UfA" firstAttribute="centerY" secondItem="bJD-CM-Mzf" secondAttribute="centerY" id="64x-to-SUQ"/>
                                                                         <constraint firstItem="CBM-bb-UfA" firstAttribute="top" secondItem="bJD-CM-Mzf" secondAttribute="top" id="AhI-ah-GZl"/>
                                                                         <constraint firstItem="pLq-us-4Eo" firstAttribute="centerY" secondItem="bJD-CM-Mzf" secondAttribute="centerY" id="Qj8-Ff-IyP"/>
                                                                         <constraint firstAttribute="bottom" secondItem="CBM-bb-UfA" secondAttribute="bottom" id="QrO-co-uKc"/>
                                                                         <constraint firstItem="CBM-bb-UfA" firstAttribute="leading" secondItem="bJD-CM-Mzf" secondAttribute="leading" id="cSi-1q-7SB"/>
                                                                         <constraint firstItem="pLq-us-4Eo" firstAttribute="centerX" secondItem="bJD-CM-Mzf" secondAttribute="centerX" id="dpD-6P-Mco"/>
                                                                         <constraint firstAttribute="height" constant="20" id="kHp-uj-aEK"/>
-                                                                        <constraint firstAttribute="trailing" secondItem="CBM-bb-UfA" secondAttribute="trailing" constant="100" id="kJq-Z8-KZu"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="CBM-bb-UfA" secondAttribute="trailing" id="kJq-Z8-KZu"/>
                                                                     </constraints>
                                                                     <userDefinedRuntimeAttributes>
                                                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -916,7 +891,6 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Qul-gO-38s" firstAttribute="leading" secondItem="bhp-Rx-RMQ" secondAttribute="leading" id="99G-jQ-gcl"/>
-                            <constraint firstItem="hkx-Sf-4oY" firstAttribute="top" secondItem="Qul-gO-38s" secondAttribute="bottom" constant="20" id="AqL-P3-Hz4"/>
                             <constraint firstItem="zRm-M8-bT5" firstAttribute="top" secondItem="DWk-OO-sdX" secondAttribute="bottom" constant="8" id="Cgk-LQ-VWw"/>
                             <constraint firstAttribute="trailing" secondItem="rVk-Mw-B2V" secondAttribute="trailing" id="Cjw-wC-RHV"/>
                             <constraint firstItem="rVk-Mw-B2V" firstAttribute="leading" secondItem="bhp-Rx-RMQ" secondAttribute="leading" id="FZW-Ir-NoH"/>
@@ -926,20 +900,16 @@
                             <constraint firstAttribute="trailing" secondItem="zRm-M8-bT5" secondAttribute="trailing" id="Uag-iX-VX5"/>
                             <constraint firstItem="Qul-gO-38s" firstAttribute="top" secondItem="bhp-Rx-RMQ" secondAttribute="top" id="Ws3-mn-QpO"/>
                             <constraint firstAttribute="trailing" secondItem="Zuf-3z-aKf" secondAttribute="trailing" constant="20" id="Yex-3m-NIr"/>
-                            <constraint firstItem="DWk-OO-sdX" firstAttribute="top" secondItem="hkx-Sf-4oY" secondAttribute="bottom" constant="8" id="Za5-kL-6HY"/>
                             <constraint firstItem="Zuf-3z-aKf" firstAttribute="leading" secondItem="bhp-Rx-RMQ" secondAttribute="leading" constant="20" id="exk-f6-3OP"/>
                             <constraint firstAttribute="trailing" secondItem="DWk-OO-sdX" secondAttribute="trailing" id="hML-Bx-d07"/>
                             <constraint firstItem="zRm-M8-bT5" firstAttribute="leading" secondItem="bhp-Rx-RMQ" secondAttribute="leading" id="ipV-IQ-8DD"/>
-                            <constraint firstItem="DWk-OO-sdX" firstAttribute="top" secondItem="hkx-Sf-4oY" secondAttribute="bottom" constant="8" id="lw8-Ke-9QS"/>
-                            <constraint firstItem="hkx-Sf-4oY" firstAttribute="leading" secondItem="bhp-Rx-RMQ" secondAttribute="leadingMargin" constant="16" id="uZS-xp-yae"/>
-                            <constraint firstItem="hkx-Sf-4oY" firstAttribute="centerX" secondItem="DWk-OO-sdX" secondAttribute="centerX" id="ueT-5i-xoM"/>
                             <constraint firstItem="rVk-Mw-B2V" firstAttribute="top" secondItem="Zuf-3z-aKf" secondAttribute="bottom" id="vlg-Gz-etA"/>
                             <constraint firstAttribute="trailing" secondItem="Qul-gO-38s" secondAttribute="trailing" id="voS-Og-vSA"/>
+                            <constraint firstItem="DWk-OO-sdX" firstAttribute="top" secondItem="Qul-gO-38s" secondAttribute="bottom" constant="20" id="z8D-Z2-gPB"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Danh sách" image="ListIcon" id="kcq-KP-OUE"/>
                     <connections>
-                        <outlet property="btnChooseRoute" destination="hkx-Sf-4oY" id="alO-Ft-xKn"/>
                         <outlet property="btnDiemDen" destination="o6y-bX-1mQ" id="1SD-y8-eVN"/>
                         <outlet property="btnDiemDi" destination="wYb-8y-UOn" id="zrJ-K0-EDX"/>
                         <outlet property="collectionViewCatagory" destination="Zuf-3z-aKf" id="czF-zY-UkZ"/>
@@ -1428,6 +1398,7 @@
         <image name="icn-dropdown" width="64" height="44"/>
         <image name="left_icon" width="30" height="75"/>
         <image name="logo_mobihome" width="241" height="155"/>
+        <image name="package_icon" width="64" height="60"/>
         <image name="person-icon" width="55" height="35"/>
         <image name="phone_active" width="55" height="35"/>
         <image name="play_icon" width="256" height="256"/>

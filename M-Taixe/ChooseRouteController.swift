@@ -47,7 +47,7 @@ class ChooseRouteController: UIViewController, UITableViewDataSource, UITableVie
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let controller = self.navigationController?.viewControllers[(self.navigationController?.viewControllers.count)!-2] as! CategoryController
-        controller.currentRoute = routes[indexPath.row]
+//        controller.currentRoute = routes[indexPath.row]
         self.navigationController?.popToViewController(controller, animated: true)
     }
     

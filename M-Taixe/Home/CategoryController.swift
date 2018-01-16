@@ -33,7 +33,7 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
     var userDefaults = UserDefaults.standard
     var formatter = DateFormatter()
     var timer = Timer()
-    var currentRoute = Route()
+//    var currentRoute = Route()
     var routes = [Route]()
     var isChooseRoute = false
     var overTop = false
@@ -42,6 +42,7 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
     var locationEndPoint = [Location]()
     var currentlocationStartPoint = Location()
     var currentlocationEndPoint = Location()
+    let formatterCurrency = NumberFormatter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,7 +71,7 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
         DispatchQueue.main.async {
             self.setUpData()
             self.loadDiaDiemDi()
-            self.loadRoute()
+//            self.loadRoute()
             self.overTop = false
             self.collectionViewCatagory.reloadData()
         }
@@ -145,50 +146,52 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
         dateLabel.text = formatter.string(from: d)
         
         AppUtils.addShadowToView(view: topBar, width: 1, height: 2, color: UIColor.gray.cgColor, opacity: 0.5, radius: 2)
+        formatterCurrency.locale = Locale.current
+        formatterCurrency.numberStyle = .currency
     }
     
     // - MARK: Connect SOAP
     
-    func loadRoute() {
-        let soapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
-            "<soapenv:Header/>" +
-            "<soapenv:Body>" +
-            "<tem:Route_GetForBooking>" +
-            "<!--Optional:-->" +
-            "<tem:CompanyId>\(currentUser.CompanyId)</tem:CompanyId>" +
-            "<!--Optional:-->" +
-            "<tem:AgentId>\(currentUser.AgentId)</tem:AgentId>" +
-            "<!--Optional:-->" +
-            "<tem:UserName>\(currentUser.UserName)</tem:UserName>" +
-            "<!--Optional:-->" +
-            "<tem:Password>\(currentUser.Password)</tem:Password>" +
-            "<!--Optional:-->" +
-            "<tem:SecurityCode>MobihomeAppDv123</tem:SecurityCode>" +
-            "</tem:Route_GetForBooking>" +
-            "</soapenv:Body>" +
-        "</soapenv:Envelope>"
-        
-        let soapAction = "http://tempuri.org/IMobihomeWcf/Route_GetForBooking"
-        let sendPostRequest = SendPostRequest()
-        sendPostRequest.sendRequest(soapMessage, soapAction: soapAction){ (string, error) in
-            if error == nil {
-                let data = string.data(using: String.Encoding.utf8, allowLossyConversion: false)
-                self.routes = self.jsonHelper.parseRoutes(data!)
-                if self.routes.count > 0 {
-                    self.currentRoute = self.routes[0]
-                    self.btnChooseRoute.setTitle(self.currentRoute.Name, for: UIControlState.normal)
-                }
-                else {
-                    self.currentRoute = Route()
-                }
-            }
-            else{
-                self.alert.hideView()
-                self.alert = SCLAlertView()
-                self.alert.showError("Lỗi!", subTitle: "Không kết nối được server!")
-            }
-        }
-    }
+//    func loadRoute() {
+//        let soapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
+//            "<soapenv:Header/>" +
+//            "<soapenv:Body>" +
+//            "<tem:Route_GetForBooking>" +
+//            "<!--Optional:-->" +
+//            "<tem:CompanyId>\(currentUser.CompanyId)</tem:CompanyId>" +
+//            "<!--Optional:-->" +
+//            "<tem:AgentId>\(currentUser.AgentId)</tem:AgentId>" +
+//            "<!--Optional:-->" +
+//            "<tem:UserName>\(currentUser.UserName)</tem:UserName>" +
+//            "<!--Optional:-->" +
+//            "<tem:Password>\(currentUser.Password)</tem:Password>" +
+//            "<!--Optional:-->" +
+//            "<tem:SecurityCode>MobihomeAppDv123</tem:SecurityCode>" +
+//            "</tem:Route_GetForBooking>" +
+//            "</soapenv:Body>" +
+//        "</soapenv:Envelope>"
+//
+//        let soapAction = "http://tempuri.org/IMobihomeWcf/Route_GetForBooking"
+//        let sendPostRequest = SendPostRequest()
+//        sendPostRequest.sendRequest(soapMessage, soapAction: soapAction){ (string, error) in
+//            if error == nil {
+//                let data = string.data(using: String.Encoding.utf8, allowLossyConversion: false)
+//                self.routes = self.jsonHelper.parseRoutes(data!)
+//                if self.routes.count > 0 {
+//                    self.currentRoute = self.routes[0]
+//                    self.btnChooseRoute.setTitle(self.currentRoute.Name, for: UIControlState.normal)
+//                }
+//                else {
+//                    self.currentRoute = Route()
+//                }
+//            }
+//            else{
+//                self.alert.hideView()
+//                self.alert = SCLAlertView()
+//                self.alert.showError("Lỗi!", subTitle: "Không kết nối được server!")
+//            }
+//        }
+//    }
     
     func loadRouteDenDropDown() {
         let dropDown = DropDown()
@@ -209,7 +212,7 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
         
         dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
             self.labelDiemDi.text = item
-            self.currentRoute = self.routes[index]
+//            self.currentRoute = self.routes[index]
         }
     
         dropDown.show()
@@ -441,11 +444,11 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
                             tongSoTienHangChuaTien += trip.BillFreightAmount - trip.BillFreightPaidAmount
                         }
                         
-                        let tongSoTienVeBanDuocAttr = "\(tongSoTienVeBanDuoc)".withAttributes([.textColor(.red)])
-                        let tongSoTienVeChuaThanhToanAttr = "\(tongSoTienVeChuaThanhToan)".withAttributes([.textColor(.red)])
+                        let tongSoTienVeBanDuocAttr = AppUtils.ConvertStringToCurrency(string: "\(tongSoTienVeBanDuoc)").withAttributes([.textColor(.red)])
+                        let tongSoTienVeChuaThanhToanAttr = AppUtils.ConvertStringToCurrency(string: "\(tongSoTienVeChuaThanhToan)").withAttributes([.textColor(.red)])
                         let tongSoVeBanDuocAttr = "\(tongSoVeBanDuoc)".withAttributes([.textColor(.black)])
                         let tongSoVeChuaThanhToanAttr = "\(tongSoVeChuaThanhToan)".withAttributes([.textColor(.black)])
-                        let tongSoTienHangAttr = "\(tongSoTienHangChuaTien)".withAttribute(.textColor(.red))
+                        let tongSoTienHangAttr = AppUtils.ConvertStringToCurrency(string: "\(tongSoTienHangChuaTien)").withAttribute(.textColor(.red))
                         let tongSoHangAttr = "\(tongSoHangChuaTien)".withAttribute(.textColor(.black))
                     
                         let sove = "Số vé: ".withAttributes([.textColor(.black)])
@@ -625,6 +628,8 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
         let cell = collectionViewCatagory.dequeueReusableCell(withReuseIdentifier: "categoryCell", for: indexPath) as! CategoryViewCell
         let trip = arrTrip[(indexPath as NSIndexPath).row]
         cell.setData(trip: trip)
+        cell.setNeedsUpdateConstraints()
+        view.layoutIfNeeded()
         return cell
     }
     
@@ -635,27 +640,27 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
     // MARK: - User Action
     
     @IBAction func btnChooseRouteClick(_ sender: Any) {
-        isChooseRoute = true
-        let dropDown = DropDown()
-        DropDown.appearance().textColor = UIColor.black
-        DropDown.appearance().textFont = UIFont.systemFont(ofSize: 15)
-        DropDown.appearance().backgroundColor = UIColor.white
-        DropDown.appearance().selectionBackgroundColor = UIColor.lightGray
-        DropDown.appearance().cellHeight = 60
-        dropDown.anchorView = btnDiemDi
-        
-        var arrDropDown = [String]()
-        for route in routes {
-            arrDropDown.append(route.Name)
-        }
-
-        dropDown.dataSource = arrDropDown
-        dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
-            self.btnChooseRoute.setTitle(item, for: .normal)
-            self.currentRoute = self.routes[index]
-            self.collectionViewCatagory.reloadData()
-        }
-        dropDown.show()
+//        isChooseRoute = true
+//        let dropDown = DropDown()
+//        DropDown.appearance().textColor = UIColor.black
+//        DropDown.appearance().textFont = UIFont.systemFont(ofSize: 15)
+//        DropDown.appearance().backgroundColor = UIColor.white
+//        DropDown.appearance().selectionBackgroundColor = UIColor.lightGray
+//        DropDown.appearance().cellHeight = 60
+//        dropDown.anchorView = btnDiemDi
+//
+//        var arrDropDown = [String]()
+//        for route in routes {
+//            arrDropDown.append(route.Name)
+//        }
+//
+//        dropDown.dataSource = arrDropDown
+//        dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
+//            self.btnChooseRoute.setTitle(item, for: .normal)
+////            self.currentRoute = self.routes[index]
+//            self.collectionViewCatagory.reloadData()
+//        }
+//        dropDown.show()
     }
     
     @IBAction func rightButtonClick(_ sender: Any) {

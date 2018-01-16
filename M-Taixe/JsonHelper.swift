@@ -9,6 +9,46 @@
 import Foundation
 class JsonHelper{
     
+    func parseEmployee(_ inputData: Data) -> [Employee] {
+        var employees = [Employee]()
+        do {
+            let json = try JSONSerialization.jsonObject(with: inputData, options: JSONSerialization.ReadingOptions.allowFragments)
+            for item in json as! [[String: AnyObject]]{
+                let employee = Employee()
+                
+                if let EmployeeId =  item["EmployeeId"] as? Int {
+                    employee.EmployeeId = EmployeeId
+                }
+                
+                if let CompanyId = item["CompanyId"] as? Int{
+                    employee.CompanyId = CompanyId
+                }
+                
+                if let PositionID = item["PositionID"] as? Int{
+                    employee.PositionID = PositionID
+                }
+                
+                if let CompanyId = item["CompanyId"] as? Int{
+                    employee.CompanyId = CompanyId
+                }
+                
+                if let EmployeeName = item["EmployeeName"] as? String{
+                    employee.EmployeeName = EmployeeName
+                }
+                
+                if let EmployeeMobile = item["EmployeeMobile"] as? String{
+                    employee.EmployeeMobile = EmployeeMobile
+                }
+                
+                employees.append(employee)
+            }
+        }
+        catch{
+            
+        }
+        return employees
+    }
+    
     func parseTicketPriceByBus(_ inputData: Data) -> [TicketByBus] {
         var ticketByBuses = [TicketByBus]()
         do {

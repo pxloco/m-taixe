@@ -49,7 +49,7 @@
                                                             <constraint firstAttribute="width" constant="30" id="cBk-Rs-8gA"/>
                                                             <constraint firstAttribute="height" constant="30" id="rCn-QY-rdV"/>
                                                         </constraints>
-                                                        <state key="normal" title="Button" image="add_seat_icon"/>
+                                                        <state key="normal" title="Button" image="setting_icon"/>
                                                         <connections>
                                                             <action selector="editRouteAction:" destination="uDm-ca-5k1" eventType="touchUpInside" id="dJU-0Q-COi"/>
                                                         </connections>
@@ -60,7 +60,7 @@
                                                             <constraint firstAttribute="width" constant="30" id="MMO-Hy-BmO"/>
                                                             <constraint firstAttribute="height" constant="30" id="rA8-Mz-ifI"/>
                                                         </constraints>
-                                                        <state key="normal" image="add_seat_icon"/>
+                                                        <state key="normal" image="user_icon"/>
                                                         <connections>
                                                             <action selector="editDriverAction:" destination="uDm-ca-5k1" eventType="touchUpInside" id="CnD-84-1eT"/>
                                                         </connections>
@@ -71,7 +71,7 @@
                                                             <constraint firstAttribute="height" constant="30" id="R3Q-Vi-fsU"/>
                                                             <constraint firstAttribute="width" constant="30" id="V52-Rz-gN1"/>
                                                         </constraints>
-                                                        <state key="normal" image="add_seat_icon"/>
+                                                        <state key="normal" image="bus_icon"/>
                                                         <connections>
                                                             <action selector="changeCarAction:" destination="uDm-ca-5k1" eventType="touchUpInside" id="2Gz-fY-w8X"/>
                                                         </connections>
@@ -82,7 +82,7 @@
                                                             <constraint firstAttribute="width" constant="30" id="1JC-82-6Na"/>
                                                             <constraint firstAttribute="height" constant="30" id="fgI-RX-Ode"/>
                                                         </constraints>
-                                                        <state key="normal" image="add_seat_icon"/>
+                                                        <state key="normal" image="package_icon"/>
                                                         <connections>
                                                             <action selector="listGoodsAction:" destination="uDm-ca-5k1" eventType="touchUpInside" id="nk8-wM-9gz"/>
                                                         </connections>
@@ -748,47 +748,47 @@
                                     <action selector="searchAction:" destination="0A0-ML-4qf" eventType="touchUpInside" id="hg2-bK-srQ"/>
                                 </connections>
                             </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ko3-U4-gX1">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ko3-U4-gX1">
                                 <rect key="frame" x="0.0" y="206" width="375" height="461"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="80" id="mNz-dp-iA2" customClass="DriverViewCell" customModule="M_Taixe" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="80"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="employeeViewCell" id="mNz-dp-iA2" customClass="DriverViewCell" customModule="M_Taixe" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="mNz-dp-iA2" id="3ul-Vk-6gy">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="79.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="69.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user_icon" translatesAutoresizingMaskIntoConstraints="NO" id="Ecp-tO-afr" customClass="HPImageView" customModule="HPUIViewExtensions">
-                                                    <rect key="frame" x="8" y="15" width="50" height="50"/>
+                                                    <rect key="frame" x="8" y="10" width="40" height="40"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="50" id="07Q-YS-TUO"/>
-                                                        <constraint firstAttribute="width" constant="50" id="NjS-7d-DfN"/>
+                                                        <constraint firstAttribute="height" constant="40" id="07Q-YS-TUO"/>
+                                                        <constraint firstAttribute="width" constant="40" id="NjS-7d-DfN"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                            <real key="value" value="25"/>
+                                                            <real key="value" value="20"/>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tài xế" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OW6-F8-m4c">
-                                                    <rect key="frame" x="74" y="19.5" width="270" height="21"/>
+                                                    <rect key="frame" x="64" y="9.5" width="280" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="01692755159" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XTc-tF-8Gj">
-                                                    <rect key="frame" x="74" y="46" width="285" height="18"/>
+                                                    <rect key="frame" x="64" y="36" width="295" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yh5-2d-R9N" customClass="UICheckbox" customModule="UICheckbox_Swift">
-                                                    <rect key="frame" x="349" y="35" width="10" height="10"/>
+                                                    <rect key="frame" x="339" y="20" width="20" height="20"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="10" id="J0V-ZU-RRk"/>
-                                                        <constraint firstAttribute="width" constant="10" id="hK9-QW-tQg"/>
+                                                        <constraint firstAttribute="height" constant="20" id="J0V-ZU-RRk"/>
+                                                        <constraint firstAttribute="width" constant="20" id="hK9-QW-tQg"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
@@ -851,8 +851,9 @@
                     <connections>
                         <outlet property="bienSoLabel" destination="3gb-R8-gYd" id="uL6-r4-0MX"/>
                         <outlet property="driverTableView" destination="ko3-U4-gX1" id="Vyd-0n-oni"/>
+                        <outlet property="searchTextField" destination="Vns-aq-VGa" id="ebB-BG-Xdg"/>
                         <outlet property="segmentControl" destination="B38-17-nlX" id="XgO-Im-GoT"/>
-                        <outlet property="startTimeLabel" destination="EgX-yH-uAy" id="GrW-Ol-vPl"/>
+                        <outlet property="startTimeLabel" destination="M90-5d-6Sd" id="11j-ta-gq3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kob-qW-3Ci" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -878,13 +879,16 @@
     </scenes>
     <resources>
         <image name="add_seat_icon" width="50" height="50"/>
+        <image name="bus_icon" width="64" height="64"/>
         <image name="callicon" width="50" height="50"/>
         <image name="depart_icon" width="50" height="50"/>
         <image name="home_icon" width="60" height="50"/>
         <image name="map_google_icon" width="36" height="36"/>
         <image name="map_icon_active" width="60" height="60"/>
+        <image name="package_icon" width="64" height="60"/>
         <image name="phone_active" width="55" height="35"/>
         <image name="search_icon" width="126" height="125"/>
+        <image name="setting_icon" width="100" height="100"/>
         <image name="sms_icon" width="150" height="150"/>
         <image name="user_icon" width="50" height="50"/>
     </resources>

@@ -57,6 +57,20 @@ class AppUtils {
         view.layer.shadowRadius = radius
     }
     
+    class func ConvertStringToCurrency(string: String) -> String {
+        let stringReversed = string.reversed()
+        var currency = ""
+        for (index, char) in stringReversed.enumerated(){
+            if (index+1)%3 == 0 && (index+1) != stringReversed.count{
+                currency += "\(char) "
+            } else {
+                currency += "\(char)"
+            }
+        }
+        
+        return "\(String(currency.reversed())) đ"
+    }
+    
     class func scriptSeat() -> String {
         return "<script>" +
         "var imageElement;" +
