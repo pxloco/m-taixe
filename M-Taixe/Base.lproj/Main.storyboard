@@ -681,8 +681,11 @@
                                                                     <rect key="frame" x="5" y="78" width="140" height="20"/>
                                                                     <subviews>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CBM-bb-UfA" userLabel="Progressbar View" customClass="HPView" customModule="HPUIViewExtensions">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="140" height="20"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="20"/>
                                                                             <color key="backgroundColor" red="0.81329314720812185" green="0.060909121920933187" blue="0.10036759023774718" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="width" id="vSG-gl-Lcv"/>
+                                                                            </constraints>
                                                                             <userDefinedRuntimeAttributes>
                                                                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                                                     <real key="value" value="10"/>
@@ -709,7 +712,6 @@
                                                                         <constraint firstItem="CBM-bb-UfA" firstAttribute="leading" secondItem="bJD-CM-Mzf" secondAttribute="leading" id="cSi-1q-7SB"/>
                                                                         <constraint firstItem="pLq-us-4Eo" firstAttribute="centerX" secondItem="bJD-CM-Mzf" secondAttribute="centerX" id="dpD-6P-Mco"/>
                                                                         <constraint firstAttribute="height" constant="20" id="kHp-uj-aEK"/>
-                                                                        <constraint firstAttribute="trailing" secondItem="CBM-bb-UfA" secondAttribute="trailing" id="kJq-Z8-KZu"/>
                                                                     </constraints>
                                                                     <userDefinedRuntimeAttributes>
                                                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -851,7 +853,7 @@
                                             <outlet property="soLuongVeView" destination="bJD-CM-Mzf" id="9cI-5R-CMK"/>
                                             <outlet property="soVeChuaTien" destination="2tC-kz-7mj" id="jzB-yK-QcM"/>
                                             <outlet property="soVeChuaTienView" destination="lZM-TW-ODC" id="ysF-7i-zOg"/>
-                                            <outlet property="trainlingProgress" destination="kJq-Z8-KZu" id="Gy3-E6-KC5"/>
+                                            <outlet property="widthProgressConstraint" destination="vSG-gl-Lcv" id="JNF-QE-3pp"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

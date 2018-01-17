@@ -234,7 +234,6 @@ class ListGoodsViewController: UIViewController, UITableViewDelegate, UITableVie
         }
     }
     
-    
     @IBAction func addGoodAction(_ sender: Any) {
         let transition:CATransition = CATransition()
         transition.duration = 0.5

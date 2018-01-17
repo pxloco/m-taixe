@@ -286,6 +286,7 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
         self.tabBarController?.selectedIndex = 1
         let customerController =  tabBarController?.viewControllers![1] as! CustomersController
         customerController.segmentControl.selectedSegmentIndex = 2
+        customerController.addGoodsButton.isHidden = false
     }
     
 }

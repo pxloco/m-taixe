@@ -114,6 +114,9 @@ class SendPostRequest: NSObject {
                     case "http://tempuri.org/IMobihomeWcf/Trip_DriverForChange":
                         self.parseEmployees(s: s!, callBack: callBack)
                         break;
+                    case "http://tempuri.org/IMobihomeWcf/Trip_EmployeeSelected":
+                        self.parseEmployeeSelected(s: s!, callBack: callBack)
+                        break;
                     default:
                         callBack("", error as NSError?)
                         break;
@@ -125,6 +128,17 @@ class SendPostRequest: NSObject {
             else {
                 callBack("", error as NSError?)
             }
+        }
+    }
+    
+    func parseEmployeeSelected(s: NSString,callBack: @escaping SendPostRequestCallBack) {
+        var arr = s.components(separatedBy: "Trip_EmployeeSelected")
+        if arr.count > 0 {
+            let result = arr[1].replacingOccurrences(of: ">", with: "").replacingOccurrences(of: "</", with: "")
+            callBack(result, nil)
+        }
+        else {
+            callBack("", NSError())
         }
     }
     

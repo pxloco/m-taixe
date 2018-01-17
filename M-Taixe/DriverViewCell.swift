@@ -10,14 +10,31 @@ import UIKit
 import HPUIViewExtensions
 import UICheckbox_Swift
 
+protocol CheckBoxDelegate {
+    func checkCheckBox(indexCheckBox: Int)
+}
+
 class DriverViewCell: UITableViewCell {
+    
     @IBOutlet weak var avatarImage: HPImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var phoneNumberLabel: UILabel!
     @IBOutlet weak var checkBox: UICheckbox!
  
-    func setDataToView(employee: Employee) {
+    var delegate: CheckBoxDelegate!
+    var indexCheckBox: Int!
+    
+    func setDataToView(employee: Employee, index:Int) {
+        self.indexCheckBox = index
         nameLabel.text = employee.EmployeeName
         phoneNumberLabel.text = employee.EmployeeMobile
+        checkBox.onSelectStateChanged = { (checkbox, selected) in
+           self.delegate.checkCheckBox(indexCheckBox: self.indexCheckBox)
+        }
     }
+    
+    @IBAction func toggleCheckBox(_ sender: Any) {
+        delegate.checkCheckBox(indexCheckBox: indexCheckBox)
+    }
+    
 }

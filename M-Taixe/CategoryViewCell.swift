@@ -19,7 +19,7 @@ class CategoryViewCell: UICollectionViewCell {
     @IBOutlet weak var soVeChuaTien: UILabel!
     @IBOutlet weak var soVeChuaTienView: HPView!
     @IBOutlet weak var imageTrangThai: UIImageView!
-    @IBOutlet weak var trainlingProgress: NSLayoutConstraint!
+    @IBOutlet weak var widthProgressConstraint: NSLayoutConstraint!
     @IBOutlet weak var soLuongVeView: HPView!
     @IBOutlet weak var progressView: HPView!
     @IBOutlet weak var goodsNotPaidview: HPView!
@@ -73,11 +73,11 @@ class CategoryViewCell: UICollectionViewCell {
         soVeChuaTien.text = "\(trip.CountBooked - trip.CountPaid) CT"
  
         if trip.CountBooked == 0 && trip.CountTicket == 0 {
-             trainlingProgress.constant  = widthProgressBar
+             widthProgressConstraint.constant  = 0
             labelTrangThaiBanVe.text = "Chưa  bán vé"
             imageTrangThai.image = #imageLiteral(resourceName: "play_icon")
         } else {
-            trainlingProgress.constant = widthProgressBar - (CGFloat(trip.CountBooked)/CGFloat(trip.CountTicket)) * CGFloat(widthProgressBar)
+            widthProgressConstraint.constant = (CGFloat(trip.CountBooked)/CGFloat(trip.CountTicket)) * CGFloat(widthProgressBar)
             labelTrangThaiBanVe.text = "Còn trống \(choTrong)/\(trip.CountTicket)"
         }
     }
