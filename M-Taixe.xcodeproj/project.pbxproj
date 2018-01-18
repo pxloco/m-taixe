@@ -19,6 +19,8 @@
 		0C24A8F71FFD9E230036B297 /* Route.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C24A8F61FFD9E230036B297 /* Route.storyboard */; };
 		0C260A341FED659D00AAF487 /* map.html in Resources */ = {isa = PBXBuildFile; fileRef = 0C260A331FED659D00AAF487 /* map.html */; };
 		0C268EC91FE5147A00DFD811 /* EditRouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C268EC81FE5147A00DFD811 /* EditRouteViewController.swift */; };
+		0C2851302010248100BA896D /* ExpandableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C28512F2010248100BA896D /* ExpandableHeaderView.swift */; };
+		0C285132201024C200BA896D /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C285131201024C200BA896D /* Section.swift */; };
 		0C2B1E0C1FEC17E3001A4451 /* script.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0C2B1E0B1FEC17E2001A4451 /* script.txt */; };
 		0C326B6D1FDBD507003CBCD4 /* SegueFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C326B6C1FDBD507003CBCD4 /* SegueFactory.swift */; };
 		0C357E721FDCBE8C008490B2 /* SeatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C357E711FDCBE8C008490B2 /* SeatView.swift */; };
@@ -117,6 +119,8 @@
 		0C24A8F61FFD9E230036B297 /* Route.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Route.storyboard; sourceTree = "<group>"; };
 		0C260A331FED659D00AAF487 /* map.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = map.html; sourceTree = "<group>"; };
 		0C268EC81FE5147A00DFD811 /* EditRouteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRouteViewController.swift; sourceTree = "<group>"; };
+		0C28512F2010248100BA896D /* ExpandableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableHeaderView.swift; sourceTree = "<group>"; };
+		0C285131201024C200BA896D /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		0C2B1E0B1FEC17E2001A4451 /* script.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = script.txt; sourceTree = "<group>"; };
 		0C326B6C1FDBD507003CBCD4 /* SegueFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegueFactory.swift; sourceTree = "<group>"; };
 		0C357E711FDCBE8C008490B2 /* SeatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeatView.swift; sourceTree = "<group>"; };
@@ -299,6 +303,7 @@
 				0CB9BAAD1FE87F2700A9BABB /* CategoryViewCell.swift */,
 				0CECD543200B4FD3005D3017 /* DriverViewCell.swift */,
 				0CECD545200B4FE2005D3017 /* CarViewCell.swift */,
+				0C28512F2010248100BA896D /* ExpandableHeaderView.swift */,
 			);
 			name = ViewComponents;
 			sourceTree = "<group>";
@@ -358,6 +363,7 @@
 				0C9AE4011FF9DEE800128DBA /* Bus.swift */,
 				0C9AE4031FF9DFF600128DBA /* TicketByBus.swift */,
 				0CB73487200E4CC800089E19 /* Employee.swift */,
+				0C285131201024C200BA896D /* Section.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -815,6 +821,7 @@
 				0CC9BB0C2009A643003152F3 /* ListGoodsViewController.swift in Sources */,
 				3109C16E1D37BFFA00C3BDE4 /* DatePickerDialog.swift in Sources */,
 				3127E7E11D378638002293D4 /* CategoryController.swift in Sources */,
+				0C2851302010248100BA896D /* ExpandableHeaderView.swift in Sources */,
 				312B88441D3D023400728743 /* InformationCell.swift in Sources */,
 				31B307621DCCB0E60039AFBC /* OrderInforCell.swift in Sources */,
 				0C13387D1FDEC75E001E6A4B /* SeatCell.swift in Sources */,
@@ -838,6 +845,7 @@
 				310EE6481D38F8A00003FD8A /* Customer.swift in Sources */,
 				0C357E721FDCBE8C008490B2 /* SeatView.swift in Sources */,
 				31B307661DCCC54C0039AFBC /* AddOrderController.swift in Sources */,
+				0C285132201024C200BA896D /* Section.swift in Sources */,
 				31C9156E1DB0B16B00385C79 /* AddCustomerViewCell.swift in Sources */,
 				0C00EC3B1FF13F7200FA96EC /* SchemaApi.swift in Sources */,
 				31B3076A1DCCD41D0039AFBC /* RouteDetail.swift in Sources */,

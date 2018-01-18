@@ -14,7 +14,6 @@ import SwiftyAttributes
 class CategoryController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
     @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var btnChooseRoute: HPButton!
     @IBOutlet weak var collectionViewCatagory: UICollectionView!
     @IBOutlet weak var labelDiemDi: UILabel!
     @IBOutlet weak var labelDiemDen: UILabel!
@@ -23,6 +22,7 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
     @IBOutlet weak var topBar: UIView!
     @IBOutlet weak var thongKeVeLabel: UILabel!
     @IBOutlet weak var thongKeHangLabel: UILabel!
+    @IBOutlet weak var diemXuatPhatTable: UITableView!
     
     var tripJson = Data()
     var currentUser = User()
@@ -33,16 +33,17 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
     var userDefaults = UserDefaults.standard
     var formatter = DateFormatter()
     var timer = Timer()
-//    var currentRoute = Route()
     var routes = [Route]()
     var isChooseRoute = false
     var overTop = false
     var sendPostRequest = SendPostRequest()
     var locationStartPoint = [Location]()
     var locationEndPoint = [Location]()
-    var currentlocationStartPoint = Location()
+    var currentlocationStartPoint: Section?
     var currentlocationEndPoint = Location()
     let formatterCurrency = NumberFormatter()
+    var sections = [Section]()
+    let rootParentId =  "00000000-0000-0000-0000-000000000000"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,7 +72,6 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
         DispatchQueue.main.async {
             self.setUpData()
             self.loadDiaDiemDi()
-//            self.loadRoute()
             self.overTop = false
             self.collectionViewCatagory.reloadData()
         }
@@ -95,8 +95,8 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
             for viewController in schemaTabBarViewController.viewControllers! {
                 if viewController is SchemaViewController {
                     (viewController as! SchemaViewController).initDataFromCategory(
-                        DepartGuid: currentlocationStartPoint.LocationID,
-                        DepartName: currentlocationStartPoint.Name,
+                        DepartGuid: (currentlocationStartPoint?.locationId)!,
+                        DepartName: (currentlocationStartPoint?.name)!,
                         ArrivalGuid: currentlocationEndPoint.LocationID,
                         ArrivalName: currentlocationEndPoint.Name,
                         DriverName: arrTrip[(indexPath as NSIndexPath).row].DriversName,
@@ -148,75 +148,18 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
         AppUtils.addShadowToView(view: topBar, width: 1, height: 2, color: UIColor.gray.cgColor, opacity: 0.5, radius: 2)
         formatterCurrency.locale = Locale.current
         formatterCurrency.numberStyle = .currency
+        
+//        let section1 = Section(genres: "Animation", movies: ["The Lion King", "The Incredibles"], expanded: false)
+//        let section2 = Section(genres: "Superhero", movies: ["Guardians of the Galaxy", "Avengers", "The Flash", "The Dark Knight"], expanded: false)
+//        let section3 = Section(genres: "Horro", movies: ["The Walking Dead", "Incidious", "Conjuring"], expanded: false)
+//
+//        sections.append(section1)
+//        sections.append(section2)
+//        sections.append(section3)
+        
     }
     
     // - MARK: Connect SOAP
-    
-//    func loadRoute() {
-//        let soapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
-//            "<soapenv:Header/>" +
-//            "<soapenv:Body>" +
-//            "<tem:Route_GetForBooking>" +
-//            "<!--Optional:-->" +
-//            "<tem:CompanyId>\(currentUser.CompanyId)</tem:CompanyId>" +
-//            "<!--Optional:-->" +
-//            "<tem:AgentId>\(currentUser.AgentId)</tem:AgentId>" +
-//            "<!--Optional:-->" +
-//            "<tem:UserName>\(currentUser.UserName)</tem:UserName>" +
-//            "<!--Optional:-->" +
-//            "<tem:Password>\(currentUser.Password)</tem:Password>" +
-//            "<!--Optional:-->" +
-//            "<tem:SecurityCode>MobihomeAppDv123</tem:SecurityCode>" +
-//            "</tem:Route_GetForBooking>" +
-//            "</soapenv:Body>" +
-//        "</soapenv:Envelope>"
-//
-//        let soapAction = "http://tempuri.org/IMobihomeWcf/Route_GetForBooking"
-//        let sendPostRequest = SendPostRequest()
-//        sendPostRequest.sendRequest(soapMessage, soapAction: soapAction){ (string, error) in
-//            if error == nil {
-//                let data = string.data(using: String.Encoding.utf8, allowLossyConversion: false)
-//                self.routes = self.jsonHelper.parseRoutes(data!)
-//                if self.routes.count > 0 {
-//                    self.currentRoute = self.routes[0]
-//                    self.btnChooseRoute.setTitle(self.currentRoute.Name, for: UIControlState.normal)
-//                }
-//                else {
-//                    self.currentRoute = Route()
-//                }
-//            }
-//            else{
-//                self.alert.hideView()
-//                self.alert = SCLAlertView()
-//                self.alert.showError("Lỗi!", subTitle: "Không kết nối được server!")
-//            }
-//        }
-//    }
-    
-    func loadRouteDenDropDown() {
-        let dropDown = DropDown()
-        DropDown.appearance().textColor = UIColor.black
-        DropDown.appearance().textFont = UIFont.systemFont(ofSize: 15)
-        DropDown.appearance().backgroundColor = UIColor.white
-        DropDown.appearance().selectionBackgroundColor = UIColor.lightGray
-        DropDown.appearance().cellHeight = 60
-        
-        dropDown.anchorView = self.btnChooseRoute
-        
-        var arrDropDown = [String]()
-        for route in self.routes {
-            arrDropDown.append(route.Name)
-        }
-        
-        dropDown.dataSource = arrDropDown
-        
-        dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
-            self.labelDiemDi.text = item
-//            self.currentRoute = self.routes[index]
-        }
-    
-        dropDown.show()
-    }
     
     func loadDiaDiemDi() {
         let soapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\"><soapenv:Header/><soapenv:Body><tem:Place_SearchAllDepart><!--Optional:--><tem:CompanyId>\(currentUser.CompanyId)</tem:CompanyId><!--Optional:--><tem:AgentId>\(currentUser.AgentId)</tem:AgentId><!--Optional:--><tem:UserName>\(currentUser.UserName)</tem:UserName><!--Optional:--><tem:Password>\(currentUser.Password)</tem:Password><!--Optional:--><tem:SecurityCode>MobihomeAppDv123</tem:SecurityCode><!--Optional:--><tem:SearchText></tem:SearchText></tem:Place_SearchAllDepart></soapenv:Body></soapenv:Envelope>"
@@ -229,7 +172,25 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
                     let data = string.data(using: String.Encoding.utf8, allowLossyConversion: false)
                     self.locationStartPoint = self.jsonHelper.parseRouteLocation(data!)
                     self.labelDiemDi.text = self.locationStartPoint[0].Name
-                    self.currentlocationStartPoint = self.locationStartPoint[0]
+                    
+                    for location in self.locationStartPoint {
+                        if location.ParentId == self.rootParentId {
+                            let section = Section(name: location.Name, arrChild: [], locationId: location.LocationID, expanded: false)
+                            self.sections.append(section)
+                        }
+                    }
+                    
+                    for section in self.sections {
+                        for location in self.locationStartPoint {
+                            if (location.ParentId == section.locationId) && (location.LocationID != section.locationId) {
+                                let childSection = Section(name: location.Name, arrChild: [], locationId: location.LocationID, expanded: false)
+                                section.arrChild.append(childSection)
+                                section.expanded = true
+                            }
+                        }
+                    }
+                    
+                    self.currentlocationStartPoint = self.sections[0]
                     self.loadDiaDiemDen()
                 }
             }
@@ -264,7 +225,7 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
             // Action triggered on selection
             dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
                 self.labelDiemDi.text = item
-                self.currentlocationStartPoint = self.locationStartPoint[index]
+//                self.currentlocationStartPoint = self.locationStartPoint[index]
                 self.loadDanhSachXe(self.date, choose: true)
             }
             
@@ -272,12 +233,12 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
             dropDown.show()
         }
         else {
-            self.currentlocationStartPoint = Location()
+//            self.currentlocationStartPoint: Section?
         }
     }
     
     func loadDiaDiemDen() {
-        if currentlocationStartPoint.LocationID == "" {
+        if currentlocationStartPoint?.locationId == "" {
             return
         }
         
@@ -296,7 +257,7 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
         "<!--Optional:-->" +
         "<tem:SecurityCode>MobihomeAppDv123</tem:SecurityCode>" +
         "<!--Optional:-->" +
-        "<tem:DepartPlaceId>\(currentlocationStartPoint.LocationID)</tem:DepartPlaceId>" +
+            "<tem:DepartPlaceId>\(currentlocationStartPoint?.locationId ?? "")</tem:DepartPlaceId>" +
         "<!--Optional:-->" +
         "<tem:SearchText></tem:SearchText>" +
         "</tem:Place_SearchAllArrival>" +
@@ -359,7 +320,7 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     func loadDanhSachXe(_ byDate: String, choose: Bool) {
-        if self.currentlocationStartPoint.LocationID == "" && self.currentlocationEndPoint.LocationID == "" {
+        if self.currentlocationStartPoint?.locationId == "" && self.currentlocationEndPoint.LocationID == "" {
             return
         }
         
@@ -378,7 +339,7 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
         "<!--Optional:-->" +
         "<tem:TripDate>\(byDate)</tem:TripDate>" +
         "<!--Optional:-->" +
-        "<tem:DepartGuid>\(currentlocationStartPoint.LocationID)</tem:DepartGuid>" +
+            "<tem:DepartGuid>\(currentlocationStartPoint?.locationId ?? "")</tem:DepartGuid>" +
         "<!--Optional:-->" +
         "<tem:ArrivalGuid>\(currentlocationEndPoint.LocationID)</tem:ArrivalGuid>" +
         "<!--Optional:-->" +
@@ -639,30 +600,6 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
     
     // MARK: - User Action
     
-    @IBAction func btnChooseRouteClick(_ sender: Any) {
-//        isChooseRoute = true
-//        let dropDown = DropDown()
-//        DropDown.appearance().textColor = UIColor.black
-//        DropDown.appearance().textFont = UIFont.systemFont(ofSize: 15)
-//        DropDown.appearance().backgroundColor = UIColor.white
-//        DropDown.appearance().selectionBackgroundColor = UIColor.lightGray
-//        DropDown.appearance().cellHeight = 60
-//        dropDown.anchorView = btnDiemDi
-//
-//        var arrDropDown = [String]()
-//        for route in routes {
-//            arrDropDown.append(route.Name)
-//        }
-//
-//        dropDown.dataSource = arrDropDown
-//        dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
-//            self.btnChooseRoute.setTitle(item, for: .normal)
-////            self.currentRoute = self.routes[index]
-//            self.collectionViewCatagory.reloadData()
-//        }
-//        dropDown.show()
-    }
-    
     @IBAction func rightButtonClick(_ sender: Any) {
         let dateFormat = DateFormatter()
         dateFormat.dateFormat = "yyyyMMdd"
@@ -712,10 +649,85 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     @IBAction func btnChonDiemDiClick(_ sender: Any) {
-        loadDiaDiemDiLenDropDown()
+       // loadDiaDiemDiLenDropDown()
+        diemXuatPhatTable.isHidden = !diemXuatPhatTable.isHidden
+        diemXuatPhatTable.reloadData()
     }
     
     @IBAction func btnChonDiemDenClick(_ sender: Any) {
         loadDiaDiemDenLenDropDown()
+    }
+}
+
+extension CategoryController: UITableViewDataSource, UITableViewDelegate, ExpandableHeaderViewDelegate {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if tableView == diemXuatPhatTable {
+            return sections[section].arrChild.count
+        } else {
+            return 0
+        }
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+         return sections.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "departViewCell")
+        cell?.textLabel?.text = sections[indexPath.section].arrChild[indexPath.row].name
+        
+        return cell!
+    }
+    
+    func toggleSection(header: ExpandableHeaderView, section: Int) {
+        sections[section].expanded = !sections[section].expanded
+        
+        diemXuatPhatTable.beginUpdates()
+        for i in 0 ..< sections[section].arrChild.count {
+            diemXuatPhatTable.reloadRows(at: [IndexPath(row: i, section: section)], with: .automatic)
+        }
+        diemXuatPhatTable.endUpdates()
+    }
+    
+    func headerSelected(indexSection: Int) {
+        diemXuatPhatTable.isHidden = !diemXuatPhatTable.isHidden
+        diemXuatPhatTable.reloadData()
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = ExpandableHeaderView()
+        let frame: CGRect = tableView.frame
+        let addButton = UIButton(frame: CGRect(x: frame.size.width - 50, y: 8, width: 50, height: 20))
+        addButton.setTitle("+", for: .normal)
+        addButton.setTitleColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), for: .normal)
+        header.addSubview(addButton)
+        
+        header.customInit(title: sections[section].name, button: addButton, section: section, delegate: self)
+        
+        return header
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        diemXuatPhatTable.isHidden = !diemXuatPhatTable.isHidden
+        self.labelDiemDi.text = sections[indexPath.section].arrChild[indexPath.row].name
+        self.currentlocationStartPoint = self.sections[indexPath.section].arrChild[indexPath.row]
+        self.loadDanhSachXe(self.date, choose: true)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 44
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if sections[indexPath.section].expanded {
+            return 44
+        } else {
+            return 0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 2
     }
 }

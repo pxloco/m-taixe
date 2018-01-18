@@ -15,7 +15,7 @@ class Location {
 //    var ShortName: String
 //    var Poster: String
 //    var CountryGuid: String
-//    var ParentId: String
+    var ParentId = String()
 //    var LocationType: Int
 //    var OrderSort: Int
 //    var HasChildren: Bool

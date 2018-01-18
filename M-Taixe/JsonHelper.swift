@@ -253,6 +253,10 @@ class JsonHelper{
                 if let Name =  item["Name"] as? String {
                     location.Name = Name
                 }
+                
+                if let ParentId =  item["ParentId"] as? String {
+                    location.ParentId = ParentId
+                }
                
                 locations.append(location)
             }
