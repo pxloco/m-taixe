@@ -11,6 +11,7 @@ import Foundation
 class Bus {
     var BusId = Int()
     var LicensePlate = String()
+    var TripId = String()
 }
 
 

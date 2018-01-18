@@ -117,6 +117,12 @@ class SendPostRequest: NSObject {
                     case "http://tempuri.org/IMobihomeWcf/Trip_EmployeeSelected":
                         self.parseEmployeeSelected(s: s!, callBack: callBack)
                         break;
+                    case "http://tempuri.org/IMobihomeWcf/Trip_GetBusForChange":
+                        self.parseGetBusForChange(s: s!, callBack: callBack)
+                        break;
+                    case "http://tempuri.org/IMobihomeWcf/Trip_ChangeBus":
+                        self.parseChangeBus(s: s!, callBack: callBack)
+                        break;
                     default:
                         callBack("", error as NSError?)
                         break;
@@ -131,8 +137,30 @@ class SendPostRequest: NSObject {
         }
     }
     
+    func parseChangeBus(s: NSString,callBack: @escaping SendPostRequestCallBack) {
+        var arr = s.components(separatedBy: "Trip_ChangeBus")
+        if arr.count > 0 {
+            let result = arr[1].replacingOccurrences(of: ">", with: "").replacingOccurrences(of: "</", with: "")
+            callBack(result, nil)
+        }
+        else {
+            callBack("", NSError())
+        }
+    }
+    
+    func parseGetBusForChange(s: NSString,callBack: @escaping SendPostRequestCallBack) {
+        var arr = s.components(separatedBy: "Trip_GetBusForChangeResult")
+        if arr.count > 0 {
+            let result = arr[1].replacingOccurrences(of: ">", with: "").replacingOccurrences(of: "</", with: "")
+            callBack(result, nil)
+        }
+        else {
+            callBack("", NSError())
+        }
+    }
+    
     func parseEmployeeSelected(s: NSString,callBack: @escaping SendPostRequestCallBack) {
-        var arr = s.components(separatedBy: "Trip_EmployeeSelected")
+        var arr = s.components(separatedBy: "Trip_EmployeeSelectedResult")
         if arr.count > 0 {
             let result = arr[1].replacingOccurrences(of: ">", with: "").replacingOccurrences(of: "</", with: "")
             callBack(result, nil)

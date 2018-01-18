@@ -76,12 +76,19 @@ class JsonHelper{
             let json = try JSONSerialization.jsonObject(with: inputData, options: JSONSerialization.ReadingOptions.allowFragments)
             for item in json as! [[String: AnyObject]]{
                 let bus = Bus()
+                
                 if let busId =  item["BusId"] as? Int {
                     bus.BusId = busId
                 }
+                
                 if let LicensePlate = item["LicensePlate"] as? String{
                     bus.LicensePlate = LicensePlate
                 }
+                
+                if let TripId = item["TripId"] as? String{
+                    bus.TripId = TripId
+                }
+                
                 buses.append(bus)
             }
         }

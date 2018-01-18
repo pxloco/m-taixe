@@ -10,4 +10,8 @@ import UIKit
 
 class CarViewCell: UITableViewCell {
     @IBOutlet weak var bienSoLabel: UILabel!
+    
+    func setDataToView(bus: Bus) {
+        bienSoLabel.text = bus.LicensePlate
+    }
 }

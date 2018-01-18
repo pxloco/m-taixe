@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UICheckbox_Swift
 
 class AddFretController: UIViewController {
 
@@ -22,6 +23,8 @@ class AddFretController: UIViewController {
     @IBOutlet weak var groupName: UIView!
     @IBOutlet weak var groupConsignee: UIView!
     @IBOutlet weak var groupShipper: UIView!
+    @IBOutlet weak var daThanhToanCheckbox: UICheckbox!
+    
     
     var billID = 0
     var tripId = ""
@@ -115,6 +118,10 @@ class AddFretController: UIViewController {
         btnSaveClick()
     }
     
+    @IBAction func deleteGoodsAction(_ sender: Any) {
+    }
+    
+    
     // MARK: Get API
     
     func btnSaveClick() {
@@ -126,6 +133,8 @@ class AddFretController: UIViewController {
         let consigneeMobile = tfConsigneeMobile.text ?? ""
         let consigneeAdd = tfConsigneeAdd.text ?? ""
         let cost = tfCost.text ?? ""
+        let IsPaid = daThanhToanCheckbox.isSelected
+        
         let soapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
             "<soapenv:Header/>" +
             "<soapenv:Body>" +
@@ -171,7 +180,7 @@ class AddFretController: UIViewController {
             "<!--Optional:-->" +
             "<tem:TripId>\(tripId)</tem:TripId>" +
             "<!--Optional:-->" +
-            "<tem:IsPaid>false</tem:IsPaid>" +
+            "<tem:IsPaid>\(IsPaid)</tem:IsPaid>" +
             "<!--Optional:-->" +
             "<tem:ShipInOption>-1</tem:ShipInOption>" +
             "<!--Optional:-->" +

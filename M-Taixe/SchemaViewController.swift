@@ -63,6 +63,8 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
             (segue.destination as! EditRouteViewController).setUpDataFromSchema(trip: currentTrip)
         case SegueFactory.fromSchemaToEditDriver.rawValue:
             (segue.destination as! EditDriverViewController).initData(trip: currentTrip)
+        case SegueFactory.fromSchemaToChangeCar.rawValue:
+            (segue.destination as! ChangeCarViewController).initData(tripId: currentTrip.TripId)
         default:
             break
         }

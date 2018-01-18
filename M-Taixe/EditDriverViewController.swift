@@ -20,6 +20,7 @@ class EditDriverViewController: UIViewController, UITableViewDelegate, UITableVi
     
     @IBOutlet weak var driverTableView: UITableView!
     
+    @IBOutlet weak var topBarMenu: UIView!
     var trip = Trip()
     var currentUser = User()
     var pageNumber: Int = 1
@@ -67,6 +68,7 @@ class EditDriverViewController: UIViewController, UITableViewDelegate, UITableVi
         bienSoLabel.text = trip.LicensePlate
         startTimeLabel.text = trip.StartTime
         segmentControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
+         AppUtils.addShadowToView(view: topBarMenu, width: 1, height: 2, color: UIColor.gray.cgColor, opacity: 0.5, radius: 2)
     }
     
     func segmentedControlValueChanged() {
