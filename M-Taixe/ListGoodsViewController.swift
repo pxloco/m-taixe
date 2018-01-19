@@ -255,7 +255,8 @@ class ListGoodsViewController: UIViewController, UITableViewDelegate, UITableVie
     // MARK: - Load data from Api
 
     func loadFilterWaitTrip() {
-        let fromDate = currentDate + "000000"
+        let dateNow = Int(self.currentDate + "000000")
+        let tenDayAgo = dateNow! - 24000000*10
         let toDate = currentDate + "240000"
         let soapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
             "<soapenv:Header/>" +
@@ -272,7 +273,7 @@ class ListGoodsViewController: UIViewController, UITableViewDelegate, UITableVie
             "<!--Optional:-->" +
             "<tem:AgentID>\(currentUser.AgentId)</tem:AgentID>" +
             "<!--Optional:-->" +
-            "<tem:From>\(fromDate)</tem:From>" +
+            "<tem:From>\(tenDayAgo)</tem:From>" +
             "<!--Optional:-->" +
             "<tem:To>\(toDate)</tem:To>" +
             "<!--Optional:-->" +

@@ -119,8 +119,8 @@ class AddFretController: UIViewController {
     }
     
     @IBAction func deleteGoodsAction(_ sender: Any) {
+        deleteGoods()
     }
-    
     
     // MARK: Get API
     
@@ -138,7 +138,7 @@ class AddFretController: UIViewController {
         let soapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
             "<soapenv:Header/>" +
             "<soapenv:Body>" +
-            "<tem:BillFreight_Save>" +
+            "<tem:BillFreight_SaveV2>" +
             "<!--Optional:-->" +
             "<tem:BillId>\(billID)</tem:BillId>" +
             "<!--Optional:-->" +
@@ -186,19 +186,59 @@ class AddFretController: UIViewController {
             "<!--Optional:-->" +
             "<tem:ShipOutOption>-1</tem:ShipOutOption>" +
             "<!--Optional:-->" +
+            "<tem:CompanyId>\(currentUser.CompanyId)</tem:CompanyId>" +
+            "<!--Optional:-->" +
+            "<tem:AgentId>\(currentUser.AgentId)</tem:AgentId>" +
+            "<!--Optional:-->" +
+            "<tem:UserId>\(currentUser.UserId)</tem:UserId>" +
+            "<!--Optional:-->" +
+            "<tem:SecurityCode>MobihomeAppDv123</tem:SecurityCode>" +
+            "</tem:BillFreight_SaveV2>" +
+            "</soapenv:Body>" +
+        "</soapenv:Envelope>"
+        let soapAction = "http://tempuri.org/IBillWcf/BillFreight_SaveV2"
+        sendPostRequest.sendRequest(soapMessage, soapAction: soapAction, urlKey:
+        .billURL){
+            (result, error) in
+            if error == nil{
+                self.alert.showSuccess("Thành công", subTitle: "Lưu phiếu hàng thành công!")
+                self.navigationController?.popViewController(animated: true)
+            }
+            else{
+                self.alert.showError("Lỗi!", subTitle: "Không kết nối được server!")
+            }
+        }
+    }
+    
+    
+    func deleteGoods() {
+        let soapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
+            "<soapenv:Header/>" +
+            "<soapenv:Body>" +
+            "<tem:SetDelete>" +
+            "<!--Optional:-->" +
+            "<tem:BillId>\(billID)</tem:BillId>" +
+            "<!--Optional:-->" +
+            "<tem:IsDeleted>true</tem:IsDeleted>" +
+            "<!--Optional:-->" +
+            "<tem:UserId>\(currentUser.UserId)</tem:UserId>" +
+            "<!--Optional:-->" +
+            "<tem:Name>\(currentUser.DisplayName)</tem:Name>" +
+            "<!--Optional:-->" +
             "<tem:Password>\(currentUser.Password)</tem:Password>" +
             "<!--Optional:-->" +
             "<tem:Mobile>\(currentUser.UserName)</tem:Mobile>" +
             "<!--Optional:-->" +
             "<tem:SecurityCode>MobihomeAppDv123</tem:SecurityCode>" +
-            "</tem:BillFreight_Save>" +
+            "</tem:SetDelete>" +
             "</soapenv:Body>" +
         "</soapenv:Envelope>"
-        let soapAction = "http://tempuri.org/IMobihomeWcf/BillFreight_Save"
-        sendPostRequest.sendRequest(soapMessage, soapAction: soapAction){
+        let soapAction = "http://tempuri.org/IBillWcf/SetDelete"
+        sendPostRequest.sendRequest(soapMessage, soapAction: soapAction, urlKey:
+        .billURL){
             (result, error) in
             if error == nil{
-                self.alert.showSuccess("Thành công", subTitle: "Lưu phiếu hàng thành công!")
+                self.alert.showSuccess("Thành công", subTitle: "Xoá hàng thành công!")
                 self.navigationController?.popViewController(animated: true)
             }
             else{

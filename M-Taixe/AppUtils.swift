@@ -62,13 +62,13 @@ class AppUtils {
         var currency = ""
         for (index, char) in stringReversed.enumerated(){
             if (index+1)%3 == 0 && (index+1) != stringReversed.count{
-                currency += "\(char) "
+                currency += "\(char)."
             } else {
                 currency += "\(char)"
             }
         }
         
-        return "\(String(currency.reversed())) đ"
+        return "\(String(currency.reversed()))đ"
     }
     
     class func scriptSeat() -> String {

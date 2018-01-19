@@ -23,6 +23,7 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
     @IBOutlet weak var thongKeVeLabel: UILabel!
     @IBOutlet weak var thongKeHangLabel: UILabel!
     @IBOutlet weak var diemXuatPhatTable: UITableView!
+    @IBOutlet weak var closeDropDownButton: UIButton!
     
     var tripJson = Data()
     var currentUser = User()
@@ -172,6 +173,8 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
                     let data = string.data(using: String.Encoding.utf8, allowLossyConversion: false)
                     self.locationStartPoint = self.jsonHelper.parseRouteLocation(data!)
                     self.labelDiemDi.text = self.locationStartPoint[0].Name
+                    
+                    self.sections.removeAll()
                     
                     for location in self.locationStartPoint {
                         if location.ParentId == self.rootParentId {
@@ -649,13 +652,23 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     @IBAction func btnChonDiemDiClick(_ sender: Any) {
-       // loadDiaDiemDiLenDropDown()
-        diemXuatPhatTable.isHidden = !diemXuatPhatTable.isHidden
-        diemXuatPhatTable.reloadData()
+        DispatchQueue.main.async {
+            self.closeDropDownButton.isHidden = !self.closeDropDownButton.isHidden
+            self.diemXuatPhatTable.isHidden = !self.diemXuatPhatTable.isHidden
+            self.diemXuatPhatTable.reloadData()
+        }
     }
     
     @IBAction func btnChonDiemDenClick(_ sender: Any) {
         loadDiaDiemDenLenDropDown()
+    }
+    
+    @IBAction func closeDropDownAction(_ sender: Any) {
+        DispatchQueue.main.async {
+            self.diemXuatPhatTable.isHidden = !self.diemXuatPhatTable.isHidden
+            self.diemXuatPhatTable.reloadData()
+            self.closeDropDownButton.isHidden = true
+        }
     }
 }
 
