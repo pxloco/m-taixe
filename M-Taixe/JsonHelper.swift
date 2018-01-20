@@ -9,6 +9,57 @@
 import Foundation
 class JsonHelper{
     
+    func parseEmployeeByTrip(_ inputData: Data) -> EmployeeByTrip {
+        let employee = EmployeeByTrip()
+        do {
+            let item = try JSONSerialization.jsonObject(with: inputData, options: JSONSerialization.ReadingOptions.allowFragments) as? Dictionary<String, AnyObject>
+            
+            if let ID = item!["ID"] as? Int {
+                    employee.ID = ID
+                }
+
+            if let TripId = item!["TripId"] as? String{
+                    employee.TripId = TripId
+                }
+
+            if let Driver1Id = item!["Driver1Id"] as? Int{
+                    employee.Driver1Id = Driver1Id
+                }
+
+            if let Driver1Name = item!["Driver1Name"] as? String{
+                    employee.Driver1Name = Driver1Name
+                }
+
+            if let Driver2Id = item!["Driver2Id"] as? Int{
+                    employee.Driver2Id = Driver2Id
+                }
+
+            if let Driver2Name = item!["Driver2Name"] as? String{
+                    employee.Driver2Name = Driver2Name
+                }
+
+            if let Employee1Id = item!["Employee1Id"] as? Int{
+                    employee.Employee1Id = Employee1Id
+                }
+
+            if let Employee1Name = item!["Employee1Name"] as? String{
+                    employee.Employee1Name = Employee1Name
+                }
+
+            if let Employee2Id = item!["Employee2Id"] as? Int{
+                    employee.Employee2Id = Employee2Id
+                }
+
+            if let Employee2Name = item!["Employee2Name"] as? String{
+                    employee.Employee2Name = Employee2Name
+                }
+        }
+        catch{
+            
+        }
+        return employee
+    }
+    
     func parseEmployee(_ inputData: Data) -> [Employee] {
         var employees = [Employee]()
         do {

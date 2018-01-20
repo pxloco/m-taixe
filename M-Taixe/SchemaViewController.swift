@@ -94,6 +94,8 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
         self.DepartName = DepartName
         self.ArrivalName = ArrivalName
         self.currentTrip = trip
+        self.DriverName = trip.DriversName
+        self.EmployeeName = trip.EmployeesName
     }
     
     func setUpData() {

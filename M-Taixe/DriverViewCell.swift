@@ -24,12 +24,20 @@ class DriverViewCell: UITableViewCell {
     var delegate: CheckBoxDelegate!
     var indexCheckBox: Int!
     
-    func setDataToView(employee: Employee, index:Int) {
+    func setDataToView(employee: Employee, index:Int, employeeByTrip: EmployeeByTrip) {
         self.indexCheckBox = index
+        
         nameLabel.text = employee.EmployeeName
         phoneNumberLabel.text = employee.EmployeeMobile
+        
+        if employee.EmployeeId == employeeByTrip.Driver1Id || employee.EmployeeId == employeeByTrip.Employee1Id {
+            checkBox.isSelected = true
+        }
+        
         checkBox.onSelectStateChanged = { (checkbox, selected) in
-           self.delegate.checkCheckBox(indexCheckBox: self.indexCheckBox)
+            if selected {
+                self.delegate.checkCheckBox(indexCheckBox: self.indexCheckBox)
+            }
         }
     }
     

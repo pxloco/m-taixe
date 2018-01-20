@@ -25,3 +25,6 @@ class Employee {
 
 //{"EmployeeId":383,"CompanyId":80,"PositionID":1,"EmployeeName":"Kha tai xe","Passport":"","EmployeeMobile":"0972766987","EmployeeAdd":"","CreatedBy":1996,"CreatedAt":20170214171253,"UpdatedBy":1996,"UpdatedAt":20170214171300}
 
+
+
+

@@ -129,6 +129,9 @@ class SendPostRequest: NSObject {
                     case "http://tempuri.org/IBillWcf/SetDelete":
                         self.parseSetDelete(s: s!, callBack: callBack)
                         break;
+                    case "http://tempuri.org/IMobihomeWcf/Trip_GetEmployeesByTrip":
+                        self.parsetrip_GetEmployeesByTrip(s: s!, callBack: callBack)
+                        break;
                     default:
                         callBack("", error as NSError?)
                         break;
@@ -140,6 +143,17 @@ class SendPostRequest: NSObject {
             else {
                 callBack("", error as NSError?)
             }
+        }
+    }
+    
+    func parsetrip_GetEmployeesByTrip(s: NSString,callBack: @escaping SendPostRequestCallBack) {
+        var arr = s.components(separatedBy: "Trip_GetEmployeesByTripResult")
+        if arr.count > 0 {
+            let result = arr[1].replacingOccurrences(of: ">", with: "").replacingOccurrences(of: "</", with: "")
+            callBack(result, nil)
+        }
+        else {
+            callBack("", NSError())
         }
     }
     

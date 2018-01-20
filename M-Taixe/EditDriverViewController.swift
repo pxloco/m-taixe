@@ -11,16 +11,12 @@ import UIKit
 class EditDriverViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var segmentControl: UISegmentedControl!
-    
     @IBOutlet weak var bienSoLabel: UILabel!
-  
     @IBOutlet weak var startTimeLabel: UILabel!
-    
     @IBOutlet weak var searchTextField: UITextField!
-    
     @IBOutlet weak var driverTableView: UITableView!
-    
     @IBOutlet weak var topBarMenu: UIView!
+    
     var trip = Trip()
     var currentUser = User()
     var pageNumber: Int = 1
@@ -30,12 +26,18 @@ class EditDriverViewController: UIViewController, UITableViewDelegate, UITableVi
     var jsonHelper = JsonHelper()
     var Driver1Id: Int = 0
     var Employee1Id: Int = 0
+    var employeeByTrip = EmployeeByTrip()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpData()
         setUpUI()
+        getDriverByTrip()
         getEmployee(positionId: 1, searchText: "")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
     
     func initData(trip: Trip) {
@@ -87,11 +89,12 @@ class EditDriverViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "employeeViewCell", for: indexPath) as! DriverViewCell
-        cell.selectionStyle = .none
-        let data = employees[indexPath.row]
-        cell.setDataToView(employee: data, index: indexPath.row)
-        cell.delegate = self
-        
+        DispatchQueue.main.async {
+            cell.selectionStyle = .none
+            let data = self.employees[indexPath.row]
+            cell.setDataToView(employee: data, index: indexPath.row, employeeByTrip: self.employeeByTrip)
+            cell.delegate = self
+        }
         return cell
     }
     
@@ -190,6 +193,44 @@ class EditDriverViewController: UIViewController, UITableViewDelegate, UITableVi
         sendPostRequest.sendRequest(soapMessage, soapAction: soapAction){ (string, error) in
             if error == nil {
                self.navigationController?.popViewController(animated: true)
+            }
+            else {
+                self.alert.hideView()
+                self.alert = SCLAlertView()
+                self.alert.showError("Lỗi!", subTitle: "Không kết nối được server!")
+            }
+        }
+    }
+    
+    func getDriverByTrip() {
+        let soapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
+            "<soapenv:Header/>" +
+            "<soapenv:Body>" +
+            "<tem:Trip_GetEmployeesByTrip>" +
+            "<!--Optional:-->" +
+            "<tem:CompanyId>\(currentUser.CompanyId)</tem:CompanyId>" +
+            "<!--Optional:-->" +
+            "<tem:UserId>\(currentUser.UserId)</tem:UserId>" +
+            "<!--Optional:-->" +
+            "<tem:UserName>\(currentUser.UserName)</tem:UserName>" +
+            "<!--Optional:-->" +
+            "<tem:Password>\(currentUser.Password)</tem:Password>" +
+            "<!--Optional:-->" +
+            "<tem:SecurityCode>MobihomeAppDv123</tem:SecurityCode>" +
+            "<!--Optional:-->" +
+            "<tem:TripId>\(trip.TripId)</tem:TripId>" +
+            "</tem:Trip_GetEmployeesByTrip>" +
+            "</soapenv:Body>" +
+        "</soapenv:Envelope>"
+        
+        let soapAction = "http://tempuri.org/IMobihomeWcf/Trip_GetEmployeesByTrip"
+        let sendPostRequest = SendPostRequest()
+        sendPostRequest.sendRequest(soapMessage, soapAction: soapAction){ (string, error) in
+            if error == nil {
+                let data = string.data(using: String.Encoding.utf8, allowLossyConversion: false)
+                self.employeeByTrip = self.jsonHelper.parseEmployeeByTrip(data!)
+                self.Employee1Id = self.employeeByTrip.Employee1Id
+                self.Driver1Id = self.employeeByTrip.Driver1Id
             }
             else {
                 self.alert.hideView()

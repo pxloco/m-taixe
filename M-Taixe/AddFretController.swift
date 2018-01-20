@@ -8,6 +8,7 @@
 
 import UIKit
 import UICheckbox_Swift
+import HPUIViewExtensions
 
 class AddFretController: UIViewController {
 
@@ -24,7 +25,7 @@ class AddFretController: UIViewController {
     @IBOutlet weak var groupConsignee: UIView!
     @IBOutlet weak var groupShipper: UIView!
     @IBOutlet weak var daThanhToanCheckbox: UICheckbox!
-    
+    @IBOutlet weak var deleteGoodsButton: HPButton!
     
     var billID = 0
     var tripId = ""
@@ -38,7 +39,6 @@ class AddFretController: UIViewController {
         super.viewDidLoad()
         
         setUpData()
-        setUpUI()
         
         // Do any additional setup after loading the view.
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(LoginController.dismissKeyboard))
@@ -53,6 +53,11 @@ class AddFretController: UIViewController {
             tfCost.text = "\(bill.TotalCharges)"
             tfBillName.text = bill.NameOfGoods
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setUpUI()
     }
     
     func setUpData(tripId: String) {
@@ -84,6 +89,11 @@ class AddFretController: UIViewController {
     
     func setUpUI() {
         AppUtils.addShadowToView(view: topBarMenu, width: 1, height: 2, color: UIColor.gray.cgColor, opacity: 0.5, radius: 2)
+        if billID == 0 {
+            deleteGoodsButton.isHidden = true
+        } else {
+            deleteGoodsButton.isHidden = false
+        }
     }
     
     func dismissKeyboard() {

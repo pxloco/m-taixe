@@ -622,6 +622,7 @@
                     </view>
                     <connections>
                         <outlet property="daThanhToanCheckbox" destination="zbo-VG-3ez" id="8Jm-Np-dxh"/>
+                        <outlet property="deleteGoodsButton" destination="zRA-3K-Jgp" id="vl0-QB-gDI"/>
                         <outlet property="groupConsignee" destination="hsE-SC-3BM" id="8i5-OH-58m"/>
                         <outlet property="groupName" destination="ciY-xe-nMv" id="JQg-Fb-IEt"/>
                         <outlet property="groupShipper" destination="CRx-64-pB5" id="DzQ-Od-JVn"/>

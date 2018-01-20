@@ -14,6 +14,7 @@
 		0C0DA20E1FEAB223008FF915 /* AppUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0DA20D1FEAB223008FF915 /* AppUtils.swift */; };
 		0C13387D1FDEC75E001E6A4B /* SeatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C13387C1FDEC75E001E6A4B /* SeatCell.swift */; };
 		0C13387F1FDEC791001E6A4B /* SchemaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C13387E1FDEC791001E6A4B /* SchemaViewController.swift */; };
+		0C145CAD201323CE007605A9 /* EmployeeByTrip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C145CAC201323CE007605A9 /* EmployeeByTrip.swift */; };
 		0C1508181FF5CFBA000F18BF /* HomeTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1508171FF5CFBA000F18BF /* HomeTabBarViewController.swift */; };
 		0C1512621FF68C7300347556 /* Schema.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C1512611FF68C7300347556 /* Schema.storyboard */; };
 		0C24A8F71FFD9E230036B297 /* Route.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C24A8F61FFD9E230036B297 /* Route.storyboard */; };
@@ -114,6 +115,7 @@
 		0C0DA20D1FEAB223008FF915 /* AppUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUtils.swift; sourceTree = "<group>"; };
 		0C13387C1FDEC75E001E6A4B /* SeatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeatCell.swift; sourceTree = "<group>"; };
 		0C13387E1FDEC791001E6A4B /* SchemaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaViewController.swift; sourceTree = "<group>"; };
+		0C145CAC201323CE007605A9 /* EmployeeByTrip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeByTrip.swift; sourceTree = "<group>"; };
 		0C1508171FF5CFBA000F18BF /* HomeTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabBarViewController.swift; sourceTree = "<group>"; };
 		0C1512611FF68C7300347556 /* Schema.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Schema.storyboard; sourceTree = "<group>"; };
 		0C24A8F61FFD9E230036B297 /* Route.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Route.storyboard; sourceTree = "<group>"; };
@@ -364,6 +366,7 @@
 				0C9AE4031FF9DFF600128DBA /* TicketByBus.swift */,
 				0CB73487200E4CC800089E19 /* Employee.swift */,
 				0C285131201024C200BA896D /* Section.swift */,
+				0C145CAC201323CE007605A9 /* EmployeeByTrip.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -814,6 +817,7 @@
 				3127E7E31D378F6B002293D4 /* Trip.swift in Sources */,
 				0C268EC91FE5147A00DFD811 /* EditRouteViewController.swift in Sources */,
 				31ABC5A81DCDE0EE000C8DAC /* CallCell.swift in Sources */,
+				0C145CAD201323CE007605A9 /* EmployeeByTrip.swift in Sources */,
 				31B307601DCCA0050039AFBC /* RouteCell.swift in Sources */,
 				31B307641DCCB79E0039AFBC /* AddSeatCell.swift in Sources */,
 				3127E77E1D372447002293D4 /* AppDelegate.swift in Sources */,
