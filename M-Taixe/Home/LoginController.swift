@@ -107,7 +107,7 @@ class LoginController: UIViewController, UITextFieldDelegate {
                             let d = Date()
                             let date = formatter.string(from: d)
                             let session = devideId + "-" + date
-                            defaults.setValue("\(session)", forKey: "Session")
+                            defaults.setValue("\(session)", forKey: "SessionId")
                         }
                         self.navigateToTrip()
                     }

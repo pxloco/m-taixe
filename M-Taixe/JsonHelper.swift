@@ -9,6 +9,61 @@
 import Foundation
 class JsonHelper{
     
+    func parseTicket(_ inputData: Data) -> Ticket {
+        let ticket = Ticket()
+        do {
+            let item = try JSONSerialization.jsonObject(with: inputData, options: JSONSerialization.ReadingOptions.allowFragments) as? Dictionary<String, AnyObject>
+            
+            if let TicketID = item!["ticket"]!["TicketID"] as? String {
+                ticket.TicketID = TicketID
+            }
+            
+            if let BusId = item!["ticket"]!["BusId"] as? Int {
+                ticket.BusId = BusId
+            }
+            
+            if let TripId = item!["ticket"]!["TripId"] as? String {
+                ticket.TripId = TripId
+            }
+            
+            if let SeatID = item!["ticket"]!["SeatID"] as? Int{
+                ticket.SeatID = SeatID
+            }
+            
+            if let MapID = item!["ticket"]!["MapID"] as? Int{
+                ticket.MapID = MapID
+            }
+            
+            if let SeatNumber = item!["ticket"]!["SeatNumber"] as? String {
+                ticket.SeatNumber = SeatNumber
+            }
+            
+            if let SeatRow = item!["ticket"]!["SeatRow"] as? String{
+                ticket.SeatRow = SeatRow
+            }
+            
+            if let SeatListing = item!["ticket"]!["SeatListing"] as? Int {
+                ticket.SeatListing = SeatListing
+            }
+            
+            if let ActualPrice = item!["ticket"]!["ActualPrice"] as? Int {
+                ticket.ActualPrice = ActualPrice
+            }
+            
+            if let TicketCustName = item!["ticket"]!["TicketCustName"] as? String {
+                ticket.TicketCustName = TicketCustName
+            }
+            
+            if let TicketCustMobile = item!["ticket"]!["TicketCustMobile"] as? String {
+                ticket.TicketCustMobile = TicketCustMobile
+            }
+        }
+        catch{
+            
+        }
+        return ticket
+    }
+    
     func parseEmployeeByTrip(_ inputData: Data) -> EmployeeByTrip {
         let employee = EmployeeByTrip()
         do {

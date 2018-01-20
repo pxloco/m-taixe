@@ -132,6 +132,9 @@ class SendPostRequest: NSObject {
                     case "http://tempuri.org/IMobihomeWcf/Trip_GetEmployeesByTrip":
                         self.parsetrip_GetEmployeesByTrip(s: s!, callBack: callBack)
                         break;
+                    case "http://tempuri.org/IMobihomeWcf/Ticket_CheckExistsV2":
+                        self.parseTicket_CheckExistsV2(s: s!, callBack: callBack)
+                        break;
                     default:
                         callBack("", error as NSError?)
                         break;
@@ -143,6 +146,17 @@ class SendPostRequest: NSObject {
             else {
                 callBack("", error as NSError?)
             }
+        }
+    }
+    
+    func parseTicket_CheckExistsV2(s: NSString,callBack: @escaping SendPostRequestCallBack) {
+        var arr = s.components(separatedBy: "Ticket_CheckExistsV2Result")
+        if arr.count > 0 {
+            let result = arr[1].replacingOccurrences(of: ">", with: "").replacingOccurrences(of: "</", with: "")
+            callBack(result, nil)
+        }
+        else {
+            callBack("", NSError())
         }
     }
     

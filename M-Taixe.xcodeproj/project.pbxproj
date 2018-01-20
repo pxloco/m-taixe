@@ -15,6 +15,7 @@
 		0C13387D1FDEC75E001E6A4B /* SeatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C13387C1FDEC75E001E6A4B /* SeatCell.swift */; };
 		0C13387F1FDEC791001E6A4B /* SchemaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C13387E1FDEC791001E6A4B /* SchemaViewController.swift */; };
 		0C145CAD201323CE007605A9 /* EmployeeByTrip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C145CAC201323CE007605A9 /* EmployeeByTrip.swift */; };
+		0C145CAF20134430007605A9 /* Ticket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C145CAE20134430007605A9 /* Ticket.swift */; };
 		0C1508181FF5CFBA000F18BF /* HomeTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C1508171FF5CFBA000F18BF /* HomeTabBarViewController.swift */; };
 		0C1512621FF68C7300347556 /* Schema.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C1512611FF68C7300347556 /* Schema.storyboard */; };
 		0C24A8F71FFD9E230036B297 /* Route.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C24A8F61FFD9E230036B297 /* Route.storyboard */; };
@@ -116,6 +117,7 @@
 		0C13387C1FDEC75E001E6A4B /* SeatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeatCell.swift; sourceTree = "<group>"; };
 		0C13387E1FDEC791001E6A4B /* SchemaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaViewController.swift; sourceTree = "<group>"; };
 		0C145CAC201323CE007605A9 /* EmployeeByTrip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeByTrip.swift; sourceTree = "<group>"; };
+		0C145CAE20134430007605A9 /* Ticket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ticket.swift; sourceTree = "<group>"; };
 		0C1508171FF5CFBA000F18BF /* HomeTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabBarViewController.swift; sourceTree = "<group>"; };
 		0C1512611FF68C7300347556 /* Schema.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Schema.storyboard; sourceTree = "<group>"; };
 		0C24A8F61FFD9E230036B297 /* Route.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Route.storyboard; sourceTree = "<group>"; };
@@ -367,6 +369,7 @@
 				0CB73487200E4CC800089E19 /* Employee.swift */,
 				0C285131201024C200BA896D /* Section.swift */,
 				0C145CAC201323CE007605A9 /* EmployeeByTrip.swift */,
+				0C145CAE20134430007605A9 /* Ticket.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -864,6 +867,7 @@
 				3127E7E71D379704002293D4 /* CategoryCell.swift in Sources */,
 				0CECD544200B4FD3005D3017 /* DriverViewCell.swift in Sources */,
 				0CECD542200B4FB0005D3017 /* EditDriverViewController.swift in Sources */,
+				0C145CAF20134430007605A9 /* Ticket.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

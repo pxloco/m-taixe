@@ -32,6 +32,7 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
     var DriverName = String()
     var EmployeeName = String()
     var currentTrip = Trip()
+    var ticket = Ticket()
     
     var ref: DatabaseReference!
     
@@ -185,6 +186,73 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
         getStatusBookedByTrip()
     }
     
+   
+    
+    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+        if request.url?.scheme == "m-taixe" {
+            if let seatId = request.url?.query {
+                if arrChooseSeatId.contains(seatId) {
+                    let dataString = self.Ticket_CheckExistsV2(TripId: tripId, SeatId: seatId, DepartGuid: self.DepartGuid, ArrivalGuid: self.ArrivalGuid)
+                    
+                    print("asasdasd")
+                } else {
+                    if arrMyChooseSeatId.contains(seatId) {
+                        arrMyChooseSeatId = arrMyChooseSeatId.filter{ $0 != seatId }
+                        self.schemaWebView.stringByEvaluatingJavaScript(from: "unchoose('\(seatId)')")
+//                        self.schemaWebView.stringByEvaluatingJavaScript(from: "resetSeat('\(seatId)')")
+                        
+                    } else {
+                        arrMyChooseSeatId.append(seatId)
+                        self.schemaWebView.stringByEvaluatingJavaScript(from: "chooseSeat('\(seatId)')")
+                        self.schemaWebView.stringByEvaluatingJavaScript(from: "setSeat('\(seatId)', true)")
+                    }
+                }
+            }
+        }
+        return true
+    }
+    
+    // MARK: - Firebases
+    
+    func saveSeatsToFireBase() {
+        let itemsRef = ref.child("seat-items")
+        for seat in seats {
+//            let item = Seat(SeatID: seat.SeatID, seatName: seat.seatName, Status: seat.Status)
+//            itemsRef.setValue(item)
+        }
+    }
+    
+    
+//    if (seatStatus.getTicket().Status == 11 && seatStatus.getTicket().BookingClerkId == CurrentUser.getUserId()&& seatStatus.getTicket().SessionId.equals(CurrentSession.getSessionId()))
+    
+    func loadMapWithScrip(htmlDecoded: String) {
+        let map = SchemaApi.replaceHtmlWithJavascrip(htmlDecoded: htmlDecoded)
+        self.schemaWebView.loadHTMLString(map, baseURL: nil)
+    }
+    
+    @IBAction func homeClick(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction func editRouteAction(_ sender: Any) {
+        performSegue(withIdentifier: SegueFactory.fromSchemaToEditRoute.rawValue, sender: nil)
+    }
+    
+    @IBAction func editDriverAction(_ sender: Any) {
+        performSegue(withIdentifier: SegueFactory.fromSchemaToEditDriver.rawValue, sender: nil)
+    }
+    
+    @IBAction func changeCarAction(_ sender: Any) {
+        performSegue(withIdentifier: SegueFactory.fromSchemaToChangeCar.rawValue, sender: nil)
+    }
+    
+    @IBAction func listGoodsAction(_ sender: Any) {
+        self.tabBarController?.selectedIndex = 1
+        let customerController =  tabBarController?.viewControllers![1] as! CustomersController
+        customerController.segmentControl.selectedSegmentIndex = 2
+        customerController.addGoodsButton.isHidden = false
+    }
+    
     func getStatusBookedByTrip() {
         let sendPostRequest = SendPostRequest()
         var dataString = Data()
@@ -245,67 +313,52 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
         }
     }
     
-    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-        if request.url?.scheme == "m-taixe" {
-            if let seatId = request.url?.query {
-                if arrChooseSeatId.contains(seatId) {
-                    let dataString = SchemaApi.Ticket_CheckExistsV2(TripId: tripId, SeatId: seatId, DepartGuid: self.DepartGuid, ArrivalGuid: self.ArrivalGuid)
-                } else {
-                    if arrMyChooseSeatId.contains(seatId) {
-                        arrMyChooseSeatId = arrMyChooseSeatId.filter{ $0 != seatId }
-                        self.schemaWebView.stringByEvaluatingJavaScript(from: "unchoose('\(seatId)')")
-//                        self.schemaWebView.stringByEvaluatingJavaScript(from: "resetSeat('\(seatId)')")
-                        
-                    } else {
-                        arrMyChooseSeatId.append(seatId)
-                        self.schemaWebView.stringByEvaluatingJavaScript(from: "chooseSeat('\(seatId)')")
-                        self.schemaWebView.stringByEvaluatingJavaScript(from: "setSeat('\(seatId)', true)")
-                    }
-                }
+    func Ticket_CheckExistsV2(TripId: String, SeatId: String, DepartGuid: String, ArrivalGuid: String) {
+        let sendPostRequest = SendPostRequest()
+        var dataString = Data()
+        var alert = SCLAlertView()
+        let soapAction = "http://tempuri.org/IMobihomeWcf/Ticket_CheckExistsV2"
+        let soapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
+            "<soapenv:Header/>" +
+            "<soapenv:Body>" +
+            "<tem:Ticket_CheckExistsV2>" +
+            "<!--Optional:-->" +
+            "<tem:CompanyId>\(UserDefaults.standard.value(forKey: "CompanyId")!)</tem:CompanyId>" +
+            "<!--Optional:-->" +
+            "<tem:AgentId>\(UserDefaults.standard.value(forKey: "AgentId")!)</tem:AgentId>" +
+            "<!--Optional:-->" +
+            "<tem:UserName>\(UserDefaults.standard.value(forKey: "UserName")!)</tem:UserName>" +
+            "<!--Optional:-->" +
+            "<tem:Password>\(UserDefaults.standard.value(forKey: "Password")!)</tem:Password>" +
+            "<!--Optional:-->" +
+            "<tem:SecurityCode>MobihomeAppDv123</tem:SecurityCode>" +
+            "<!--Optional:-->" +
+            "<tem:TripId>\(TripId)</tem:TripId>" +
+            "<!--Optional:-->" +
+            "<tem:SeatId>\(SeatId)</tem:SeatId>" +
+            "<!--Optional:-->" +
+            "<tem:DepartGuid>\(DepartGuid)</tem:DepartGuid>" +
+            "<!--Optional:-->" +
+            "<tem:ArrivalGuid>\(ArrivalGuid)</tem:ArrivalGuid>" +
+            "<!--Optional:-->" +
+            "<tem:DeviceId>\(UserDefaults.standard.string(forKey: "DevideId")!)</tem:DeviceId>" +
+            "<!--Optional:-->" +
+            "<tem:SessionId>\(UserDefaults.standard.string(forKey: "SessionId")!)</tem:SessionId>" +
+            "</tem:Ticket_CheckExistsV2>" +
+            "</soapenv:Body>" +
+        "</soapenv:Envelope>"
+        
+        sendPostRequest.sendRequest(soapMessage, soapAction: soapAction){ (string, error) in
+            if error == nil {
+                dataString = string.data(using: String.Encoding.utf8, allowLossyConversion: false)!
+                
+                self.ticket = self.jsonHelper.parseTicket(dataString)
+            }
+            else {
+                alert.hideView()
+                alert = SCLAlertView()
+                alert.showError("Lỗi!", subTitle: "Không kết nối được server!")
             }
         }
-        return true
     }
-    
-    // MARK: - Firebases
-    
-    func saveSeatsToFireBase() {
-        let itemsRef = ref.child("seat-items")
-        for seat in seats {
-//            let item = Seat(SeatID: seat.SeatID, seatName: seat.seatName, Status: seat.Status)
-//            itemsRef.setValue(item)
-        }
-    }
-    
-    
-//    if (seatStatus.getTicket().Status == 11 && seatStatus.getTicket().BookingClerkId == CurrentUser.getUserId()&& seatStatus.getTicket().SessionId.equals(CurrentSession.getSessionId()))
-    
-    func loadMapWithScrip(htmlDecoded: String) {
-        let map = SchemaApi.replaceHtmlWithJavascrip(htmlDecoded: htmlDecoded)
-        self.schemaWebView.loadHTMLString(map, baseURL: nil)
-    }
-    
-    @IBAction func homeClick(_ sender: Any) {
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    @IBAction func editRouteAction(_ sender: Any) {
-        performSegue(withIdentifier: SegueFactory.fromSchemaToEditRoute.rawValue, sender: nil)
-    }
-    
-    @IBAction func editDriverAction(_ sender: Any) {
-        performSegue(withIdentifier: SegueFactory.fromSchemaToEditDriver.rawValue, sender: nil)
-    }
-    
-    @IBAction func changeCarAction(_ sender: Any) {
-        performSegue(withIdentifier: SegueFactory.fromSchemaToChangeCar.rawValue, sender: nil)
-    }
-    
-    @IBAction func listGoodsAction(_ sender: Any) {
-        self.tabBarController?.selectedIndex = 1
-        let customerController =  tabBarController?.viewControllers![1] as! CustomersController
-        customerController.segmentControl.selectedSegmentIndex = 2
-        customerController.addGoodsButton.isHidden = false
-    }
-    
 }
