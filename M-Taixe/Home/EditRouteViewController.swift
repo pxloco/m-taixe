@@ -495,11 +495,17 @@ class EditRouteViewController: UIViewController {
                 if self.currentTrip.TripId == "00000000-0000-0000-0000-000000000000" {
                     self.navigationController?.popViewController(animated: true)
                 } else {
-                    let controller = self.navigationController?.viewControllers[(self.navigationController?.viewControllers.count)!-3]
-                    self.navigationController?.popToViewController(controller!, animated: true)
+                    //let controller = self.navigationController?.viewControllers[(self.navigationController?.viewControllers.count)!-3]
+                    
+                    let storyboard = UIStoryboard.init(name: "Schema", bundle: Bundle.main)
+                    let schemaController = storyboard.instantiateViewController(withIdentifier: "Schema") as! SchemaViewController
+                    schemaController.initDataFromUpdateRoute(bienso: LicensePlate)
+                    //schemaController.bienSoLabel.text =
+                    
+                    self.navigationController?.popViewController(animated: true)
                 }
             }
-            else{
+            else {
                 self.alert.hideView()
                 self.alert = SCLAlertView()
                 self.alert.showError("Lỗi!", subTitle: "Không kết nối được server!")

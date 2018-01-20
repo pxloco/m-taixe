@@ -40,11 +40,14 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
     var sendPostRequest = SendPostRequest()
     var locationStartPoint = [Location]()
     var locationEndPoint = [Location]()
-    var currentlocationStartPoint: Section?
-    var currentlocationEndPoint = Location()
+    var currentlocationStartPoint: Section!
+    var currentlocationEndPoint: Section!
     let formatterCurrency = NumberFormatter()
     var sections = [Section]()
+    var sections1 = [Section]()
+    var sections2 = [Section]()
     let rootParentId =  "00000000-0000-0000-0000-000000000000"
+    var dropDownDiaDiemDi: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,8 +101,8 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
                     (viewController as! SchemaViewController).initDataFromCategory(
                         DepartGuid: (currentlocationStartPoint?.locationId)!,
                         DepartName: (currentlocationStartPoint?.name)!,
-                        ArrivalGuid: currentlocationEndPoint.LocationID,
-                        ArrivalName: currentlocationEndPoint.Name,
+                        ArrivalGuid: (currentlocationEndPoint?.locationId)!,
+                        ArrivalName: (currentlocationEndPoint?.name)!,
                         DriverName: arrTrip[(indexPath as NSIndexPath).row].DriversName,
                         EmployeeName: arrTrip[(indexPath as NSIndexPath).row].EmployeesName,
                         trip: arrTrip[indexPath.row])
@@ -147,17 +150,9 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
         dateLabel.text = formatter.string(from: d)
         
         AppUtils.addShadowToView(view: topBar, width: 1, height: 2, color: UIColor.gray.cgColor, opacity: 0.5, radius: 2)
+        AppUtils.addShadowToView(view: diemXuatPhatTable, width: 1, height: 2, color: UIColor.gray.cgColor, opacity: 0.5, radius: 2)
         formatterCurrency.locale = Locale.current
         formatterCurrency.numberStyle = .currency
-        
-//        let section1 = Section(genres: "Animation", movies: ["The Lion King", "The Incredibles"], expanded: false)
-//        let section2 = Section(genres: "Superhero", movies: ["Guardians of the Galaxy", "Avengers", "The Flash", "The Dark Knight"], expanded: false)
-//        let section3 = Section(genres: "Horro", movies: ["The Walking Dead", "Incidious", "Conjuring"], expanded: false)
-//
-//        sections.append(section1)
-//        sections.append(section2)
-//        sections.append(section3)
-        
     }
     
     // - MARK: Connect SOAP
@@ -174,16 +169,16 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
                     self.locationStartPoint = self.jsonHelper.parseRouteLocation(data!)
                     self.labelDiemDi.text = self.locationStartPoint[0].Name
                     
-                    self.sections.removeAll()
+                    self.sections1.removeAll()
                     
                     for location in self.locationStartPoint {
                         if location.ParentId == self.rootParentId {
                             let section = Section(name: location.Name, arrChild: [], locationId: location.LocationID, expanded: false)
-                            self.sections.append(section)
+                            self.sections1.append(section)
                         }
                     }
                     
-                    for section in self.sections {
+                    for section in self.sections1 {
                         for location in self.locationStartPoint {
                             if (location.ParentId == section.locationId) && (location.LocationID != section.locationId) {
                                 let childSection = Section(name: location.Name, arrChild: [], locationId: location.LocationID, expanded: false)
@@ -193,7 +188,7 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
                         }
                     }
                     
-                    self.currentlocationStartPoint = self.sections[0]
+                    self.currentlocationStartPoint = self.sections1[0]
                     self.loadDiaDiemDen()
                 }
             }
@@ -275,8 +270,29 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
                     let data = string.data(using: String.Encoding.utf8, allowLossyConversion: false)
                     self.locationEndPoint = self.jsonHelper.parseRouteLocation(data!)
                     self.labelDiemDen.text = self.locationEndPoint[0].Name
-                    self.currentlocationEndPoint = self.locationEndPoint[0]
+                    
+                    self.sections2.removeAll()
+                    
+                    for location in self.locationEndPoint {
+                        if location.ParentId == self.rootParentId {
+                            let section = Section(name: location.Name, arrChild: [], locationId: location.LocationID, expanded: false)
+                            self.sections2.append(section)
+                        }
+                    }
+                    
+                    for section in self.sections2 {
+                        for location in self.locationEndPoint {
+                            if (location.ParentId == section.locationId) && (location.LocationID != section.locationId) {
+                                let childSection = Section(name: location.Name, arrChild: [], locationId: location.LocationID, expanded: false)
+                                section.arrChild.append(childSection)
+                                section.expanded = true
+                            }
+                        }
+                    }
+                    
+                    self.currentlocationEndPoint = self.sections2[0]
                     self.loadDanhSachXe(self.date, choose: true)
+                    
                 }
             }
             else {
@@ -287,43 +303,8 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
         }
     }
     
-    func loadDiaDiemDenLenDropDown() {
-        if self.locationEndPoint.count > 0 {
-            let dropDown = DropDown()
-            DropDown.appearance().textColor = UIColor.black
-            DropDown.appearance().textFont = UIFont.systemFont(ofSize: 15)
-            DropDown.appearance().backgroundColor = UIColor.white
-            DropDown.appearance().selectionBackgroundColor = UIColor.lightGray
-            DropDown.appearance().cellHeight = 60
-            
-            // The view to which the drop down will appear on
-            dropDown.anchorView = self.labelDiemDi // UIView or UIBarButtonItem
-            
-            var arrDropDown = [String]()
-            for location in self.locationEndPoint {
-                arrDropDown.append(location.Name)
-            }
-            
-            // The list of items to display. Can be changed dynamically
-            dropDown.dataSource = arrDropDown
-            
-            // Action triggered on selection
-            dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
-                self.labelDiemDen.text = item
-                self.currentlocationEndPoint = self.locationEndPoint[index]
-                self.loadDanhSachXe(self.date, choose: true)
-            }
-            
-            // Will set a custom width instead of the anchor view width
-            dropDown.show()
-        }
-        else {
-            self.currentlocationEndPoint = Location()
-        }
-    }
-    
     func loadDanhSachXe(_ byDate: String, choose: Bool) {
-        if self.currentlocationStartPoint?.locationId == "" && self.currentlocationEndPoint.LocationID == "" {
+        if self.currentlocationStartPoint?.locationId == "" && self.currentlocationEndPoint?.locationId == "" {
             return
         }
         
@@ -344,7 +325,7 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
         "<!--Optional:-->" +
             "<tem:DepartGuid>\(currentlocationStartPoint?.locationId ?? "")</tem:DepartGuid>" +
         "<!--Optional:-->" +
-        "<tem:ArrivalGuid>\(currentlocationEndPoint.LocationID)</tem:ArrivalGuid>" +
+        "<tem:ArrivalGuid>\(currentlocationEndPoint?.locationId ?? "")</tem:ArrivalGuid>" +
         "<!--Optional:-->" +
         "<tem:SecurityCode>MobihomeAppDv123</tem:SecurityCode>" +
         "</tem:Trip_FilterForBooking>" +
@@ -555,8 +536,8 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
             }
             
         }
-        
     }
+    
     func backgroundThread(_ delay: Double = 0.0, background: (() -> Void)? = nil, completion: (() -> Void)? = nil) {
         if #available(iOS 8.0, *) {
 //            let str = "\(DispatchQoS.QoSClass.userInitiated.rawValue)" as NSString
@@ -572,6 +553,7 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
             // Fallback on earlier versions
         }
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -652,20 +634,28 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     @IBAction func btnChonDiemDiClick(_ sender: Any) {
+        dropDownDiaDiemDi = true
         DispatchQueue.main.async {
-            self.closeDropDownButton.isHidden = !self.closeDropDownButton.isHidden
-            self.diemXuatPhatTable.isHidden = !self.diemXuatPhatTable.isHidden
+            self.sections = self.sections1
+            self.closeDropDownButton.isHidden = false
+            self.diemXuatPhatTable.isHidden = false
             self.diemXuatPhatTable.reloadData()
         }
     }
     
     @IBAction func btnChonDiemDenClick(_ sender: Any) {
-        loadDiaDiemDenLenDropDown()
+        dropDownDiaDiemDi = false
+        DispatchQueue.main.async {
+            self.sections = self.sections2
+            self.closeDropDownButton.isHidden = false
+            self.diemXuatPhatTable.isHidden = false
+            self.diemXuatPhatTable.reloadData()
+        }
     }
     
     @IBAction func closeDropDownAction(_ sender: Any) {
         DispatchQueue.main.async {
-            self.diemXuatPhatTable.isHidden = !self.diemXuatPhatTable.isHidden
+            self.diemXuatPhatTable.isHidden = true
             self.diemXuatPhatTable.reloadData()
             self.closeDropDownButton.isHidden = true
         }
@@ -704,14 +694,24 @@ extension CategoryController: UITableViewDataSource, UITableViewDelegate, Expand
     }
     
     func headerSelected(indexSection: Int) {
-        diemXuatPhatTable.isHidden = !diemXuatPhatTable.isHidden
-        diemXuatPhatTable.reloadData()
+        self.closeDropDownButton.isHidden = true
+        if dropDownDiaDiemDi {
+            diemXuatPhatTable.isHidden = true
+            self.labelDiemDi.text = sections[indexSection].name
+            self.currentlocationStartPoint = self.sections[indexSection]
+            self.loadDanhSachXe(self.date, choose: true)
+        } else {
+            diemXuatPhatTable.isHidden = true
+            self.labelDiemDen.text = sections[indexSection].name
+            self.currentlocationEndPoint = self.sections[indexSection]
+            self.loadDanhSachXe(self.date, choose: true)
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = ExpandableHeaderView()
         let frame: CGRect = tableView.frame
-        let addButton = UIButton(frame: CGRect(x: frame.size.width - 50, y: 8, width: 50, height: 20))
+        let addButton = UIButton(frame: CGRect(x: frame.size.width - 50, y: 8, width: 50, height: 30))
         addButton.setTitle("+", for: .normal)
         addButton.setTitleColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), for: .normal)
         header.addSubview(addButton)
@@ -723,9 +723,17 @@ extension CategoryController: UITableViewDataSource, UITableViewDelegate, Expand
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         diemXuatPhatTable.isHidden = !diemXuatPhatTable.isHidden
-        self.labelDiemDi.text = sections[indexPath.section].arrChild[indexPath.row].name
-        self.currentlocationStartPoint = self.sections[indexPath.section].arrChild[indexPath.row]
-        self.loadDanhSachXe(self.date, choose: true)
+        
+        if dropDownDiaDiemDi {
+            self.labelDiemDi.text = sections[indexPath.section].arrChild[indexPath.row].name
+            self.currentlocationStartPoint = self.sections[indexPath.section].arrChild[indexPath.row]
+            self.loadDanhSachXe(self.date, choose: true)
+
+        } else {
+            self.labelDiemDen.text = sections[indexPath.section].arrChild[indexPath.row].name
+            self.currentlocationEndPoint = self.sections[indexPath.section].arrChild[indexPath.row]
+            self.loadDanhSachXe(self.date, choose: true)
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

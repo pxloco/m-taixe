@@ -44,11 +44,17 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpData()
-        setUpUI()
-        ref = Database.database().reference(withPath: "m-taixe")
-        getXMLMapView()
-        getStatusBookedByTrip()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        DispatchQueue.main.async {
+            self.setUpData()
+            self.setUpUI()
+            self.ref = Database.database().reference(withPath: "m-taixe")
+            self.getXMLMapView()
+            self.getStatusBookedByTrip()
+        }
     }
     
     // MARK: - Init
@@ -68,6 +74,15 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
         default:
             break
         }
+    }
+    
+    func initDataFromUpdateRoute(bienso: String) {
+        self.LicensePlate = bienso
+    }
+    
+    func initDataFromUpdateDriver(DriverName: String, EmployeeName: String) {
+        self.DriverName = DriverName
+        self.EmployeeName = EmployeeName
     }
     
     func initDataFromCategory(DepartGuid: String, DepartName: String, ArrivalGuid: String, ArrivalName: String, DriverName: String, EmployeeName: String, trip: Trip) {
@@ -105,7 +120,7 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
     }
     
     func setUpUI() {
-        self.bienSoLabel.text = LicensePlate
+        self.bienSoLabel.text = self.LicensePlate
         self.tuyenDuongLabel.text = DepartName + " -> " + ArrivalName
         self.taixephuxeLabel.text = "Tài xế: " + DriverName + " -  Phụ xe: " + EmployeeName
         AppUtils.addShadowToView(view: topbar, width: 1, height: 2, color: UIColor.gray.cgColor, opacity: 0.5, radius: 2)

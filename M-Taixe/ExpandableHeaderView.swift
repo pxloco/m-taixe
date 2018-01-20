@@ -44,7 +44,6 @@ class ExpandableHeaderView: UITableViewHeaderFooterView {
     
     @objc func ShowHideTable(section: Int) {
         delegate?.toggleSection(header: self, section: self.section)
-        print("show table ne")
     }
     
     override func layoutSubviews() {
