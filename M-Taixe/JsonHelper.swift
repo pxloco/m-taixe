@@ -9,6 +9,63 @@
 import Foundation
 class JsonHelper{
     
+    func parseReportInTrip(_ inputData: Data) -> [ReportInTrip] {
+        var reportInTrips = [ReportInTrip]()
+        do {
+            let json = try JSONSerialization.jsonObject(with: inputData, options: JSONSerialization.ReadingOptions.allowFragments)
+            for item in json as! [[String: AnyObject]]{
+                let report = ReportInTrip()
+                
+                if let SellerName =  item["SellerName"] as? String {
+                    report.SellerName = SellerName
+                }
+                
+                if let TotalAmount = item["TotalAmount"] as? Int{
+                    report.TotalAmount = TotalAmount
+                }
+                
+                if let TotalAmountPaid = item["TotalAmountPaid"] as? Int {
+                    report.TotalAmountPaid = TotalAmountPaid
+                }
+                
+                if let CountOrder = item["CountOrder"] as? Int {
+                    report.CountOrder = CountOrder
+                }
+                
+                if let CountTicket = item["CountTicket"] as? Int {
+                    report.CountTicket = CountTicket
+                }
+                
+                if let CountTicketPaid = item["CountTicketPaid"] as? Int {
+                    report.CountTicketPaid = CountTicketPaid
+                }
+                
+                if let CountBill = item["CountBill"] as? Int {
+                    report.CountBill = CountBill
+                }
+                
+                if let BillAmount = item["BillAmount"] as? Int {
+                    report.BillAmount = BillAmount
+                }
+                
+                if let CountBillPaid = item["CountBillPaid"] as? Int {
+                    report.CountBillPaid = CountBillPaid
+                }
+                
+                if let BillPaidAmount = item["BillPaidAmount"] as? Int {
+                    report.BillPaidAmount = BillPaidAmount
+                }
+   
+                
+                reportInTrips.append(report)
+            }
+        }
+        catch{
+            
+        }
+        return reportInTrips
+    }
+    
     func parseTicket(_ inputData: Data) -> Ticket {
         let ticket = Ticket()
         do {

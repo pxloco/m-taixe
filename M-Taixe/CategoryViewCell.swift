@@ -62,7 +62,7 @@ class CategoryViewCell: UICollectionViewCell {
                 self.soVeChuaTienView.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0)
                 self.soVeChuaTienView.borderWidth = 0
             } else {
-                self.soVeChuaTienView.backgroundColor = #colorLiteral(red: 0.5725490451, green: 0, blue: 0.2313725501, alpha: 1)
+                self.soVeChuaTienView.backgroundColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
                 self.soVeChuaTienView.borderWidth = 1
             }
             

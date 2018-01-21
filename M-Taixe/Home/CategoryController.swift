@@ -24,6 +24,8 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
     @IBOutlet weak var thongKeHangLabel: UILabel!
     @IBOutlet weak var diemXuatPhatTable: UITableView!
     @IBOutlet weak var closeDropDownButton: UIButton!
+    @IBOutlet weak var heightConstraintDiemXuatPhat: NSLayoutConstraint!
+    @IBOutlet weak var topContraintDropDownDiemXuatPhat: NSLayoutConstraint!
     
     var tripJson = Data()
     var currentUser = User()
@@ -638,8 +640,11 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
         DispatchQueue.main.async {
             self.sections = self.sections1
             self.closeDropDownButton.isHidden = false
+            self.topContraintDropDownDiemXuatPhat.constant = 0
             self.diemXuatPhatTable.isHidden = false
             self.diemXuatPhatTable.reloadData()
+            
+            
         }
     }
     
@@ -648,6 +653,7 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
         DispatchQueue.main.async {
             self.sections = self.sections2
             self.closeDropDownButton.isHidden = false
+            self.topContraintDropDownDiemXuatPhat.constant = 55
             self.diemXuatPhatTable.isHidden = false
             self.diemXuatPhatTable.reloadData()
         }

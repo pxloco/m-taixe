@@ -33,6 +33,7 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
     var EmployeeName = String()
     var currentTrip = Trip()
     var ticket = Ticket()
+    var reportInTrips = [ReportInTrip]()
     
     var ref: DatabaseReference!
     
@@ -41,6 +42,7 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
     @IBOutlet weak var taixephuxeLabel: UILabel!
     @IBOutlet weak var schemaWebView: UIWebView!
     @IBOutlet weak var topbar: UIView!
+    @IBOutlet weak var analysLabel: UILabel!
     
     
     override func viewDidLoad() {
@@ -55,6 +57,7 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
             self.ref = Database.database().reference(withPath: "m-taixe")
             self.getXMLMapView()
             self.getStatusBookedByTrip()
+            self.getReportByTrip()
         }
     }
     
@@ -253,6 +256,10 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
         customerController.addGoodsButton.isHidden = false
     }
     
+    @IBAction func analysByTrip(_ sender: Any) {
+    }
+    
+    
     func getStatusBookedByTrip() {
         let sendPostRequest = SendPostRequest()
         var dataString = Data()
@@ -353,6 +360,68 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
                 dataString = string.data(using: String.Encoding.utf8, allowLossyConversion: false)!
                 
                 self.ticket = self.jsonHelper.parseTicket(dataString)
+            }
+            else {
+                alert.hideView()
+                alert = SCLAlertView()
+                alert.showError("Lỗi!", subTitle: "Không kết nối được server!")
+            }
+        }
+    }
+    
+    func getReportByTrip() {
+        let sendPostRequest = SendPostRequest()
+        var dataString = Data()
+        var alert = SCLAlertView()
+        let soapAction = "http://tempuri.org/IMobihomeWcf/Order_ReportInTrip"
+        let soapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
+            "<soapenv:Header/>" +
+            "<soapenv:Body>" +
+            "<tem:Order_ReportInTrip>" +
+            "<!--Optional:-->" +
+            "<tem:UserName>\(UserDefaults.standard.value(forKey: "UserName")!)</tem:UserName>" +
+            "<!--Optional:-->" +
+            "<tem:Password>\(UserDefaults.standard.value(forKey: "Password")!)</tem:Password>" +
+            "<!--Optional:-->" +
+            "<tem:TripId>\(tripId)</tem:TripId>" +
+            "<!--Optional:-->" +
+            "<tem:SecurityCode>MobihomeAppDv123</tem:SecurityCode>" +
+            "<!--Optional:-->" +
+            "<tem:TripId>\(tripId)</tem:TripId>" +
+            "</tem:Order_ReportInTrip>" +
+            "</soapenv:Body>" +
+        "</soapenv:Envelope>"
+        
+        sendPostRequest.sendRequest(soapMessage, soapAction: soapAction){ (string, error) in
+            if error == nil {
+                dataString = string.data(using: String.Encoding.utf8, allowLossyConversion: false)!
+                self.reportInTrips = self.jsonHelper.parseReportInTrip(dataString)
+                
+                var totalTicket = Int()
+                var totalAmount = Int()
+                var totalAmoutPaid = Int()
+                var totalTicketPaid = Int()
+                
+//                var SellerName = String()
+//                var TotalAmount = Int()
+//                var TotalAmountPaid = Int()
+//                var CountOrder = Int()
+//                var CountTicket = Int()
+//                var CountTicketPaid = Int()
+//                var CountBill = Int()
+//                var BillAmount = Int()
+//                var CountBillPaid = Int()
+//                var BillPaidAmount = Int()
+                
+                for report in self.reportInTrips {
+                    totalTicket += report.CountTicket
+                    totalTicketPaid += report.CountTicketPaid
+                    totalAmount += report.TotalAmount
+                    totalAmoutPaid += report.TotalAmountPaid
+                }
+                
+                self.analysLabel.text = "Vé (\(totalTicket)): \(totalAmount), Thanh toán ((\(totalAmount)): \(totalAmoutPaid) VNĐ"
+                
             }
             else {
                 alert.hideView()
