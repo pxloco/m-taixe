@@ -32,10 +32,13 @@
 		0C9AE4001FF9DACC00128DBA /* RoutetApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9AE3FF1FF9DACC00128DBA /* RoutetApi.swift */; };
 		0C9AE4021FF9DEE800128DBA /* Bus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9AE4011FF9DEE800128DBA /* Bus.swift */; };
 		0C9AE4041FF9DFF600128DBA /* TicketByBus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9AE4031FF9DFF600128DBA /* TicketByBus.swift */; };
+		0CA06CB52014361900284098 /* AnalysByTripViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA06CB42014361900284098 /* AnalysByTripViewController.swift */; };
+		0CA06CB72014366C00284098 /* AnalysByTripViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA06CB62014366C00284098 /* AnalysByTripViewCell.swift */; };
 		0CB73488200E4CC800089E19 /* Employee.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB73487200E4CC800089E19 /* Employee.swift */; };
 		0CB9BAAE1FE87F2700A9BABB /* CategoryViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB9BAAD1FE87F2700A9BABB /* CategoryViewCell.swift */; };
 		0CC9BB0C2009A643003152F3 /* ListGoodsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC9BB0B2009A643003152F3 /* ListGoodsViewController.swift */; };
 		0CD1BD2E1FF3148A00E32053 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0CD1BD2D1FF3148A00E32053 /* GoogleService-Info.plist */; };
+		0CDA3F6D20142363001CEE6D /* LocationViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDA3F6C20142363001CEE6D /* LocationViewCell.swift */; };
 		0CE4B9331FE5F2BC00992EED /* AnalysViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE4B9321FE5F2BC00992EED /* AnalysViewController.swift */; };
 		0CE4B9351FE6076A00992EED /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE4B9341FE6076A00992EED /* MapViewController.swift */; };
 		0CECD540200B4FA0005D3017 /* ChangeCarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CECD53F200B4FA0005D3017 /* ChangeCarViewController.swift */; };
@@ -135,10 +138,13 @@
 		0C9AE3FF1FF9DACC00128DBA /* RoutetApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutetApi.swift; sourceTree = "<group>"; };
 		0C9AE4011FF9DEE800128DBA /* Bus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bus.swift; sourceTree = "<group>"; };
 		0C9AE4031FF9DFF600128DBA /* TicketByBus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketByBus.swift; sourceTree = "<group>"; };
+		0CA06CB42014361900284098 /* AnalysByTripViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysByTripViewController.swift; sourceTree = "<group>"; };
+		0CA06CB62014366C00284098 /* AnalysByTripViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysByTripViewCell.swift; sourceTree = "<group>"; };
 		0CB73487200E4CC800089E19 /* Employee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Employee.swift; sourceTree = "<group>"; };
 		0CB9BAAD1FE87F2700A9BABB /* CategoryViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewCell.swift; sourceTree = "<group>"; };
 		0CC9BB0B2009A643003152F3 /* ListGoodsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListGoodsViewController.swift; sourceTree = "<group>"; };
 		0CD1BD2D1FF3148A00E32053 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0CDA3F6C20142363001CEE6D /* LocationViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewCell.swift; sourceTree = "<group>"; };
 		0CE4B9321FE5F2BC00992EED /* AnalysViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysViewController.swift; sourceTree = "<group>"; };
 		0CE4B9341FE6076A00992EED /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		0CECD53F200B4FA0005D3017 /* ChangeCarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeCarViewController.swift; sourceTree = "<group>"; };
@@ -271,6 +277,7 @@
 				0CC9BB0B2009A643003152F3 /* ListGoodsViewController.swift */,
 				0CECD53F200B4FA0005D3017 /* ChangeCarViewController.swift */,
 				0CECD541200B4FB0005D3017 /* EditDriverViewController.swift */,
+				0CA06CB42014361900284098 /* AnalysByTripViewController.swift */,
 			);
 			name = Schema;
 			sourceTree = "<group>";
@@ -310,6 +317,8 @@
 				0CECD543200B4FD3005D3017 /* DriverViewCell.swift */,
 				0CECD545200B4FE2005D3017 /* CarViewCell.swift */,
 				0C28512F2010248100BA896D /* ExpandableHeaderView.swift */,
+				0CDA3F6C20142363001CEE6D /* LocationViewCell.swift */,
+				0CA06CB62014366C00284098 /* AnalysByTripViewCell.swift */,
 			);
 			name = ViewComponents;
 			sourceTree = "<group>";
@@ -812,11 +821,14 @@
 				311F3B7D1D3A00AD004507A5 /* SendPostRequest.swift in Sources */,
 				0C9AE4041FF9DFF600128DBA /* TicketByBus.swift in Sources */,
 				31C1361A1DD05E9A00B970AA /* Bill.swift in Sources */,
+				0CA06CB52014361900284098 /* AnalysByTripViewController.swift in Sources */,
 				3121F9221D3CD09700E3ED8E /* ColorHelper.swift in Sources */,
 				0C1508181FF5CFBA000F18BF /* HomeTabBarViewController.swift in Sources */,
+				0CDA3F6D20142363001CEE6D /* LocationViewCell.swift in Sources */,
 				0CE4B9331FE5F2BC00992EED /* AnalysViewController.swift in Sources */,
 				31ABC5A61DCDDDC8000C8DAC /* Call.swift in Sources */,
 				0C0722061FF73237006EEC22 /* SchemaTabViewController.swift in Sources */,
+				0CA06CB72014366C00284098 /* AnalysByTripViewCell.swift in Sources */,
 				0CECD546200B4FE2005D3017 /* CarViewCell.swift in Sources */,
 				0C03022E1FE94DD000DB4D45 /* Location.swift in Sources */,
 				3182F7CA1DC32B57006517B4 /* CurrentUser.swift in Sources */,

@@ -930,22 +930,29 @@
                                     <constraint firstAttribute="height" constant="300" id="SGA-om-dmO"/>
                                 </constraints>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="departViewCell" textLabel="7P9-ex-h6M" style="IBUITableViewCellStyleDefault" id="qPq-eR-Hl1">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="departViewCell" id="qPq-eR-Hl1" customClass="LocationViewCell" customModule="M_Taixe" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="248" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qPq-eR-Hl1" id="8by-rp-AK3">
                                             <rect key="frame" x="0.0" y="0.0" width="248" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7P9-ex-h6M">
-                                                    <rect key="frame" x="15" y="0.0" width="218" height="43.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zkf-lR-znv" userLabel="Title Label">
+                                                    <rect key="frame" x="30" y="13" width="202" height="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="zkf-lR-znv" firstAttribute="centerY" secondItem="8by-rp-AK3" secondAttribute="centerY" id="2IW-oQ-qXW"/>
+                                                <constraint firstItem="zkf-lR-znv" firstAttribute="leading" secondItem="8by-rp-AK3" secondAttribute="leading" constant="30" id="6TF-Za-GZM"/>
+                                                <constraint firstAttribute="trailing" secondItem="zkf-lR-znv" secondAttribute="trailing" constant="16" id="c9V-Al-149"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="titleLabel" destination="zkf-lR-znv" id="Ja7-iM-PRR"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>

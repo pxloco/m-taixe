@@ -63,7 +63,8 @@ class AddOrderController: UITableViewController, UITextFieldDelegate, UIWebViewD
             inforCell.tfName.text = currentOrder.CustomerName
             inforCell.tfCatchAddress.text = currentOrder.CatchAddress
         }
-        if isSearch{
+        
+        if isSearch {
             inforCell.tfName.isEnabled = false
             inforCell.tfCatchAddress.isEnabled = false
             let depart = RouteDetail()
@@ -149,7 +150,7 @@ class AddOrderController: UITableViewController, UITextFieldDelegate, UIWebViewD
         let arrivalText = webviewArrival.stringByEvaluatingJavaScript(from: "getSelectedText()") ?? ""
         var seats = ""
         
-        for seat in arrSeat{
+        for seat in arrSeat {
             seats = "\(seats),\(seat)"
         }
         
@@ -161,7 +162,7 @@ class AddOrderController: UITableViewController, UITextFieldDelegate, UIWebViewD
         let soapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
             "<soapenv:Header/>" +
             "<soapenv:Body>" +
-            "<tem:Order_Save>" +
+            "<tem:Order_SaveV2>" +
             "<!--Optional:-->" +
             "<tem:OrderGuid>\(orderGuid)</tem:OrderGuid>" +
             "<!--Optional:-->" +
@@ -193,20 +194,33 @@ class AddOrderController: UITableViewController, UITextFieldDelegate, UIWebViewD
             "<!--Optional:-->" +
             "<tem:SeatNumbers>\(seats)</tem:SeatNumbers>" +
             "<!--Optional:-->" +
+            "<tem:CompanyId>\(currentUser.CompanyId)</tem:CompanyId>" +
+            "<!--Optional:-->" +
+            "<tem:AgentId>\(currentUser.AgentId)</tem:AgentId>" +
+            "<!--Optional:-->" +
+            "<tem:UserGuid>\(currentUser.UserGuid)</tem:UserGuid>" +
+            "<!--Optional:-->" +
+            "<tem:UserId>\(currentUser.UserId)</tem:UserId>" +
+            "<!--Optional:-->" +
             "<tem:Password>\(currentUser.Password)</tem:Password>" +
             "<!--Optional:-->" +
             "<tem:Mobile>\(currentUser.UserName)</tem:Mobile>" +
             "<!--Optional:-->" +
+            "<tem:Mobile>0</tem:Mobile>" +
+            "<!--Optional:-->" +
+            "<tem:SessionId>\(UserDefaults.standard.value(forKey: "SessionId")!)</tem:SessionId>" +
+            "<!--Optional:-->" +
+            "<tem:DeviceId>5B47E42C-16BE-4479-92B5-2C31633AD9D4</tem:DeviceId>" +  // \(UserDefaults.standard.string(forKey: "DevideId")!)
+            "<!--Optional:-->" +
             "<tem:SecurityCode>MobihomeAppDv123</tem:SecurityCode>" +
-            "</tem:Order_Save>" +
+            "</tem:Order_SaveV2>" +
             "</soapenv:Body>" +
         "</soapenv:Envelope>"
-        let soapAction = "http://tempuri.org/IMobihomeWcf/Order_Save"
+        let soapAction = "http://tempuri.org/IMobihomeWcf/Order_SaveV2"
         sendPostRequest.sendRequest(soapMessage, soapAction: soapAction){
             (result, error) in
             if error != nil{
                 self.alert.showError("Lỗi!", subTitle: "Không kết nối được server!")
-                
             }
             else{
                 self.navigationController?.popViewController(animated: true)

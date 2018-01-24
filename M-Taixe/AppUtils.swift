@@ -105,13 +105,15 @@ class AppUtils {
         "}" +
         "function seatClick() {" +
         "var seatid = this.getAttribute(\"seatid\");" +
-        " window.location = \"M-Taixe://kha.M-Taixe?\"+seatid+\"\";" +
+        "var seatno = this.getAttribute(\"seatno\");" +
+        " window.location = \"M-Taixe://kha.M-Taixe?\"+seatid+\"?\"+seatno+\"\";" +
             
         //"MyHandler.seatClick(this.getAttribute(\"seatno\")+\" \" +this.getAttribute(\"seatid\"));" +
         "};" +
         "function textClick() {" +
         "var seatid = this.getAttribute(\"seatid\");" +
-        " window.location = \"M-Taixe://kha.M-Taixe?\"+seatid+\"\";" +
+        "var seatno = this.getAttribute(\"seatno\");" +
+        " window.location = \"M-Taixe://kha.M-Taixe?\"+seatid+\"?\"+seatno+\"\";" +
         //"MyHandler.seatClick(this.innerHTML+\" \" +this.getAttribute(\"seatid\"));" +
         "};" +
             

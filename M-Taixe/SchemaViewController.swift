@@ -34,6 +34,7 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
     var currentTrip = Trip()
     var ticket = Ticket()
     var reportInTrips = [ReportInTrip]()
+    var seatNames = [String]()
     
     var ref: DatabaseReference!
     
@@ -43,7 +44,7 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
     @IBOutlet weak var schemaWebView: UIWebView!
     @IBOutlet weak var topbar: UIView!
     @IBOutlet weak var analysLabel: UILabel!
-    
+    @IBOutlet weak var btnAddSeat: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -189,11 +190,22 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
         getStatusBookedByTrip()
     }
     
-   
+    func checkVisibleAddSeat() {
+        if seatNames.isEmpty {
+            btnAddSeat.isHidden = true
+        } else {
+            btnAddSeat.isHidden = false
+        }
+    }
+    
     
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         if request.url?.scheme == "m-taixe" {
-            if let seatId = request.url?.query {
+            if let seatData = request.url?.query {
+                let searArr = seatData.components(separatedBy: "?")
+                let seatId    = searArr[0]
+                let seatName  = searArr[1]
+                
                 if arrChooseSeatId.contains(seatId) {
                     let dataString = self.Ticket_CheckExistsV2(TripId: tripId, SeatId: seatId, DepartGuid: self.DepartGuid, ArrivalGuid: self.ArrivalGuid)
                     
@@ -203,11 +215,14 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
                         arrMyChooseSeatId = arrMyChooseSeatId.filter{ $0 != seatId }
                         self.schemaWebView.stringByEvaluatingJavaScript(from: "unchoose('\(seatId)')")
 //                        self.schemaWebView.stringByEvaluatingJavaScript(from: "resetSeat('\(seatId)')")
-                        
+                        seatNames = seatNames.filter { $0 != seatName }
+                        checkVisibleAddSeat()
                     } else {
                         arrMyChooseSeatId.append(seatId)
-                        self.schemaWebView.stringByEvaluatingJavaScript(from: "chooseSeat('\(seatId)')")
-                        self.schemaWebView.stringByEvaluatingJavaScript(from: "setSeat('\(seatId)', true)")
+                        seatNames.append(seatName)
+                        self.schemaWebView.stringByEvaluatingJavaScript(from: "myChoose('\(seatId)', true)")
+                        checkVisibleAddSeat()
+//                        self.schemaWebView.stringByEvaluatingJavaScript(from: "setSeat('\(seatId)', true)")
                     }
                 }
             }
@@ -259,6 +274,21 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
     @IBAction func analysByTrip(_ sender: Any) {
     }
     
+    @IBAction func addSeatAction(_ sender: Any) {
+        let transition:CATransition = CATransition()
+        transition.duration = 0.5
+        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        transition.type = kCATransitionPush
+        transition.subtype = kCATransitionFromTop
+        self.navigationController!.view.layer.add(transition, forKey: kCATransition)
+        let storyboard = UIStoryboard.init(name: "Schema", bundle: Bundle.main)
+        let addController = storyboard.instantiateViewController(withIdentifier: "AddOrder") as! AddOrderController
+        addController.tripId = tripId
+        addController.currentUser = currentUser
+        addController.arrSeat = seatNames
+        self.navigationController?.pushViewController(addController, animated: false)
+    }
+    
     
     func getStatusBookedByTrip() {
         let sendPostRequest = SendPostRequest()
@@ -290,23 +320,27 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
                 dataString = string.data(using: String.Encoding.utf8, allowLossyConversion: false)!
                 
                 self.seats = self.jsonHelper.parseSeats(dataString)
-                self.saveSeatsToFireBase()
+                //self.saveSeatsToFireBase()
                 self.schemaWebView.stringByEvaluatingJavaScript(from: "clearAllTicket()")
                 for seat in self.seats {
                     self.arrChooseSeatId.append(String(seat.SeatID))
                     
+                    //
                     if seat.Status == 32 {
                         self.schemaWebView.stringByEvaluatingJavaScript(from: "setSeat('\(seat.SeatID)', true)")
                     }
                     
+                    // Seat đã chọn
                     if seat.Status == 11 {
+                        // mình chọn
                         if self.seatsID.contains(String(seat.SeatID)) {
                             self.schemaWebView.stringByEvaluatingJavaScript(from: "myChoose('\(seat.SeatID)', true)")
-                        } else {
+                        } else { // Đã chọn rồi
                             self.schemaWebView.stringByEvaluatingJavaScript(from: "chooseSeat('\(seat.SeatID)', true)")
                         }
                     }
                     
+                    //
                     if seat.Status == 12 {
                         self.schemaWebView.stringByEvaluatingJavaScript(from: "setSeat('\(seat.SeatID)', true)")
                     }

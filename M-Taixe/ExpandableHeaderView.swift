@@ -29,8 +29,6 @@ class ExpandableHeaderView: UITableViewHeaderFooterView {
     
     @objc func selectHeaderAction(gestureRecognizer: UITapGestureRecognizer) {
         let cell = gestureRecognizer.view as! ExpandableHeaderView
-        //        delegate?.toggleSection(header: self, section: cell.section)
-        //        print("select header \(cell.section!)")
         delegate?.headerSelected(indexSection: cell.section)
     }
     
@@ -49,8 +47,8 @@ class ExpandableHeaderView: UITableViewHeaderFooterView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        self.textLabel?.textColor = UIColor.white
-        self.contentView.backgroundColor = UIColor.gray
+        self.textLabel?.textColor = UIColor.black
+        self.contentView.backgroundColor = UIColor.white
     }
 }
 

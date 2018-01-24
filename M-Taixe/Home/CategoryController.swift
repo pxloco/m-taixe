@@ -653,7 +653,7 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
         DispatchQueue.main.async {
             self.sections = self.sections2
             self.closeDropDownButton.isHidden = false
-            self.topContraintDropDownDiemXuatPhat.constant = 55
+            self.topContraintDropDownDiemXuatPhat.constant = 60
             self.diemXuatPhatTable.isHidden = false
             self.diemXuatPhatTable.reloadData()
         }
@@ -683,8 +683,8 @@ extension CategoryController: UITableViewDataSource, UITableViewDelegate, Expand
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "departViewCell")
-        cell?.textLabel?.text = sections[indexPath.section].arrChild[indexPath.row].name
+        let cell = tableView.dequeueReusableCell(withIdentifier: "departViewCell") as? LocationViewCell
+        cell?.titleLabel.text = sections[indexPath.section].arrChild[indexPath.row].name
         
         return cell!
     }
@@ -719,7 +719,7 @@ extension CategoryController: UITableViewDataSource, UITableViewDelegate, Expand
         let frame: CGRect = tableView.frame
         let addButton = UIButton(frame: CGRect(x: frame.size.width - 50, y: 8, width: 50, height: 30))
         addButton.setTitle("+", for: .normal)
-        addButton.setTitleColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), for: .normal)
+        addButton.setTitleColor(#colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), for: .normal)
         header.addSubview(addButton)
         
         header.customInit(title: sections[section].name, button: addButton, section: section, delegate: self)
