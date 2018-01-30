@@ -59,6 +59,9 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
             self.getXMLMapView()
             self.getStatusBookedByTrip()
             self.getReportByTrip()
+            self.btnAddSeat.isHidden = true
+            self.seatNames.removeAll()
+            self.schemaWebView.stringByEvaluatingJavaScript(from: "clearAllTicket()")
         }
     }
     
@@ -76,6 +79,8 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
             (segue.destination as! EditDriverViewController).initData(trip: currentTrip)
         case SegueFactory.fromSchemaToChangeCar.rawValue:
             (segue.destination as! ChangeCarViewController).initData(tripId: currentTrip.TripId)
+        case SegueFactory.fromSchemaToAddSeat.rawValue:
+            (segue.destination as! AddSeatViewController).initDataFromShema(tripId: currentTrip.TripId, currentUser: currentUser, currentTrip: currentTrip)
         default:
             break
         }
@@ -207,7 +212,7 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
                 let seatName  = searArr[1]
                 
                 if arrChooseSeatId.contains(seatId) {
-                    let dataString = self.Ticket_CheckExistsV2(TripId: tripId, SeatId: seatId, DepartGuid: self.DepartGuid, ArrivalGuid: self.ArrivalGuid)
+                    self.Ticket_CheckExistsV2(TripId: tripId, SeatId: seatId, DepartGuid: self.DepartGuid, ArrivalGuid: self.ArrivalGuid)
                     
                     print("asasdasd")
                 } else {
@@ -282,7 +287,7 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
         transition.subtype = kCATransitionFromTop
         self.navigationController!.view.layer.add(transition, forKey: kCATransition)
         let storyboard = UIStoryboard.init(name: "Schema", bundle: Bundle.main)
-        let addController = storyboard.instantiateViewController(withIdentifier: "AddOrder") as! AddOrderController
+        let addController = storyboard.instantiateViewController(withIdentifier: "AddSeat") as! AddSeatViewController
         addController.tripId = tripId
         addController.currentUser = currentUser
         addController.arrSeat = seatNames
@@ -394,6 +399,9 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
                 dataString = string.data(using: String.Encoding.utf8, allowLossyConversion: false)!
                 
                 self.ticket = self.jsonHelper.parseTicket(dataString)
+                
+                self.performSegue(withIdentifier: SegueFactory.fromSchemaToAddSeat.rawValue, sender: nil)
+                
             }
             else {
                 alert.hideView()

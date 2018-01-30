@@ -28,6 +28,7 @@
 		0C357E721FDCBE8C008490B2 /* SeatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C357E711FDCBE8C008490B2 /* SeatView.swift */; };
 		0C357E741FDCBE99008490B2 /* SeatView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C357E731FDCBE99008490B2 /* SeatView.xib */; };
 		0C357E761FDCC6BE008490B2 /* Seat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C357E751FDCC6BE008490B2 /* Seat.swift */; };
+		0C5F370F201F09D8002823DF /* AddSeatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5F370E201F09D8002823DF /* AddSeatViewController.swift */; };
 		0C738A762013504400EBEA35 /* ReportInTrip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C738A752013504400EBEA35 /* ReportInTrip.swift */; };
 		0C9AE4001FF9DACC00128DBA /* RoutetApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9AE3FF1FF9DACC00128DBA /* RoutetApi.swift */; };
 		0C9AE4021FF9DEE800128DBA /* Bus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9AE4011FF9DEE800128DBA /* Bus.swift */; };
@@ -134,6 +135,7 @@
 		0C357E711FDCBE8C008490B2 /* SeatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeatView.swift; sourceTree = "<group>"; };
 		0C357E731FDCBE99008490B2 /* SeatView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SeatView.xib; sourceTree = "<group>"; };
 		0C357E751FDCC6BE008490B2 /* Seat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seat.swift; sourceTree = "<group>"; };
+		0C5F370E201F09D8002823DF /* AddSeatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSeatViewController.swift; sourceTree = "<group>"; };
 		0C738A752013504400EBEA35 /* ReportInTrip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportInTrip.swift; sourceTree = "<group>"; };
 		0C9AE3FF1FF9DACC00128DBA /* RoutetApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutetApi.swift; sourceTree = "<group>"; };
 		0C9AE4011FF9DEE800128DBA /* Bus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bus.swift; sourceTree = "<group>"; };
@@ -278,6 +280,7 @@
 				0CECD53F200B4FA0005D3017 /* ChangeCarViewController.swift */,
 				0CECD541200B4FB0005D3017 /* EditDriverViewController.swift */,
 				0CA06CB42014361900284098 /* AnalysByTripViewController.swift */,
+				0C5F370E201F09D8002823DF /* AddSeatViewController.swift */,
 			);
 			name = Schema;
 			sourceTree = "<group>";
@@ -837,6 +840,7 @@
 				31ABC5A81DCDE0EE000C8DAC /* CallCell.swift in Sources */,
 				0C145CAD201323CE007605A9 /* EmployeeByTrip.swift in Sources */,
 				31B307601DCCA0050039AFBC /* RouteCell.swift in Sources */,
+				0C5F370F201F09D8002823DF /* AddSeatViewController.swift in Sources */,
 				31B307641DCCB79E0039AFBC /* AddSeatCell.swift in Sources */,
 				0C738A762013504400EBEA35 /* ReportInTrip.swift in Sources */,
 				3127E77E1D372447002293D4 /* AppDelegate.swift in Sources */,

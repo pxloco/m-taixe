@@ -329,6 +329,7 @@ class AddOrderController: UITableViewController, UITextFieldDelegate, UIWebViewD
         self.webviewArrival.loadHTMLString(arrivalStr, baseURL: nil)
         self.alert.hideView()
     }
+    
     func loadDeparts(){
         let soapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
         "<soapenv:Header/>" +
@@ -363,6 +364,7 @@ class AddOrderController: UITableViewController, UITextFieldDelegate, UIWebViewD
             
         }
     }
+    
     func loadArrivals(){
         let soapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
             "<soapenv:Header/>" +
@@ -396,6 +398,7 @@ class AddOrderController: UITableViewController, UITextFieldDelegate, UIWebViewD
             
         }
     }
+    
     func loadOneTrip(){
         let soapMessage = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\">" +
             "<soapenv:Header/>" +

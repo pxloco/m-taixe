@@ -112,7 +112,7 @@ class AppUtils {
         "};" +
         "function textClick() {" +
         "var seatid = this.getAttribute(\"seatid\");" +
-        "var seatno = this.getAttribute(\"seatno\");" +
+        "var seatno = this.innerHTML;" +
         " window.location = \"M-Taixe://kha.M-Taixe?\"+seatid+\"?\"+seatno+\"\";" +
         //"MyHandler.seatClick(this.innerHTML+\" \" +this.getAttribute(\"seatid\"));" +
         "};" +
