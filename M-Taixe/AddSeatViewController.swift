@@ -10,7 +10,7 @@ import UIKit
 import UICheckbox_Swift
 import HPUIViewExtensions
 
-class AddSeatViewController: UIViewController, UIWebViewDelegate {
+class AddSeatViewController: UIViewController, UIWebViewDelegate, UITextFieldDelegate {
     
     @IBOutlet weak var countPhoneLabel: UILabel!
     @IBOutlet weak var phoneTextField: UITextField!
@@ -23,6 +23,9 @@ class AddSeatViewController: UIViewController, UIWebViewDelegate {
     @IBOutlet weak var moneyTextField: UITextField!
     
     @IBOutlet weak var titleLabel: UILabel!
+    
+    @IBOutlet weak var avoidingView: HPView!
+    
     var arrSeat = [String]()
     var tripId = String()
     var currentTrip = Trip()
@@ -38,18 +41,25 @@ class AddSeatViewController: UIViewController, UIWebViewDelegate {
     var orderGuid = "00000000-0000-0000-0000-000000000000"
     var currentOrder = Customer()
     var seats = ""
+    var ticket = Ticket()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         initData()
+        self.hideKeyboardWhenTappedAround()
+        KeyboardAvoiding.avoidingView = self.avoidingView
     }
     
     // MARK: Init data
     
-    func initDataFromShema(tripId: String, currentUser: User, currentTrip: Trip) {
+    func initDataFromShema(tripId: String, currentUser: User, currentTrip: Trip, ticket: Ticket, seatInOrder: String) {
         self.tripId = tripId
         self.currentUser = currentUser
         self.currentTrip = currentTrip
+        self.orderGuid = ticket.OrderGuid
+        self.ticket = ticket
+        self.seats = seatInOrder
     }
     
     func initData() {
@@ -60,16 +70,23 @@ class AddSeatViewController: UIViewController, UIWebViewDelegate {
         }
 
         if orderGuid != "00000000-0000-0000-0000-000000000000" {
-            self.navigationItem.title = "Sửa vé"
+            titleLabel.text = "Sửa vé"
             arrSeat = currentOrder.SeatInOrder.components(separatedBy: ",")
+            phoneTextField.text = ticket.TicketCustMobile
+            nameUserTextField.text = ticket.TicketCustName
+            
+            if ticket.PaidTime != 0 {
+                paidCheckBox.isSelected = true
+            }
+            catchTextField.text = ticket.CatchAddress
         }
         
         let bundle = Bundle.main
         let file = bundle.path(forResource: "select", ofType: "html")
-        do{
+        do {
             htmlString = try String.init(contentsOfFile: file!)
         }
-        catch{
+        catch {
             
         }
 
@@ -84,7 +101,7 @@ class AddSeatViewController: UIViewController, UIWebViewDelegate {
     // MARK: User Action
     
     @IBAction func closeAction(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+        navigationController?.popViewController(animated: true)
     }
     
     @IBAction func bookTicketAction(_ sender: Any) {
@@ -95,6 +112,17 @@ class AddSeatViewController: UIViewController, UIWebViewDelegate {
     }
     
     @IBAction func printTicketAction(_ sender: Any) {
+    }
+    
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        KeyboardAvoiding.avoidingView = self.avoidingView
+        return true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
     // MARK: Helpper
@@ -363,7 +391,7 @@ class AddSeatViewController: UIViewController, UIWebViewDelegate {
             "<tem:SessionId>\(UserDefaults.standard.value(forKey: "SessionId")!)</tem:SessionId>" +
             "<!--Optional:-->" +
             "<tem:DeviceId>5B47E42C-16BE-4479-92B5-2C31633AD9D4</tem:DeviceId>" +  // \(UserDefaults.standard.string(forKey: "DevideId")!)
-            "<!--Optional:-->" +
+            "<!--Optional:-->" + 
             "<tem:SecurityCode>MobihomeAppDv123</tem:SecurityCode>" +
             "</tem:Order_SaveV2>" +
             "</soapenv:Body>" +

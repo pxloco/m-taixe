@@ -114,6 +114,54 @@ class JsonHelper{
             if let TicketCustMobile = item!["ticket"]!["TicketCustMobile"] as? String {
                 ticket.TicketCustMobile = TicketCustMobile
             }
+            
+            if let OrderGuid = item!["ticket"]!["OrderGuid"] as? String {
+                ticket.OrderGuid = OrderGuid
+            }
+            
+            if let OfferPrice = item!["ticket"]!["OfferPrice"] as? Int {
+                ticket.OfferPrice = OfferPrice
+            }
+            
+            if let DepartText = item!["ticket"]!["DepartText"] as? String {
+                ticket.DepartText = DepartText
+            }
+            
+            if let ArrivalText = item!["ticket"]!["ArrivalText"] as? String {
+                ticket.ArrivalText = ArrivalText
+            }
+            
+            if let DepartGuid = item!["ticket"]!["DepartGuid"] as? String {
+                ticket.DepartGuid = DepartGuid
+            }
+            
+            if let ArrivalGuid = item!["ticket"]!["ArrivalGuid"] as? String {
+                ticket.ArrivalGuid = ArrivalGuid
+            }
+            
+            if let PaidTime = item!["ticket"]!["PaidTime"] as? Int {
+                ticket.PaidTime = PaidTime
+            }
+            
+            if let CatchAddress = item!["ticket"]!["CatchAddress"] as? String {
+                ticket.CatchAddress = CatchAddress
+            }
+            
+            if let BookingClerkId = item!["ticket"]!["BookingClerkId"] as? Int {
+                ticket.BookingClerkId = BookingClerkId
+            }
+            
+            if let BookingClerkName = item!["ticket"]!["BookingClerkName"] as? String {
+                ticket.BookingClerkName = BookingClerkName
+            }
+            
+            if let Status = item!["ticket"]!["Status"] as? Int {
+                ticket.Status = Status
+            }
+            
+            if let SessionId = item!["ticket"]!["SessionId"] as? String {
+                ticket.SessionId = SessionId
+            }
         }
         catch{
             
@@ -309,15 +357,47 @@ class JsonHelper{
             let json = try JSONSerialization.jsonObject(with: inputData, options: JSONSerialization.ReadingOptions.allowFragments)
             for item in json as! [[String: AnyObject]]{
                 let seat = Seat()
+                
                 if let seatID =  item["SeatID"] as? Int {
                     seat.SeatID = seatID
                 }
+                
                 if let status = item["Status"] as? Int{
                     seat.Status = status
                 }
+                
                 if let seatName = item["SeatName"] as? String{
                     seat.seatName = seatName
                 }
+                
+                if let StatusList = item["StatusList"] as? Int{
+                    seat.StatusList = StatusList
+                }
+                
+                if let OrderGuid = item["OrderGuid"] as? String{
+                    seat.OrderGuid = OrderGuid
+                }
+                
+                if let Total = item["Total"] as? Int{
+                    seat.Total = Total
+                }
+                
+                if let IsExternalAgent = item["IsExternalAgent"] as? Bool{
+                    seat.IsExternalAgent = IsExternalAgent
+                }
+                
+                if let IsPayOverrun = item["IsPayOverrun"] as? Bool{
+                    seat.IsPayOverrun = IsPayOverrun
+                }
+                
+                if let IsBookOverrun = item["IsBookOverrun"] as? Bool{
+                    seat.IsBookOverrun = IsBookOverrun
+                }
+                
+                if let IsDebit = item["IsDebit"] as? Bool{
+                    seat.IsDebit = IsDebit
+                }
+                
                 seats.append(seat)
             }
         }

@@ -20,6 +20,7 @@ target 'M-Taixe' do
   pod 'M13Checkbox'
   pod 'UICheckbox.Swift'
   pod 'SwiftyAttributes'
+  pod 'IHKeyboardAvoiding'
 
   # Pods for M-Taixe
 

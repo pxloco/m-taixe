@@ -17,9 +17,21 @@ class Ticket {
     var SeatNumber = String()
     var SeatRow = String()
     var SeatListing = Int()
-    var ActualPrice = Int()
     var TicketCustName = String()
     var TicketCustMobile = String()
+    var OrderGuid = String()
+    var ActualPrice = Int()
+    var OfferPrice = Int()
+    var DepartText = String()
+    var ArrivalText = String()
+    var DepartGuid = String()
+    var ArrivalGuid = String()
+    var PaidTime = Int()
+    var CatchAddress = String()
+    var BookingClerkId = Int()
+    var BookingClerkName = String()
+    var Status = Int()
+    var SessionId = String()
 }
 
 

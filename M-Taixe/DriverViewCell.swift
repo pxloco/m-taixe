@@ -24,6 +24,9 @@ class DriverViewCell: UITableViewCell {
     var delegate: CheckBoxDelegate!
     var indexCheckBox: Int!
     
+    // Employee -> danh sach tai xe
+    // EmployeeByTrip -> Danh sach tai xe cua xe
+    
     func setDataToView(employee: Employee, index:Int, employeeByTrip: EmployeeByTrip) {
         self.indexCheckBox = index
         
@@ -32,6 +35,8 @@ class DriverViewCell: UITableViewCell {
         
         if employee.EmployeeId == employeeByTrip.Driver1Id || employee.EmployeeId == employeeByTrip.Employee1Id {
             checkBox.isSelected = true
+        } else {
+            checkBox.isSelected = false
         }
         
         checkBox.onSelectStateChanged = { (checkbox, selected) in

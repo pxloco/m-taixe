@@ -164,40 +164,41 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
         
         let soapAction = "http://tempuri.org/IMobihomeWcf/Place_SearchAllDepart"
         let sendPostRequest = SendPostRequest()
-        sendPostRequest.sendRequest(soapMessage, soapAction: soapAction){ (string, error) in
-            if error == nil {
-                DispatchQueue.main.async {
-                    let data = string.data(using: String.Encoding.utf8, allowLossyConversion: false)
-                    self.locationStartPoint = self.jsonHelper.parseRouteLocation(data!)
-                    self.labelDiemDi.text = self.locationStartPoint[0].Name
-                    
-                    self.sections1.removeAll()
-                    
-                    for location in self.locationStartPoint {
-                        if location.ParentId == self.rootParentId {
-                            let section = Section(name: location.Name, arrChild: [], locationId: location.LocationID, expanded: false)
-                            self.sections1.append(section)
-                        }
-                    }
-                    
-                    for section in self.sections1 {
+        
+        DispatchQueue.main.async {
+            sendPostRequest.sendRequest(soapMessage, soapAction: soapAction){ (string, error) in
+                if error == nil {
+                        let data = string.data(using: String.Encoding.utf8, allowLossyConversion: false)
+                        self.locationStartPoint = self.jsonHelper.parseRouteLocation(data!)
+                        self.labelDiemDi.text = self.locationStartPoint[0].Name
+                        
+                        self.sections1.removeAll()
+                        
                         for location in self.locationStartPoint {
-                            if (location.ParentId == section.locationId) && (location.LocationID != section.locationId) {
-                                let childSection = Section(name: location.Name, arrChild: [], locationId: location.LocationID, expanded: false)
-                                section.arrChild.append(childSection)
-                                section.expanded = true
+                            if location.ParentId == self.rootParentId {
+                                let section = Section(name: location.Name, arrChild: [], locationId: location.LocationID, expanded: false)
+                                self.sections1.append(section)
                             }
                         }
-                    }
-                    
-                    self.currentlocationStartPoint = self.sections1[0]
-                    self.loadDiaDiemDen()
+                        
+                        for section in self.sections1 {
+                            for location in self.locationStartPoint {
+                                if (location.ParentId == section.locationId) && (location.LocationID != section.locationId) {
+                                    let childSection = Section(name: location.Name, arrChild: [], locationId: location.LocationID, expanded: false)
+                                    section.arrChild.append(childSection)
+                                    section.expanded = true
+                                }
+                            }
+                        }
+                        
+                        self.currentlocationStartPoint = self.sections1[0]
+                        self.loadDiaDiemDen()
                 }
-            }
-            else{
-                self.alert.hideView()
-                self.alert = SCLAlertView()
-                self.alert.showError("Lỗi!", subTitle: "Không kết nối được server!")
+                else{
+                    self.alert.hideView()
+                    self.alert = SCLAlertView()
+                    self.alert.showError("Lỗi!", subTitle: "Không kết nối được server!")
+                }
             }
         }
     }
@@ -266,41 +267,40 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
         
         let soapAction = "http://tempuri.org/IMobihomeWcf/Place_SearchAllArrival"
         let sendPostRequest = SendPostRequest()
-        sendPostRequest.sendRequest(soapMessage, soapAction: soapAction){ (string, error) in
-            if error == nil {
-                DispatchQueue.main.async {
-                    let data = string.data(using: String.Encoding.utf8, allowLossyConversion: false)
-                    self.locationEndPoint = self.jsonHelper.parseRouteLocation(data!)
-                    self.labelDiemDen.text = self.locationEndPoint[0].Name
-                    
-                    self.sections2.removeAll()
-                    
-                    for location in self.locationEndPoint {
-                        if location.ParentId == self.rootParentId {
-                            let section = Section(name: location.Name, arrChild: [], locationId: location.LocationID, expanded: false)
-                            self.sections2.append(section)
-                        }
-                    }
-                    
-                    for section in self.sections2 {
+        DispatchQueue.main.async {
+            sendPostRequest.sendRequest(soapMessage, soapAction: soapAction){ (string, error) in
+                if error == nil {
+                        let data = string.data(using: String.Encoding.utf8, allowLossyConversion: false)
+                        self.locationEndPoint = self.jsonHelper.parseRouteLocation(data!)
+                        self.labelDiemDen.text = self.locationEndPoint[0].Name
+                        
+                        self.sections2.removeAll()
+                        
                         for location in self.locationEndPoint {
-                            if (location.ParentId == section.locationId) && (location.LocationID != section.locationId) {
-                                let childSection = Section(name: location.Name, arrChild: [], locationId: location.LocationID, expanded: false)
-                                section.arrChild.append(childSection)
-                                section.expanded = true
+                            if location.ParentId == self.rootParentId {
+                                let section = Section(name: location.Name, arrChild: [], locationId: location.LocationID, expanded: false)
+                                self.sections2.append(section)
                             }
                         }
-                    }
-                    
-                    self.currentlocationEndPoint = self.sections2[0]
-                    self.loadDanhSachXe(self.date, choose: true)
-                    
+                        
+                        for section in self.sections2 {
+                            for location in self.locationEndPoint {
+                                if (location.ParentId == section.locationId) && (location.LocationID != section.locationId) {
+                                    let childSection = Section(name: location.Name, arrChild: [], locationId: location.LocationID, expanded: false)
+                                    section.arrChild.append(childSection)
+                                    section.expanded = true
+                                }
+                            }
+                        }
+                        
+                        self.currentlocationEndPoint = self.sections2[0]
+                        self.loadDanhSachXe(self.date, choose: true)
                 }
-            }
-            else {
-                self.alert.hideView()
-                self.alert = SCLAlertView()
-                self.alert.showError("Lỗi!", subTitle: "Không kết nối được server!")
+                else {
+                    self.alert.hideView()
+                    self.alert = SCLAlertView()
+                    self.alert.showError("Lỗi!", subTitle: "Không kết nối được server!")
+                }
             }
         }
     }
@@ -336,116 +336,117 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
         
         let soapAction = "http://tempuri.org/IMobihomeWcf/Trip_FilterForBooking"
         let sendPostRequest = SendPostRequest()
-        //Gửi yêu cầu lấy danh sách chuyến trong ngày "bydate"
-        sendPostRequest.sendRequest(soapMessage, soapAction: soapAction) { (string, error) in
-            if error == nil {
-                
-                //Parse dữ liệu trả về sang NSData
-                let data = string.data(using: String.Encoding.utf8, allowLossyConversion: false)
-                var trips = [Trip]()
-                
-                //Chuyển sang danh sách chuyến
-                trips = self.jsonHelper.parseTrips(data!)
-                
-                //Nếu có dữ liẹu trả về từ server thì lưu xuống bộ nhớ local
-                if string != "" {
-                    self.userDefaults.setValue(data, forKey: byDate)
-                    self.userDefaults.synchronize()
-                }
-                
-                //Nếu là load ngày dc chọn
-                if self.date == byDate {
-                    self.arrTrip = [Trip]()
-                    self.alert.hideView()
+        
+        DispatchQueue.main.async {
+            //Gửi yêu cầu lấy danh sách chuyến trong ngày "bydate"
+            sendPostRequest.sendRequest(soapMessage, soapAction: soapAction) { (string, error) in
+                if error == nil {
                     
-                    //Nếu ko nhận dc dữ liệu từ server (server lỗi)
-                    if string == ""{
-                        if choose{
-                            self.alert = SCLAlertView()
-                            self.alert.showError("Lỗi!", subTitle: "Không kết nối được server!")
+                    //Parse dữ liệu trả về sang NSData
+                    let data = string.data(using: String.Encoding.utf8, allowLossyConversion: false)
+                    var trips = [Trip]()
+                    
+                    //Chuyển sang danh sách chuyến
+                    trips = self.jsonHelper.parseTrips(data!)
+                    
+                    //Nếu có dữ liẹu trả về từ server thì lưu xuống bộ nhớ local
+                    if string != "" {
+                        self.userDefaults.setValue(data, forKey: byDate)
+                        self.userDefaults.synchronize()
+                    }
+                    
+                    //Nếu là load ngày dc chọn
+                    if self.date == byDate {
+                        self.arrTrip = [Trip]()
+                        self.alert.hideView()
+                        
+                        //Nếu ko nhận dc dữ liệu từ server (server lỗi)
+                        if string == "" {
+                            if choose{
+                                self.alert = SCLAlertView()
+                                self.alert.showError("Lỗi!", subTitle: "Không kết nối được server!")
+                            }
+                            //Lấy danh sách chuyến từ local
+                            let jsonTrips = self.userDefaults.value(forKey: self.date) as? NSData
+                            if jsonTrips != nil{
+                                self.arrTrip = self.jsonHelper.parseTrips(jsonTrips! as Data)
+                            }
+                            self.collectionViewCatagory.reloadData()
                         }
-                        //Lấy danh sách chuyến từ local
+                        else {
+                            //Load dữ liệu của server trả về
+                            self.arrTrip = trips
+                            var tongSoTienVeBanDuoc: Int = 0
+                            var tongSoTienVeChuaThanhToan: Int = 0
+                            var tongSoVeBanDuoc: Int = 0
+                            var tongSoVeChuaThanhToan: Int = 0
+                            var tongSoHangChuaTien: Int = 0
+                            var tongSoTienHangChuaTien: Int = 0
+                            
+                            for trip in self.arrTrip {
+                                tongSoTienVeBanDuoc += trip.TicketAmount
+                                tongSoTienVeChuaThanhToan += trip.TicketAmount - trip.TicketPaidAmount
+                                tongSoVeBanDuoc += trip.CountBooked
+                                tongSoVeChuaThanhToan += trip.CountBooked - trip.CountPaid
+                                tongSoHangChuaTien += trip.BillFreightCount - trip.BillFreightPaidCount
+                                tongSoTienHangChuaTien += trip.BillFreightAmount - trip.BillFreightPaidAmount
+                            }
+                            
+                            let tongSoTienVeBanDuocAttr = AppUtils.ConvertStringToCurrency(string: "\(tongSoTienVeBanDuoc)").withAttributes([.textColor(.red)])
+                            let tongSoTienVeChuaThanhToanAttr = AppUtils.ConvertStringToCurrency(string: "\(tongSoTienVeChuaThanhToan)").withAttributes([.textColor(.red)])
+                            let tongSoVeBanDuocAttr = "\(tongSoVeBanDuoc)".withAttributes([.textColor(.black)])
+                            let tongSoVeChuaThanhToanAttr = "\(tongSoVeChuaThanhToan)".withAttributes([.textColor(.black)])
+                            let tongSoTienHangAttr = AppUtils.ConvertStringToCurrency(string: "\(tongSoTienHangChuaTien)").withAttribute(.textColor(.red))
+                            let tongSoHangAttr = "\(tongSoHangChuaTien)".withAttribute(.textColor(.black))
+                            
+                            let sove = "Số vé: ".withAttributes([.textColor(.black)])
+                            let mongoac = " ( ".withAttributes([.textColor(.black)])
+                            let dongngoac = " )".withAttributes([.textColor(.black)])
+                            let gach = " - ".withAttributes([.textColor(.black)])
+                            let chuathanhtoan = " chưa thanh toán".withAttributes([.textColor(.black)])
+                            let hang = "Hàng: ".withAttribute(.textColor(.black))
+                            
+                            self.thongKeVeLabel.attributedText = sove + tongSoVeBanDuocAttr + gach + tongSoTienVeBanDuocAttr + mongoac + tongSoVeChuaThanhToanAttr + gach + tongSoTienVeChuaThanhToanAttr + chuathanhtoan + dongngoac
+                            self.thongKeHangLabel.attributedText = hang + tongSoHangAttr + mongoac + tongSoTienHangAttr + dongngoac
+                            self.collectionViewCatagory.reloadData()
+                        }
+                    }
+                    
+                    //Chạy ngầm tính năng lưu dữ liệu xuống local
+                    self.backgroundThread(0.0, background: {
+                        
+                        //Lưu danh sách khách hàng của từng chuyến
+                        for i in 0 ..< trips.count {
+                            let trip = trips[i]
+                            self.insertCustomer(trip.TripId, atDate: byDate)
+                        }
+                        
+                        //Xoá dữ liệu cách đây 30ngày
+                        var currentDate = NSDate()
+                        let dateFormat = DateFormatter()
+                        dateFormat.dateFormat = "yyyyMMdd"
+                        currentDate = currentDate.addingTimeInterval(TimeInterval(-30*60*60*24))
+                        self.deleteTrips(currentDate as Date)
+                    })
+                }
+                else{
+                    
+                    //Nếu là load ngày đang chọn
+                    if self.date == byDate{
+                        
+                        //Lấy dữ liệu từ local
+                        self.arrTrip = [Trip]()
+                        self.alert.hideView()
                         let jsonTrips = self.userDefaults.value(forKey: self.date) as? NSData
                         if jsonTrips != nil{
                             self.arrTrip = self.jsonHelper.parseTrips(jsonTrips! as Data)
                         }
                         self.collectionViewCatagory.reloadData()
-                    }
-                    else{
-                        
-                        //Load dữ liệu của server trả về
-                        self.arrTrip = trips
-                        var tongSoTienVeBanDuoc: Int = 0
-                        var tongSoTienVeChuaThanhToan: Int = 0
-                        var tongSoVeBanDuoc: Int = 0
-                        var tongSoVeChuaThanhToan: Int = 0
-                        var tongSoHangChuaTien: Int = 0
-                        var tongSoTienHangChuaTien: Int = 0
-                        
-                        for trip in self.arrTrip {
-                            tongSoTienVeBanDuoc += trip.TicketAmount
-                            tongSoTienVeChuaThanhToan += trip.TicketAmount - trip.TicketPaidAmount
-                            tongSoVeBanDuoc += trip.CountBooked
-                            tongSoVeChuaThanhToan += trip.CountBooked - trip.CountPaid
-                            tongSoHangChuaTien += trip.BillFreightCount - trip.BillFreightPaidCount
-                            tongSoTienHangChuaTien += trip.BillFreightAmount - trip.BillFreightPaidAmount
+                        if choose{
+                            self.alert = SCLAlertView()
+                            self.alert.showError("Lỗi!", subTitle: "Không có kết nối mạng!")
+                            
                         }
-                        
-                        let tongSoTienVeBanDuocAttr = AppUtils.ConvertStringToCurrency(string: "\(tongSoTienVeBanDuoc)").withAttributes([.textColor(.red)])
-                        let tongSoTienVeChuaThanhToanAttr = AppUtils.ConvertStringToCurrency(string: "\(tongSoTienVeChuaThanhToan)").withAttributes([.textColor(.red)])
-                        let tongSoVeBanDuocAttr = "\(tongSoVeBanDuoc)".withAttributes([.textColor(.black)])
-                        let tongSoVeChuaThanhToanAttr = "\(tongSoVeChuaThanhToan)".withAttributes([.textColor(.black)])
-                        let tongSoTienHangAttr = AppUtils.ConvertStringToCurrency(string: "\(tongSoTienHangChuaTien)").withAttribute(.textColor(.red))
-                        let tongSoHangAttr = "\(tongSoHangChuaTien)".withAttribute(.textColor(.black))
-                    
-                        let sove = "Số vé: ".withAttributes([.textColor(.black)])
-                        let mongoac = " ( ".withAttributes([.textColor(.black)])
-                        let dongngoac = " )".withAttributes([.textColor(.black)])
-                        let gach = " - ".withAttributes([.textColor(.black)])
-                        let chuathanhtoan = " chưa thanh toán".withAttributes([.textColor(.black)])
-                        let hang = "Hàng: ".withAttribute(.textColor(.black))
-                        
-                        self.thongKeVeLabel.attributedText = sove + tongSoVeBanDuocAttr + gach + tongSoTienVeBanDuocAttr + mongoac + tongSoVeChuaThanhToanAttr + gach + tongSoTienVeChuaThanhToanAttr + chuathanhtoan + dongngoac
-                        self.thongKeHangLabel.attributedText = hang + tongSoHangAttr + mongoac + tongSoTienHangAttr + dongngoac
-                        
-                        self.collectionViewCatagory.reloadData()
-                    }
-                }
-                
-                //Chạy ngầm tính năng lưu dữ liệu xuống local
-                self.backgroundThread(0.0, background: {
-                    
-                    //Lưu danh sách khách hàng của từng chuyến
-                    for i in 0 ..< trips.count {
-                        let trip = trips[i]
-                        self.insertCustomer(trip.TripId, atDate: byDate)
-                    }
-                    
-                    //Xoá dữ liệu cách đây 30ngày
-                    var currentDate = NSDate()
-                    let dateFormat = DateFormatter()
-                    dateFormat.dateFormat = "yyyyMMdd"
-                    currentDate = currentDate.addingTimeInterval(TimeInterval(-30*60*60*24))
-                    self.deleteTrips(currentDate as Date)
-                })
-            }
-            else{
-                
-                //Nếu là load ngày đang chọn
-                if self.date == byDate{
-                    
-                    //Lấy dữ liệu từ local
-                    self.arrTrip = [Trip]()
-                    self.alert.hideView()
-                    let jsonTrips = self.userDefaults.value(forKey: self.date) as? NSData
-                    if jsonTrips != nil{
-                        self.arrTrip = self.jsonHelper.parseTrips(jsonTrips! as Data)
-                    }
-                    self.collectionViewCatagory.reloadData()
-                    if choose{
-                        self.alert = SCLAlertView()
-                        self.alert.showError("Lỗi!", subTitle: "Không có kết nối mạng!")
-                        
                     }
                 }
             }
@@ -577,7 +578,8 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
         let trip = arrTrip[(indexPath as NSIndexPath).row]
         cell.setData(trip: trip)
         cell.setNeedsUpdateConstraints()
-        view.layoutIfNeeded()
+        cell.layoutIfNeeded()
+        
         return cell
     }
     
@@ -620,10 +622,10 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
             self.formatter.dateFormat = "yyyyMMdd"
             self.date = self.formatter.string(from: date)
             self.arrTrip = [Trip]()
-            self.collectionViewCatagory.reloadData()
             self.alert = SCLAlertView()
             self.alert.showWait("Đang tải dữ liệu!", subTitle: "Vui lòng đợi!")
             self.loadDanhSachXe(self.date, choose: true)
+            self.collectionViewCatagory.reloadData()
         }
     }
     
@@ -643,8 +645,6 @@ class CategoryController: UIViewController, UICollectionViewDelegate, UICollecti
             self.topContraintDropDownDiemXuatPhat.constant = 0
             self.diemXuatPhatTable.isHidden = false
             self.diemXuatPhatTable.reloadData()
-            
-            
         }
     }
     

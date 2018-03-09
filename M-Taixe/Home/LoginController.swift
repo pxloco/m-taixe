@@ -37,7 +37,7 @@ class LoginController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    func dismissKeyboard() {
+    override func dismissKeyboard() {
         view.endEditing(true)
     }
     
@@ -103,7 +103,7 @@ class LoginController: UIViewController, UITextFieldDelegate {
                             defaults.setValue("\(devideId)", forKey: "DevideId")
                             
                             let formatter = DateFormatter()
-                            formatter.dateFormat = "yyyymmddHHmmss"
+                            formatter.dateFormat = "yyyymmddHHmm"
                             let d = Date()
                             let date = formatter.string(from: d)
                             let session = devideId + "-" + date

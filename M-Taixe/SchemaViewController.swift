@@ -35,8 +35,10 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
     var ticket = Ticket()
     var reportInTrips = [ReportInTrip]()
     var seatNames = [String]()
+    var customers = [Customer]()
+    var currentCustomers = Customer()
     
-    var ref: DatabaseReference!
+    let ref = Database.database().reference(withPath: "tickets")
     
     @IBOutlet weak var bienSoLabel: UILabel!
     @IBOutlet weak var tuyenDuongLabel: UILabel!
@@ -48,6 +50,21 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let itemTripIdRef = self.ref.child("\(tripId)")
+        itemTripIdRef.observe(.value, with: { snapshot in
+            var newItems: [Seat] = []
+            
+            for item in snapshot.children {
+                // 4
+                let seatItem = Seat(snapshot: item as! DataSnapshot)
+                newItems.append(seatItem)
+            }
+            
+            // 5
+            self.seats = newItems
+            self.getXMLMapView()
+        })
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,13 +72,13 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
         DispatchQueue.main.async {
             self.setUpData()
             self.setUpUI()
-            self.ref = Database.database().reference(withPath: "m-taixe")
             self.getXMLMapView()
             self.getStatusBookedByTrip()
             self.getReportByTrip()
             self.btnAddSeat.isHidden = true
             self.seatNames.removeAll()
             self.schemaWebView.stringByEvaluatingJavaScript(from: "clearAllTicket()")
+            self.loadAllCustomer()
         }
     }
     
@@ -80,14 +97,12 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
         case SegueFactory.fromSchemaToChangeCar.rawValue:
             (segue.destination as! ChangeCarViewController).initData(tripId: currentTrip.TripId)
         case SegueFactory.fromSchemaToAddSeat.rawValue:
-            (segue.destination as! AddSeatViewController).initDataFromShema(tripId: currentTrip.TripId, currentUser: currentUser, currentTrip: currentTrip)
+            
+            let ticket = sender as! Ticket
+            (segue.destination as! AddSeatViewController).initDataFromShema(tripId: currentTrip.TripId, currentUser: currentUser, currentTrip: currentTrip, ticket: ticket, seatInOrder: currentCustomers.SeatInOrder)
         default:
             break
         }
-    }
-    
-    func initDataFromUpdateRoute(bienso: String) {
-        self.LicensePlate = bienso
     }
     
     func initDataFromUpdateDriver(DriverName: String, EmployeeName: String) {
@@ -134,7 +149,7 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
     func setUpUI() {
         self.bienSoLabel.text = self.LicensePlate
         self.tuyenDuongLabel.text = DepartName + " -> " + ArrivalName
-        self.taixephuxeLabel.text = "Tài xế: " + DriverName + " -  Phụ xe: " + EmployeeName
+        self.taixephuxeLabel.text = "Tài xế: " + self.DriverName + " -  Phụ xe: " + self.EmployeeName
         AppUtils.addShadowToView(view: topbar, width: 1, height: 2, color: UIColor.gray.cgColor, opacity: 0.5, radius: 2)
     }
     
@@ -205,43 +220,64 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
     
     
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-        if request.url?.scheme == "m-taixe" {
-            if let seatData = request.url?.query {
-                let searArr = seatData.components(separatedBy: "?")
-                let seatId    = searArr[0]
-                let seatName  = searArr[1]
-                
-                if arrChooseSeatId.contains(seatId) {
-                    self.Ticket_CheckExistsV2(TripId: tripId, SeatId: seatId, DepartGuid: self.DepartGuid, ArrivalGuid: self.ArrivalGuid)
-                    
-                    print("asasdasd")
-                } else {
-                    if arrMyChooseSeatId.contains(seatId) {
-                        arrMyChooseSeatId = arrMyChooseSeatId.filter{ $0 != seatId }
-                        self.schemaWebView.stringByEvaluatingJavaScript(from: "unchoose('\(seatId)')")
-//                        self.schemaWebView.stringByEvaluatingJavaScript(from: "resetSeat('\(seatId)')")
-                        seatNames = seatNames.filter { $0 != seatName }
-                        checkVisibleAddSeat()
+        DispatchQueue.main.async {
+            if request.url?.scheme == "m-taixe" {
+                if let seatData = request.url?.query {
+                    let searArr = seatData.components(separatedBy: "?")
+                    let seatId    = searArr[0]
+                    let seatName  = searArr[1]
+                    self.Ticket_CheckExistsV2(TripId: self.tripId, SeatId: seatId, DepartGuid: self.DepartGuid, ArrivalGuid: self.ArrivalGuid)
+                    var statusSeatChoose: Int = 0
+                    var bookingClerkId = String()
+                    var sessionId = String()
+                    if self.arrChooseSeatId.contains(seatId) {
+                        //                    for seat in seats {
+                        //                        if seat.SeatID == Int(seatId) {
+                        //                            statusSeatChoose = seat.Status
+                        //                        }
+                        //                    }
+                        
+                        
+                        
+                        if self.ticket.Status == 11 && self.ticket.SessionId == UserDefaults.standard.string(forKey: "SessionId"){
+                            for customer in self.customers {
+                                if customer.SeatInOrder.contains(seatName) {
+                                    self.currentCustomers = customer
+                                    self.performSegue(withIdentifier: SegueFactory.fromSchemaToAddSeat.rawValue, sender: (ticket: self.ticket))
+                                }
+                            }
+                        } else {
+                            self.alert.showInfo("Thông tin!", subTitle: "Ghế đã được chọn bởi \(self.ticket.BookingClerkName).")
+                        }
                     } else {
-                        arrMyChooseSeatId.append(seatId)
-                        seatNames.append(seatName)
-                        self.schemaWebView.stringByEvaluatingJavaScript(from: "myChoose('\(seatId)', true)")
-                        checkVisibleAddSeat()
-//                        self.schemaWebView.stringByEvaluatingJavaScript(from: "setSeat('\(seatId)', true)")
+                        if self.arrMyChooseSeatId.contains(seatId) {
+                            self.arrMyChooseSeatId = self.arrMyChooseSeatId.filter{ $0 != seatId }
+                            self.schemaWebView.stringByEvaluatingJavaScript(from: "unchoose('\(seatId)')")
+                            //                        self.schemaWebView.stringByEvaluatingJavaScript(from: "resetSeat('\(seatId)')")
+                            self.seatNames = self.seatNames.filter { $0 != seatName }
+                            self.checkVisibleAddSeat()
+                        } else {
+                            self.arrMyChooseSeatId.append(seatId)
+                            self.seatNames.append(seatName)
+                            self.schemaWebView.stringByEvaluatingJavaScript(from: "myChoose('\(seatId)', true)")
+                            self.checkVisibleAddSeat()
+                            //                        self.schemaWebView.stringByEvaluatingJavaScript(from: "setSeat('\(seatId)', true)")
+                        }
                     }
                 }
             }
         }
+
         return true
     }
     
     // MARK: - Firebases
     
-    func saveSeatsToFireBase() {
-        let itemsRef = ref.child("seat-items")
+    func saveSeatsToFireBase(seats: [Seat]) {
         for seat in seats {
-//            let item = Seat(SeatID: seat.SeatID, seatName: seat.seatName, Status: seat.Status)
-//            itemsRef.setValue(item)
+            let itemTripIdRef = self.ref.child("\(tripId)")
+            let itemRef = itemTripIdRef.child("\(seat.OrderGuid)")
+            itemRef.setValue(seat.toAnyObject())
         }
     }
     
@@ -325,7 +361,7 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
                 dataString = string.data(using: String.Encoding.utf8, allowLossyConversion: false)!
                 
                 self.seats = self.jsonHelper.parseSeats(dataString)
-                //self.saveSeatsToFireBase()
+                self.saveSeatsToFireBase(seats: self.seats)
                 self.schemaWebView.stringByEvaluatingJavaScript(from: "clearAllTicket()")
                 for seat in self.seats {
                     self.arrChooseSeatId.append(String(seat.SeatID))
@@ -347,7 +383,7 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
                     
                     //
                     if seat.Status == 12 {
-                        self.schemaWebView.stringByEvaluatingJavaScript(from: "setSeat('\(seat.SeatID)', true)")
+                        self.schemaWebView.stringByEvaluatingJavaScript(from: "setSeat('\(seat.SeatID)', false)")
                     }
                 }
             }
@@ -400,7 +436,7 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
                 
                 self.ticket = self.jsonHelper.parseTicket(dataString)
                 
-                self.performSegue(withIdentifier: SegueFactory.fromSchemaToAddSeat.rawValue, sender: nil)
+//                self.performSegue(withIdentifier: SegueFactory.fromSchemaToAddSeat.rawValue, sender: self.ticket)
                 
             }
             else {
@@ -469,6 +505,28 @@ class SchemaViewController: UIViewController, UIWebViewDelegate {
                 alert.hideView()
                 alert = SCLAlertView()
                 alert.showError("Lỗi!", subTitle: "Không kết nối được server!")
+            }
+        }
+    }
+    
+    func loadAllCustomer() {
+        let soapMessage = String(format: "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\"><soapenv:Header/><soapenv:Body><tem:Order_GetByTrip><!--Optional:--><tem:UserName>\(currentUser.UserName)</tem:UserName><!--Optional:--><tem:Password>\(currentUser.Password)</tem:Password><!--Optional:--><tem:TripId>\(tripId)</tem:TripId><tem:SecurityCode>MobihomeAppDv123</tem:SecurityCode></tem:Order_GetByTrip></soapenv:Body></soapenv:Envelope>")
+        let soapAction = "http://tempuri.org/IMobihomeWcf/Order_GetByTrip"
+        let sendPostRequest = SendPostRequest()
+        sendPostRequest.sendRequest(soapMessage, soapAction: soapAction) { (string, error) in
+            self.alert.hideView()
+            if error == nil{
+                if string != "" {
+                    let data = string.data(using: String.Encoding.utf8, allowLossyConversion: false)
+                    self.customers = self.jsonHelper.parseCustomers(data!)
+                }
+                else{
+                    //Thông báo lỗi server
+                    
+                }
+            }
+            else{
+                
             }
         }
     }

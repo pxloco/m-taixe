@@ -25,15 +25,19 @@ class EditDriverViewController: UIViewController, UITableViewDelegate, UITableVi
     var alert = SCLAlertView()
     var jsonHelper = JsonHelper()
     var Driver1Id: Int = 0
+    var Driver1Name = String()
     var Employee1Id: Int = 0
+    var Employee1Name = String()
     var employeeByTrip = EmployeeByTrip()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpData()
-        setUpUI()
-        getDriverByTrip()
-        getEmployee(positionId: 1, searchText: "")
+        DispatchQueue.main.async {
+            self.setUpData()
+            self.setUpUI()
+            self.getDriverByTrip()
+            
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -110,6 +114,11 @@ class EditDriverViewController: UIViewController, UITableViewDelegate, UITableVi
     
     
     @IBAction func searchAction(_ sender: Any) {
+        if segmentControl.selectedSegmentIndex == 0 {
+            getEmployee(positionId: 1, searchText: searchTextField.text ?? "")
+        } else {
+            getEmployee(positionId: 2, searchText: searchTextField.text ?? "")
+        }
     }
     
     // MAKR: Get API
@@ -192,6 +201,10 @@ class EditDriverViewController: UIViewController, UITableViewDelegate, UITableVi
         let sendPostRequest = SendPostRequest()
         sendPostRequest.sendRequest(soapMessage, soapAction: soapAction){ (string, error) in
             if error == nil {
+                let storyboard = UIStoryboard.init(name: "Schema", bundle: Bundle.main)
+                let schemaController = storyboard.instantiateViewController(withIdentifier: "Schema") as! SchemaViewController
+                schemaController.initDataFromUpdateDriver(DriverName: self.Driver1Name, EmployeeName: self.Employee1Name)
+                
                self.navigationController?.popViewController(animated: true)
             }
             else {
@@ -231,6 +244,8 @@ class EditDriverViewController: UIViewController, UITableViewDelegate, UITableVi
                 self.employeeByTrip = self.jsonHelper.parseEmployeeByTrip(data!)
                 self.Employee1Id = self.employeeByTrip.Employee1Id
                 self.Driver1Id = self.employeeByTrip.Driver1Id
+                self.Driver1Name = self.employeeByTrip.Driver1Name
+                self.getEmployee(positionId: 1, searchText: "")
             }
             else {
                 self.alert.hideView()
@@ -245,20 +260,30 @@ extension EditDriverViewController: CheckBoxDelegate {
     func checkCheckBox(indexCheckBox: Int) {
         if segmentControl.selectedSegmentIndex == 0 {
             Driver1Id = employees[indexCheckBox].EmployeeId
+            Driver1Name = employees[indexCheckBox].EmployeeName
+            employeeByTrip.Driver1Id = employees[indexCheckBox].EmployeeId
+            //self.driverTableView.reloadData()
         } else {
             Employee1Id = employees[indexCheckBox].EmployeeId
+            Employee1Name = employees[indexCheckBox].EmployeeName
+            employeeByTrip.Employee1Id = employees[indexCheckBox].EmployeeId
+            //self.driverTableView.reloadData()
         }
         
-//        DispatchQueue.main.async {
-//            for row in 0 ..< self.employees.count {
-//                if row != indexCheckBox {
-//                    let cell = self.driverTableView.cellForRow(at: IndexPath(item: row, section: 0)) as! DriverViewCell
-//                    cell.checkBox.isSelected = false
-//                }
-//            }
-//        }
+        DispatchQueue.main.async {
+            for row in 0 ..< self.employees.count {
+                if row != indexCheckBox {
+                    let cell = self.driverTableView.cellForRow(at: IndexPath(item: row, section: 0)) as! DriverViewCell
+                    
+                    if cell.checkBox.isSelected {
+                        cell.checkBox.isSelected = false
+                        self.driverTableView.reloadRows(at: [IndexPath(item: row, section: 0)], with: .none)
+                    }
+                }
+            }
+        }
+
         
-//         self.driverTableView.reloadData()
     }
 }
 

@@ -52,6 +52,8 @@ class EditRouteViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.hideKeyboardWhenTappedAround()
         setUpUserDefaultParam()
         setUpUI()
         setUpView()
@@ -496,12 +498,6 @@ class EditRouteViewController: UIViewController {
                     self.navigationController?.popViewController(animated: true)
                 } else {
                     //let controller = self.navigationController?.viewControllers[(self.navigationController?.viewControllers.count)!-3]
-                    
-                    let storyboard = UIStoryboard.init(name: "Schema", bundle: Bundle.main)
-                    let schemaController = storyboard.instantiateViewController(withIdentifier: "Schema") as! SchemaViewController
-                    schemaController.initDataFromUpdateRoute(bienso: LicensePlate)
-                    //schemaController.bienSoLabel.text =
-                    
                     self.navigationController?.popViewController(animated: true)
                 }
             }

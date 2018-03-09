@@ -66,6 +66,13 @@ class ChangeCarViewController: UIViewController, UITableViewDelegate, UITableVie
         
     }
     
+    @IBAction func searchTextFieldChangeAction(_ sender: Any) {
+//        let searchText = (searchTextField.text)!
+//        buses = buses.filter{ ($0.LicensePlate.contains(searchText)) }
+//        carTableView.reloadData()
+    }
+    
+    
     // MARK: Table
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

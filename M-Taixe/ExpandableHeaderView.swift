@@ -18,6 +18,8 @@ class ExpandableHeaderView: UITableViewHeaderFooterView {
     var delegate: ExpandableHeaderViewDelegate?
     var section: Int!
     
+    var button: UIButton!
+    
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(selectHeaderAction)))
@@ -36,11 +38,17 @@ class ExpandableHeaderView: UITableViewHeaderFooterView {
         self.textLabel?.text = title
         self.section = section
         self.delegate = delegate
-        
+        self.button = button
         button.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ShowHideTable)))
     }
     
     @objc func ShowHideTable(section: Int) {
+        if button.titleLabel?.text == "+" {
+            self.button.setTitle("-", for: .normal)
+        } else {
+            self.button.setTitle("+", for: .normal)
+        }
+        
         delegate?.toggleSection(header: self, section: self.section)
     }
     
